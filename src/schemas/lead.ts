@@ -12,6 +12,7 @@ export const leadSchema = z
   .object({
     company: z.string().trim().min(1, "Informe a empresa").max(200),
     contact_name: text,
+    referred_by: text.default(""),
     whatsapp: z.string().max(30),
     email: z.union([z.email(), z.literal("")]),
     instagram: url.refine(

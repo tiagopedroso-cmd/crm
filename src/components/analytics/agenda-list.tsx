@@ -1,4 +1,5 @@
 "use client";
+import { MessageButton } from "@/components/leads/message-button";
 import { useState } from "react";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
@@ -47,8 +48,7 @@ export function AgendaList({
         <>
           <div className="agenda-list">
             {query.data.rows.map((l) => (
-              <Link
-                href={`/leads/${l.id}`}
+              <div
                 key={l.id}
                 className={`agenda-item ${actionStatus(l) === "Ação atrasada" ? "late" : ""}`}
               >
@@ -67,7 +67,9 @@ export function AgendaList({
                   </small>
                 </div>
                 <div className="agenda-company">
-                  <strong>{l.company}</strong>
+                  <Link className="company-link" href={`/leads/${l.id}`}>
+                    {l.company}
+                  </Link>
                   <span>{l.next_action || "Definir próxima ação"}</span>
                 </div>
                 <span
@@ -75,8 +77,15 @@ export function AgendaList({
                 >
                   {actionStatus(l) || "Agendado"}
                 </span>
-                <ArrowUpRight size={18} />
-              </Link>
+                {!l.first_contact_at && <MessageButton lead={l} compact />}
+                <Link
+                  href={`/leads/${l.id}`}
+                  className="icon-btn"
+                  aria-label={`Abrir ${l.company}`}
+                >
+                  <ArrowUpRight size={18} />
+                </Link>
+              </div>
             ))}
           </div>
           {!compact && (

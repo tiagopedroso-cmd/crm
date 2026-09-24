@@ -3,8 +3,8 @@
 ## Resultado da validação local — 24/09/2026
 
 - TypeScript e build de produção aprovados.
-- 13 testes de utilitários, migrations e regras PostgreSQL/RLS aprovados.
-- 11 cenários de interface aprovados: navegação/responsividade, CRUD completo e logout em desktop, tablet e celular; arraste com rollback e metas/propostas/pós-venda/CSV no desktop. As quatro combinações redundantes desses dois cenários adicionais com tablet/celular são explicitamente ignoradas.
+- 35 testes de utilitários, migrations e regras PostgreSQL/RLS aprovados.
+- 17 cenários de interface aprovados (incluindo abordagem e gestão de modelos nos três formatos): navegação/responsividade, CRUD completo e logout em desktop, tablet e celular; arraste com rollback e metas/propostas/pós-venda/CSV no desktop. As quatro combinações redundantes desses dois cenários adicionais com tablet/celular são explicitamente ignoradas.
 - Capturas de desktop e celular inspecionadas. Corrigidos largura do Lead 360°, acesso ao logout mobile e estado otimista do checklist.
 - `npm audit` sem vulnerabilidades conhecidas na árvore instalada.
 - Auth real, cookies no domínio publicado, envio de recuperação e sincronização entre aparelhos físicos continuam pendentes de um projeto Supabase configurado. Os testes de interface usam autenticação simulada e banco temporário; não certificam o ambiente de produção.
@@ -40,3 +40,13 @@
 | RLS | Repetir matriz A/B/admin do README | Nenhum vazamento entre vendedores ou para anônimos |
 
 O ambiente Supabase real e o deploy não são disponibilizados pelo repositório. Não considerar testes simulados como homologação de Auth, rede, recuperação de conta ou sincronização entre dispositivos reais.
+
+## Abordagens — validação local
+
+- Modelos privados por usuário, inclusive isolamento de administradores; anônimos bloqueados.
+- Confirmação idempotente registra texto, template, interação, primeiro contato e mudança de etapa em uma transação.
+- Etapas já avançadas e primeiro contato são preservados. Excluir template mantém snapshot.
+- D+2 respeita Brasília; sobrescrita requer confirmação e detecta alteração concorrente.
+- Desktop, tablet e celular: copiar, editar, abrir link interceptado de WhatsApp, voltar sem confirmar, confirmar, substituir ação explicitamente e conferir histórico.
+- Configurações: criar, inserir variável, duplicar, definir padrão, desativar e excluir.
+- Aplicação remota de `supabase/upgrade-outreach.sql` necessária antes do deploy desta versão. Nenhuma mensagem real foi enviada nos testes.

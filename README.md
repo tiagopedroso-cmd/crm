@@ -174,3 +174,18 @@ Consultas independentes são paralelas; listas e históricos são paginados. Rea
 ## Homologação antes de produção
 
 Confira `docs/ACCEPTANCE.md` para separar o que foi validado localmente do que depende do seu projeto Supabase real. Login/logout reais, entrega de e-mail de recuperação, persistência entre dispositivos e RLS no ambiente publicado precisam dessa etapa. Não há envio automático de WhatsApp, IA, automação de e-mail, ERP, nota fiscal ou financeiro completo.
+
+## Abordagem comercial individual pelo WhatsApp
+
+Para atualizar um CRM já instalado, execute **somente** `supabase/upgrade-outreach.sql` no SQL Editor do projeto Supabase, uma vez, antes de publicar esta versão. O arquivo aplica a migration `202609240001_outreach.sql` em uma transação. Não execute novamente o instalador inicial em um banco existente. Pela CLI, use o fluxo de migrations do seu projeto (confira o histórico remoto antes de `db push`).
+
+- Onze modelos iniciais são copiados para cada usuário existente e novo. Configurações → Mensagens de abordagem permite criar, editar, duplicar, ativar/desativar, excluir e definir um padrão por grupo. Templates são privados inclusive entre administradores; RLS usa exclusivamente o usuário autenticado.
+- O nicho sugere o grupo, a origem Indicação tem prioridade e o site cadastrado sugere a variante. Um padrão pessoal tem prioridade. Todos os modelos ativos continuam disponíveis para escolha manual. Revise alegações sobre o site e a empresa antes de usar os modelos.
+- Variáveis: responsável, empresa, nicho, produto, cidade, indicado_por, site e origem. O cadastro inclui “Indicado por”. Campos ausentes recebem alternativas; variáveis desconhecidas exigem revisão antes de abrir o WhatsApp.
+- Lista, cards do Pipeline, Lead 360 e Agenda (sem primeiro contato) abrem o modal individual. Copiar ou abrir o WhatsApp **não** grava uma interação. O texto editado nunca altera o modelo original.
+- Após enviar dentro do WhatsApp, volte à mesma aba e confirme “Sim, registrar envio”. É possível ajustar o texto efetivamente enviado antes de confirmar. O rascunho permanece apenas na memória dessa aba; recarregar ou fechar o modal antes da confirmação descarta o rascunho.
+- A RPC `confirm_approach` verifica sessão, acesso ao lead e propriedade do template; bloqueia o lead e grava interação, snapshot da abordagem, primeiro contato e etapa numa transação. Uma chave de idempotência evita duplicação ao repetir a mesma confirmação após falha de rede. Etapas diferentes de NOVO LEAD e primeiro contato existente são preservados.
+- O follow-up sugerido é D+2, às 09h em Brasília. A ação existente só é substituída após marcar a confirmação. Uma comparação atômica detecta alterações concorrentes.
+- `lead_approaches` preserva o texto, nome/grupo do template, telefone, nicho, produto, usuário e interação. Possui campos opcionais `response_interaction_id` e `responded_at` para vinculação futura de respostas. Respostas não são inferidas automaticamente; painéis avançados ficam para outra etapa. Excluir um template mantém os snapshots de abordagens.
+
+Validação: `npm test`, `npm run test:e2e`, `npm run build`. Os testes de interface interceptam o domínio WhatsApp; nenhuma mensagem real é enviada. O banco dos testes é PostgreSQL local (PGlite) com as migrations e políticas reais, sem dados de produção.

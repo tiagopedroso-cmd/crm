@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft, Pencil, Trash2, Globe } from "lucide-react";
 import { getLead, deleteLead } from "@/services/crm";
 import { useReference, useRefresh } from "@/hooks/use-crm";
-import { dateLabel, money, actionStatus } from "@/lib/utils";
+import { dateLabel, money, actionStatus, whatsappUrl } from "@/lib/utils";
 import { MessageButton } from "@/components/leads/message-button";
 import { LeadForm } from "@/components/leads/lead-form";
 import { StageControl } from "@/components/leads/stage-control";
@@ -25,6 +25,19 @@ export default function Lead360({
   const refs = useReference();
   const refresh = useRefresh();
   const router = useRouter();
+  const [quickAction, setQuickAction] = useState<{
+    tab: string;
+    type: string;
+    nonce: number;
+  }>();
+  function openAction(tab: string, type = "WhatsApp") {
+    setQuickAction({ tab, type, nonce: Date.now() });
+    requestAnimationFrame(() =>
+      document
+        .getElementById("lead-activity")
+        ?.scrollIntoView({ behavior: "smooth", block: "start" }),
+    );
+  }
   const [editing, setEditing] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -70,7 +83,7 @@ export default function Lead360({
         <aside className="detail-summary">
           <section className="card panel">
             <p className="eyebrow">ETAPA ATUAL</p>
-            <StageControl lead={l} />
+            <span className="badge">{l.stage}</span>
             <div className="detail-value">
               <small>Valor potencial</small>
               <strong>{money(l.potential_value)}</strong>
@@ -79,7 +92,39 @@ export default function Lead360({
                   "Produto não definido"}
               </span>
             </div>
-            <MessageButton lead={l} />
+            <div className="lead-quick-actions">
+              <h3>Ações</h3>
+              <MessageButton lead={l} />
+              {whatsappUrl(l.whatsapp) && (
+                <a
+                  className="btn wide"
+                  href={whatsappUrl(l.whatsapp)!}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Abrir WhatsApp
+                </a>
+              )}
+              <button
+                className="btn"
+                onClick={() => openAction("interaction", "Ligação")}
+              >
+                Registrar ligação
+              </button>
+              <button className="btn" onClick={() => openAction("interaction")}>
+                Registrar interação
+              </button>
+              <button className="btn" onClick={() => openAction("action")}>
+                Agendar follow-up
+              </button>
+              <button className="btn" onClick={() => openAction("action")}>
+                Criar próxima ação
+              </button>
+              <label>
+                Mudar etapa
+                <StageControl lead={l} />
+              </label>
+            </div>
             <dl className="facts">
               {[
                 ["WhatsApp", l.whatsapp],
@@ -193,7 +238,7 @@ export default function Lead360({
               </div>
             )}
           </section>
-          <LeadTimeline lead={l} />
+          <LeadTimeline lead={l} action={quickAction} />
         </div>
       </div>
       <LeadForm open={editing} onClose={() => setEditing(false)} lead={l} />

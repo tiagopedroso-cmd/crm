@@ -48,11 +48,14 @@ export const localInput = (v: string | null) =>
 export const inputToInstant = (v: string) =>
   v ? new Date(`${v}:00-03:00`).toISOString() : null;
 export function whatsappUrl(phone: string, message = "") {
+  if (!/^[+\d\s().-]+$/.test(phone)) return null;
   let digits = phone.replace(/\D/g, "");
   if (digits.startsWith("0") && [11, 12].includes(digits.length))
     digits = digits.slice(1);
   if (digits.length === 10 || digits.length === 11) digits = "55" + digits;
-  return digits.length >= 12 && digits.length <= 15
+  if (digits.startsWith("55") && !/^55[1-9]\d[2-9]\d{7,8}$/.test(digits))
+    return null;
+  return /^[1-9]\d{11,14}$/.test(digits)
     ? `https://wa.me/${digits}${message ? `?text=${encodeURIComponent(message)}` : ""}`
     : null;
 }

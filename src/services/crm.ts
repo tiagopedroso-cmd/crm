@@ -1,3 +1,4 @@
+import type { Approach } from "@/lib/outreach";
 import { browserClient } from "@/lib/supabase/client";
 import { dayKey } from "@/lib/utils";
 import { leadSchema } from "@/schemas/lead";
@@ -166,8 +167,14 @@ export async function leadDetails(id: string, page = 0) {
     db.from("after_sales").select("*").eq("lead_id", id).maybeSingle(),
   ]);
   for (const r of results) if (r.error) throw r.error;
+  const ids = (results[0].data as Interaction[]).map((i) => i.id);
+  const approaches = ids.length
+    ? await db.from("lead_approaches").select("*").in("interaction_id", ids)
+    : { data: [], error: null };
+  if (approaches.error) throw approaches.error;
   return {
     interactions: results[0].data as Interaction[],
+    approaches: approaches.data as Approach[],
     history: results[1].data as History[],
     proposals: results[2].data as Proposal[],
     afterSales: results[3].data as Record<string, boolean> | null,
@@ -262,6 +269,8 @@ export async function backup() {
     "pipeline_history",
     "proposals",
     "after_sales",
+    "message_templates",
+    "lead_approaches",
   ]) {
     const rows: unknown[] = [];
     for (let page = 0; ; page++) {

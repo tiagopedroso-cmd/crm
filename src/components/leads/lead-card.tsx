@@ -21,13 +21,16 @@ export function LeadCard({
         <span className="company-initial">
           {lead.company.slice(0, 2).toUpperCase()}
         </span>
-        <Link
-          href={`/leads/${lead.id}`}
-          className="icon-btn"
-          aria-label={`Abrir ${lead.company}`}
-        >
-          <ArrowUpRight size={18} />
-        </Link>
+        <div className="actions">
+          {stageControl && <MessageButton lead={lead} compact />}
+          <Link
+            href={`/leads/${lead.id}`}
+            className="icon-btn"
+            aria-label={`Abrir ${lead.company}`}
+          >
+            <ArrowUpRight size={18} />
+          </Link>
+        </div>
       </div>
       <Link className="company-link" href={`/leads/${lead.id}`}>
         {lead.company}
@@ -59,7 +62,6 @@ export function LeadCard({
       )}
       {lead.is_demo && <span className="badge">Demonstração</span>}
       {stageControl && <StageControl lead={lead} />}
-      {stageControl && <MessageButton lead={lead} />}
     </article>
   );
 }

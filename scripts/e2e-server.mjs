@@ -30,7 +30,11 @@ const db = new PGlite();
 await db.exec(
   `create role anon;create role authenticated;create schema auth;create table auth.users(id uuid primary key,raw_user_meta_data jsonb default '{}'::jsonb);create function auth.uid() returns uuid language sql stable as $$select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid$$;grant usage on schema auth,public to authenticated;grant execute on function auth.uid() to authenticated;`,
 );
-for (const file of ["202609230001_crm.sql", "202609230002_analytics.sql"])
+for (const file of [
+  "202609230001_crm.sql",
+  "202609230002_analytics.sql",
+  "202609240001_outreach.sql",
+])
   await db.exec(readFileSync(`supabase/migrations/${file}`, "utf8"));
 await db.exec(
   `insert into auth.users(id) values('${id}');update profiles set role='ADMIN',display_name='Tiago' where id='${id}';select set_config('request.jwt.claim.sub','${id}',false);set role authenticated;`,
@@ -88,6 +92,8 @@ const tables = [
   "lead_interactions",
   "proposals",
   "after_sales",
+  "message_templates",
+  "lead_approaches",
 ];
 const columns = {};
 for (const table of tables)
@@ -104,6 +110,37 @@ function column(table, key) {
 async function rest(url, req, body) {
   const table = url.pathname.split("/").pop();
   if (url.pathname.includes("/rpc/")) {
+    const rpc = {
+      confirm_approach: [
+        "p_id",
+        "p_lead",
+        "p_template",
+        "p_message",
+        "p_phone",
+      ],
+      schedule_approach_followup: [
+        "p_lead",
+        "p_at",
+        "p_expected_action",
+        "p_expected_at",
+      ],
+      set_template_default: ["p_id"],
+    };
+    if (rpc[table]) {
+      const keys = rpc[table];
+      return {
+        data: (
+          await db.query(
+            "select " +
+              table +
+              "(" +
+              keys.map((_, i) => "$" + (i + 1)).join(",") +
+              ") data",
+            keys.map((key) => body[key] ?? null),
+          )
+        ).rows[0].data,
+      };
+    }
     if (table !== "crm_metrics") throw new Error("Unknown RPC");
     return {
       data: (
@@ -152,7 +189,13 @@ async function rest(url, req, body) {
         );
       else throw new Error("Unsupported not");
     } else if (op === "is" && v === "null") where.push(`${c} is null`);
-    else {
+    else if (op === "in") {
+      const values = v
+        .slice(1, -1)
+        .split(",")
+        .map((x) => param(x.replaceAll('"', "")));
+      where.push(`${c}::text in (${values.join(",")})`);
+    } else {
       const ops = { eq: "=", gte: ">=", lte: "<=", lt: "<", ilike: "ilike" };
       if (!ops[op]) throw new Error("Unsupported operator");
       where.push(`${c} ${ops[op]} ${param(v)}`);

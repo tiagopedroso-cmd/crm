@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
   addInteraction,
@@ -18,11 +18,20 @@ import {
   money,
 } from "@/lib/utils";
 import { Empty, ErrorState, Loading, Notice } from "@/components/ui";
-export function LeadTimeline({ lead }: { lead: Lead }) {
+export function LeadTimeline({
+  lead,
+  action,
+}: {
+  lead: Lead;
+  action?: { tab: string; type: string; nonce: number };
+}) {
   const refresh = useRefresh();
   const refs = useReference();
   const [page, setPage] = useState(0);
   const [tab, setTab] = useState("history");
+  useEffect(() => {
+    if (action) setTab(action.tab);
+  }, [action]);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [afterDraft, setAfterDraft] = useState<Record<string, boolean> | null>(
@@ -49,7 +58,12 @@ export function LeadTimeline({ lead }: { lead: Lead }) {
       id: i.id,
       date: i.occurred_at,
       title: i.type,
-      description: i.description,
+      description: [
+        i.description,
+        ...(details.data?.approaches
+          .filter((a) => a.interaction_id === i.id)
+          .map((a) => `Modelo: ${a.template_name}\n${a.message}`) || []),
+      ].join("\n\n"),
       actor: i.actor_id,
     })) || []),
     ...(details.data?.history.map((h) => ({
@@ -57,13 +71,13 @@ export function LeadTimeline({ lead }: { lead: Lead }) {
       date: h.created_at,
       title: h.from_stage ? "Etapa alterada" : "Lead cadastrado",
       description: h.from_stage
-        ? `${h.from_stage} → ${h.to_stage}`
+        ? `${h.from_stage} → ${h.to_stage}${h.reason ? " · " + h.reason : ""}`
         : h.to_stage,
       actor: h.actor_id,
     })) || []),
   ].sort((a, b) => b.date.localeCompare(a.date));
   return (
-    <section className="card panel">
+    <section className="card panel" id="lead-activity">
       <div className="tabs">
         {[
           ["history", "Histórico"],
@@ -154,7 +168,11 @@ export function LeadTimeline({ lead }: { lead: Lead }) {
               <div className="form-grid">
                 <label>
                   Tipo
-                  <select name="type">
+                  <select
+                    name="type"
+                    key={action?.nonce}
+                    defaultValue={action?.type || "WhatsApp"}
+                  >
                     {INTERACTIONS.map((t) => (
                       <option key={t}>{t}</option>
                     ))}

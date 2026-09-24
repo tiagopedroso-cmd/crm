@@ -16,7 +16,11 @@ beforeAll(async () => {
   await db.exec(
     `create role anon;create role authenticated;create schema auth;create table auth.users(id uuid primary key,raw_user_meta_data jsonb default '{}'::jsonb);create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$;grant usage on schema auth,public to anon,authenticated;grant execute on function auth.uid() to anon,authenticated;`,
   );
-  for (const file of ["202609230001_crm.sql", "202609230002_analytics.sql"])
+  for (const file of [
+    "202609230001_crm.sql",
+    "202609230002_analytics.sql",
+    "202609240001_outreach.sql",
+  ])
     await db.exec(readFileSync(`supabase/migrations/${file}`, "utf8"));
   await db.exec(
     `insert into auth.users(id) values('${A}'),('${B}'),('${ADMIN}');update public.profiles set role='ADMIN' where id='${ADMIN}';`,
@@ -190,5 +194,215 @@ describe.sequential("PostgreSQL, RLS e regras comerciais", () => {
     expect(
       (await db.query("select * from lead_interactions")).rows,
     ).toHaveLength(0);
+  });
+});
+
+describe.sequential("Templates privados e confirmação de abordagem", () => {
+  let template: string, approachLead: string, first: unknown;
+  const request = "10000000-0000-4000-8000-000000000001";
+  it("distribui onze modelos privados e isola até administradores", async () => {
+    await asUser(A);
+    const templates = await db.query<{ id: string; message: string }>(
+      "select * from message_templates order by name",
+    );
+    expect(templates.rows).toHaveLength(11);
+    template = templates.rows[0].id;
+    await asUser(B);
+    expect(
+      (
+        await db.query("select * from message_templates where id=$1", [
+          template,
+        ])
+      ).rows,
+    ).toHaveLength(0);
+    await db.query(
+      "update message_templates set message='invasão' where id=$1",
+      [template],
+    );
+    await expect(
+      db.query(
+        "insert into message_templates(user_id,name,niche_group,message) values($1,'Forjado','Geral','Oi')",
+        [A],
+      ),
+    ).rejects.toThrow();
+    await asUser(ADMIN);
+    expect(
+      (
+        await db.query("select * from message_templates where id=$1", [
+          template,
+        ])
+      ).rows,
+    ).toHaveLength(0);
+    await db.exec("reset role;set role anon");
+    await expect(db.query("select * from message_templates")).rejects.toThrow();
+    await expect(
+      db.query("select confirm_approach($1,$1,$1,'Oi','5511999999999')", [
+        request,
+      ]),
+    ).rejects.toThrow();
+    await asUser(A);
+    expect(
+      (
+        await db.query<{ message: string }>(
+          "select message from message_templates where id=$1",
+          [template],
+        )
+      ).rows[0].message,
+    ).toBe(templates.rows[0].message);
+  });
+  it("salva padrão sem expor templates alheios", async () => {
+    await asUser(A);
+    await db.query("select set_template_default($1)", [template]);
+    expect(
+      (
+        await db.query<{ is_default: boolean }>(
+          "select is_default from message_templates where id=$1",
+          [template],
+        )
+      ).rows[0].is_default,
+    ).toBe(true);
+    await asUser(B);
+    await expect(
+      db.query("select set_template_default($1)", [template]),
+    ).rejects.toThrow();
+  });
+  it("confirma interação, primeiro contato e etapa atomicamente; retry não duplica", async () => {
+    await asUser(A);
+    approachLead = (
+      await db.query<{ id: string }>(
+        "insert into leads(company,whatsapp) values('Topografia Horizonte','11999999999') returning id",
+      )
+    ).rows[0].id;
+    await db.query("select confirm_approach($1,$2,$3,$4,$5)", [
+      request,
+      approachLead,
+      template,
+      "Texto realmente enviado",
+      "5511999999999",
+    ]);
+    await db.query("select confirm_approach($1,$2,$3,$4,$5)", [
+      request,
+      approachLead,
+      template,
+      "Tentativa repetida",
+      "5511999999999",
+    ]);
+    const l = (
+      await db.query<{
+        stage: string;
+        first_contact_at: unknown;
+        last_interaction_at: unknown;
+      }>("select * from leads where id=$1", [approachLead])
+    ).rows[0];
+    expect(l.stage).toBe("CONTATADO");
+    expect(l.first_contact_at).toBeTruthy();
+    expect(l.last_interaction_at).toBeTruthy();
+    first = l.first_contact_at;
+    expect(
+      (
+        await db.query("select * from lead_interactions where lead_id=$1", [
+          approachLead,
+        ])
+      ).rows,
+    ).toHaveLength(1);
+    expect(
+      (
+        await db.query<{ message: string }>(
+          "select * from lead_approaches where lead_id=$1",
+          [approachLead],
+        )
+      ).rows[0].message,
+    ).toBe("Texto realmente enviado");
+    expect(
+      (
+        await db.query<{ reason: string }>(
+          "select reason from pipeline_history where lead_id=$1 and from_stage='NOVO LEAD'",
+          [approachLead],
+        )
+      ).rows[0].reason,
+    ).toBe("Primeira abordagem enviada via WhatsApp.");
+  });
+  it("nega lead ou modelo de outro usuário e impede alteração da auditoria", async () => {
+    await asUser(B);
+    const mine = (
+      await db.query<{ id: string }>("select id from message_templates limit 1")
+    ).rows[0].id;
+    await expect(
+      db.query(
+        "select confirm_approach(gen_random_uuid(),$1,$2,'Oi','5511999999999')",
+        [approachLead, mine],
+      ),
+    ).rejects.toThrow();
+    expect((await db.query("select * from lead_approaches")).rows).toHaveLength(
+      0,
+    );
+    await asUser(A);
+    await expect(
+      db.query(
+        "select confirm_approach(gen_random_uuid(),$1,$2,'Oi','5511999999999')",
+        [approachLead, mine],
+      ),
+    ).rejects.toThrow();
+    await expect(
+      db.query("update lead_approaches set message='forjado'"),
+    ).rejects.toThrow();
+  });
+  it("preserva primeiro contato e outras etapas; não sobrescreve ação concorrente", async () => {
+    await asUser(A);
+    await db.query(
+      "update leads set stage='RESPONDEU',next_action='Reunião',next_action_at=now()+interval '1 day' where id=$1",
+      [approachLead],
+    );
+    await db.query(
+      "select confirm_approach(gen_random_uuid(),$1,$2,'Nova conversa','5511999999999')",
+      [approachLead, template],
+    );
+    const l = (
+      await db.query<{
+        stage: string;
+        first_contact_at: unknown;
+        next_action_at: string;
+      }>("select * from leads where id=$1", [approachLead])
+    ).rows[0];
+    expect(l.stage).toBe("RESPONDEU");
+    expect(l.first_contact_at).toEqual(first);
+    expect(
+      (
+        await db.query<{ ok: boolean }>(
+          "select schedule_approach_followup($1,now()+interval '2 days','',null) ok",
+          [approachLead],
+        )
+      ).rows[0].ok,
+    ).toBe(false);
+    expect(
+      (
+        await db.query<{ ok: boolean }>(
+          "select schedule_approach_followup($1,now()+interval '2 days','Reunião',$2) ok",
+          [approachLead, l.next_action_at],
+        )
+      ).rows[0].ok,
+    ).toBe(true);
+    expect(
+      (
+        await db.query<{ next_action: string }>(
+          "select next_action from leads where id=$1",
+          [approachLead],
+        )
+      ).rows[0].next_action,
+    ).toBe("1º follow-up WhatsApp");
+  });
+  it("excluir modelo preserva texto e nome no histórico da abordagem", async () => {
+    await asUser(A);
+    await db.query("delete from message_templates where id=$1", [template]);
+    const a = (
+      await db.query<{
+        template_id: string | null;
+        template_name: string;
+        message: string;
+      }>("select * from lead_approaches where id=$1", [request])
+    ).rows[0];
+    expect(a.template_id).toBeNull();
+    expect(a.template_name).toBeTruthy();
+    expect(a.message).toBe("Texto realmente enviado");
   });
 });

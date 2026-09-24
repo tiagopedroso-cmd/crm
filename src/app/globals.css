@@ -2185,3 +2185,90 @@ td small {
     font-size: 14px;
   }
 }
+
+/* Individual outreach, using the existing modal and form controls. */
+.approach-layout {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.7fr) minmax(0, 1.3fr);
+  gap: 24px;
+}
+.approach-context {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.approach-context h3 {
+  margin-top: 0;
+}
+.approach-editor {
+  min-width: 0;
+}
+.approach-message {
+  min-height: 280px;
+  line-height: 1.6;
+  resize: vertical;
+}
+.approach-actions {
+  flex-wrap: wrap;
+}
+.template-list {
+  display: grid;
+  gap: 12px;
+}
+.template-row {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+.template-row .actions {
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+.check-inline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 14px 0;
+}
+.check-inline input {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+.lead-quick-actions {
+  display: grid;
+  gap: 8px;
+  margin: 18px 0;
+}
+.lead-quick-actions h3 {
+  margin: 0;
+}
+.timeline p {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+#lead-activity {
+  scroll-margin-top: 90px;
+}
+@media (max-width: 700px) {
+  .approach-layout {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .approach-context .facts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .approach-context .facts > div {
+    display: block;
+  }
+  .approach-message {
+    min-height: 240px;
+  }
+  .approach-actions .btn {
+    width: 100%;
+    min-height: 46px;
+  }
+  .template-row .actions .btn {
+    flex: 1 1 auto;
+  }
+}

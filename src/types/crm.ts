@@ -84,6 +84,7 @@ export interface Lead {
   owner_id: string;
   company: string;
   contact_name: string;
+  referred_by: string;
   whatsapp: string;
   email: string;
   instagram: string;
@@ -127,6 +128,7 @@ export interface Interaction {
   description: string;
 }
 export interface History {
+  reason: string;
   id: string;
   lead_id: string;
   from_stage: Stage | null;

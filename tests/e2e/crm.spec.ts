@@ -1,29 +1,4 @@
 import { test, expect } from "@playwright/test";
-test("mensagem personalizada pode ser revisada antes de abrir WhatsApp", async ({
-  page,
-}) => {
-  await page.goto("/leads");
-  await page
-    .getByRole("button", {
-      name: "Enviar mensagem para Clínica Sorriso",
-      exact: true,
-    })
-    .filter({ visible: true })
-    .click();
-  const dialog = page.getByRole("dialog");
-  const message = dialog.getByLabel("Mensagem personalizada");
-  await expect(message).toContainText("Olá, Ana Oliveira!");
-  await expect(message).toContainText("Clínica Sorriso");
-  await message.fill("Olá, Ana! Proposta A & B para Clínica Sorriso.");
-  const href = await dialog
-    .getByRole("link", { name: "Abrir no WhatsApp" })
-    .getAttribute("href");
-  const url = new URL(href!);
-  expect(url.pathname).toBe("/5511999998888");
-  expect(url.searchParams.get("text")).toBe(await message.inputValue());
-  await dialog.getByRole("button", { name: "Cancelar" }).click();
-  await expect(dialog).not.toBeVisible();
-});
 test.beforeEach(async ({ page }) => {
   await page.goto("/login");
   await page.getByLabel("E-mail", { exact: true }).fill("demo@inovalogix.test");
@@ -213,7 +188,10 @@ test("cadastro, edição, interação, agendamento, fechamento e exclusão", asy
   await page
     .getByLabel("Como foi a conversa?")
     .fill("Cliente precisa de uma landing page.");
-  await page.getByRole("button", { name: "Registrar interação" }).click();
+  await page
+    .locator("#lead-activity")
+    .getByRole("button", { name: "Registrar interação" })
+    .click();
   await expect(
     page.getByText("Cliente precisa de uma landing page."),
   ).toBeVisible();

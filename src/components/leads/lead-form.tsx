@@ -41,6 +41,7 @@ export function LeadForm({
       const payload = {
         company: str("company"),
         contact_name: str("contact_name"),
+        referred_by: str("referred_by", lead?.referred_by),
         whatsapp: str("whatsapp"),
         email: str("email", lead?.email),
         instagram: str("instagram", lead?.instagram),
@@ -130,6 +131,7 @@ export function LeadForm({
             />
           </label>
           {input("contact_name", "Nome do contato")}
+          {input("referred_by", "Indicado por")}
           {input("whatsapp", "WhatsApp", "tel")}
           <label>
             Produto de interesse
