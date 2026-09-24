@@ -20,6 +20,7 @@ beforeAll(async () => {
     "202609230001_crm.sql",
     "202609230002_analytics.sql",
     "202609240001_outreach.sql",
+    "202609240002_user_names.sql",
   ])
     await db.exec(readFileSync(`supabase/migrations/${file}`, "utf8"));
   await db.exec(
@@ -404,5 +405,78 @@ describe.sequential("Templates privados e confirmação de abordagem", () => {
     expect(a.template_id).toBeNull();
     expect(a.template_name).toBeTruthy();
     expect(a.message).toBe("Texto realmente enviado");
+  });
+});
+
+describe.sequential("Nomes dos usuários", () => {
+  it("permite editar nome próprio e impede editar outros usuários ou papel", async () => {
+    await asUser(A);
+    await db.query("update profiles set display_name='Tiago' where id=$1", [A]);
+    expect(
+      (
+        await db.query<{ display_name: string }>(
+          "select display_name from profiles where id=$1",
+          [A],
+        )
+      ).rows[0].display_name,
+    ).toBe("Tiago");
+    await expect(
+      db.query("update profiles set role='ADMIN' where id=$1", [A]),
+    ).rejects.toThrow();
+    await asUser(B);
+    await db.query("update profiles set display_name='Outro' where id=$1", [A]);
+    await asUser(A);
+    expect(
+      (
+        await db.query<{ display_name: string }>(
+          "select display_name from profiles where id=$1",
+          [A],
+        )
+      ).rows[0].display_name,
+    ).toBe("Tiago");
+    await asUser(ADMIN);
+    await db.query(
+      "update profiles set display_name='Tiago Pedroso' where id=$1",
+      [A],
+    );
+    expect(
+      (
+        await db.query<{ display_name: string }>(
+          "select display_name from profiles where id=$1",
+          [A],
+        )
+      ).rows[0].display_name,
+    ).toBe("Tiago Pedroso");
+  });
+  it("novas contas recebem nome, metas e modelos com variável do remetente", async () => {
+    await db.exec("reset role");
+    const newId = "00000000-0000-4000-8000-000000000004";
+    await db.query(
+      "insert into auth.users(id,raw_user_meta_data) values($1,$2)",
+      [newId, { display_name: "Joana" }],
+    );
+    await asUser(newId);
+    expect(
+      (
+        await db.query<{ display_name: string; role: string }>(
+          "select display_name,role from profiles",
+        )
+      ).rows,
+    ).toEqual([{ display_name: "Joana", role: "VENDEDOR" }]);
+    expect((await db.query("select * from sales_goals")).rows).toHaveLength(1);
+    const templates = (
+      await db.query<{ message: string }>(
+        "select message from message_templates",
+      )
+    ).rows;
+    expect(templates).toHaveLength(11);
+    expect(
+      templates.every((t) =>
+        t.message.includes("Me chamo {{usuario}}, da InovaLogix."),
+      ),
+    ).toBe(true);
+    await expect(
+      db.query("select add_sender_to_seed_templates($1)", [A]),
+    ).rejects.toThrow();
   });
 });

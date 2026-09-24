@@ -34,6 +34,7 @@ for (const file of [
   "202609230001_crm.sql",
   "202609230002_analytics.sql",
   "202609240001_outreach.sql",
+  "202609240002_user_names.sql",
 ])
   await db.exec(readFileSync(`supabase/migrations/${file}`, "utf8"));
 await db.exec(
@@ -332,6 +333,34 @@ const server = http.createServer((req, res) => {
           res.end("{}");
           return;
         }
+        if (url.pathname === "/auth/v1/admin/users" && req.method === "POST") {
+          if (req.headers.authorization !== "Bearer test-only-service-key") {
+            res.writeHead(403);
+            res.end("{}");
+            return;
+          }
+          const newId = crypto.randomUUID();
+          await db.exec("reset role");
+          try {
+            await db.query(
+              "insert into auth.users(id,raw_user_meta_data) values($1,$2)",
+              [newId, body.user_metadata],
+            );
+          } finally {
+            await db.exec("set role authenticated");
+          }
+          res.end(
+            JSON.stringify({
+              id: newId,
+              email: body.email,
+              user_metadata: body.user_metadata,
+              aud: "authenticated",
+              role: "authenticated",
+              created_at: new Date().toISOString(),
+            }),
+          );
+          return;
+        }
         if (url.pathname === "/auth/v1/token") {
           if (body.password && body.password !== "Demo123!") {
             res.writeHead(400);
@@ -406,6 +435,7 @@ const next = spawn(
       ...process.env,
       NEXT_PUBLIC_SUPABASE_URL: "http://127.0.0.1:54329",
       NEXT_PUBLIC_SUPABASE_ANON_KEY: "test-public-key",
+      SUPABASE_SERVICE_ROLE_KEY: "test-only-service-key",
       E2E_BUILD_DIR: ".next-e2e",
     },
   },

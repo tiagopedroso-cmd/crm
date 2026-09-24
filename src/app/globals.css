@@ -2272,3 +2272,25 @@ td small {
     flex: 1 1 auto;
   }
 }
+
+.user-name-row {
+  display: flex;
+  align-items: end;
+  gap: 12px;
+  margin: 16px 0;
+}
+.user-name-row label {
+  flex: 1;
+  min-width: 0;
+}
+.user-name-row .badge {
+  margin-bottom: 12px;
+}
+@media (max-width: 600px) {
+  .user-name-row {
+    flex-wrap: wrap;
+  }
+  .user-name-row label {
+    flex-basis: 100%;
+  }
+}

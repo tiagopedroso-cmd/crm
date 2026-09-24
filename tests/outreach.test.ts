@@ -9,6 +9,19 @@ import {
 import { whatsappUrl } from "../src/lib/utils";
 import type { Lead } from "../src/types/crm";
 describe("Abordagem individual", () => {
+  it("personaliza o remetente sem confundir com o responsável do lead", () => {
+    expect(
+      renderTemplate(
+        "Olá, {{responsavel}}! Me chamo {{usuario}}, da InovaLogix.",
+        { contact_name: "Carlos" },
+        "Site",
+        "Tiago",
+      ).text,
+    ).toBe("Olá, Carlos! Me chamo Tiago, da InovaLogix.");
+    expect(
+      renderTemplate("Me chamo {{usuario}}, da InovaLogix.", {}).text,
+    ).toBe("Sou da InovaLogix.");
+  });
   const lead = {
     company: "Topografia Horizonte",
     contact_name: "Carlos",

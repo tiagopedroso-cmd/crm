@@ -1,5 +1,6 @@
 "use client";
 import { TemplateManager } from "@/components/leads/template-manager";
+import { UserManager } from "@/components/user-manager";
 import { useState } from "react";
 import { useReference, useProfile, useRefresh } from "@/hooks/use-crm";
 import {
@@ -128,6 +129,7 @@ export default function Settings() {
         </div>
       </div>
       <Notice text={message} />
+      <UserManager />
       <TemplateManager />
       <div className="settings-stack">
         <section className="card panel">

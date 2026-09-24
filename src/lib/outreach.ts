@@ -8,6 +8,7 @@ export const TEMPLATE_GROUPS = [
   "Geral",
 ] as const;
 export const TEMPLATE_VARIABLES = [
+  "usuario",
   "responsavel",
   "empresa",
   "nicho",
@@ -90,8 +91,14 @@ export function renderTemplate(
   template: string,
   lead: Partial<Lead>,
   product = "",
+  sender = "",
 ) {
   let text = template;
+  if (!sender.trim())
+    text = text.replace(
+      /Me chamo\s*\{\{\s*usuario\s*\}\}, da InovaLogix\./gi,
+      "Sou da InovaLogix.",
+    );
   if (!lead.contact_name?.trim()) {
     text = text.replace(
       /(?:Oi|Olá|Ola)[,!]?\s*\{\{\s*responsavel\s*\}\}[.!?,]?\s*(?:Tudo bem\?)?/gi,
@@ -105,6 +112,7 @@ export function renderTemplate(
     );
   }
   const values: Record<string, string> = {
+    usuario: sender.trim() || "equipe InovaLogix",
     responsavel: lead.contact_name?.trim() || "equipe",
     empresa: lead.company?.trim() || "sua empresa",
     nicho: lead.niche?.trim() || "serviços especializados",

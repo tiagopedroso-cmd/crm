@@ -14,7 +14,13 @@ import {
   type MessageTemplate,
 } from "@/lib/outreach";
 import { Modal, Notice, Loading } from "@/components/ui";
-const blank = { name: "", niche_group: "Geral", message: "", is_active: true };
+const blank = {
+  name: "",
+  niche_group: "Geral",
+  message:
+    "Oi, {{responsavel}}. Tudo bem?\n\nMe chamo {{usuario}}, da InovaLogix.\n\n",
+  is_active: true,
+};
 export function TemplateManager() {
   const profile = useProfile();
   const refresh = useRefresh();

@@ -23,7 +23,7 @@ NEXT_PUBLIC_SUPABASE_URL=https://SEU-PROJETO.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=SUA_CHAVE_PUBLICA_ANON_OU_PUBLISHABLE
 ```
 
-Nunca use uma chave `service_role` ou `sb_secret_`. A chave pública não concede acesso aos dados sem sessão e políticas RLS válidas. Não versionar `.env.local`.
+Nas variáveis públicas, nunca use uma chave `service_role` ou `sb_secret_`. O cadastro administrativo utiliza uma chave separada, exclusivamente no servidor, conforme a seção de usuários. A chave pública não concede acesso aos dados sem sessão e políticas RLS válidas. Não versionar `.env.local`.
 
 ## Supabase e migrations
 
@@ -189,3 +189,11 @@ Para atualizar um CRM já instalado, execute **somente** `supabase/upgrade-outre
 - `lead_approaches` preserva o texto, nome/grupo do template, telefone, nicho, produto, usuário e interação. Possui campos opcionais `response_interaction_id` e `responded_at` para vinculação futura de respostas. Respostas não são inferidas automaticamente; painéis avançados ficam para outra etapa. Excluir um template mantém os snapshots de abordagens.
 
 Validação: `npm test`, `npm run test:e2e`, `npm run build`. Os testes de interface interceptam o domínio WhatsApp; nenhuma mensagem real é enviada. O banco dos testes é PostgreSQL local (PGlite) com as migrations e políticas reais, sem dados de produção.
+
+## Usuários e nome do remetente
+
+Após a atualização de abordagens, aplique `supabase/upgrade-user-names.sql` uma vez. Em Configurações → Usuários, cada pessoa pode editar seu nome; administradores podem editar os nomes visíveis e adicionar usuários com nome, e-mail e senha (mínimo 12 caracteres). As novas contas são sempre VENDEDOR, recebem metas e modelos privados pelos triggers existentes e podem entrar imediatamente. Nenhum e-mail é enviado pelo cadastro; o administrador entrega o acesso à pessoa.
+
+O endpoint `POST /api/users` valida origem, sessão com Supabase Auth e perfil ADMIN antes de chamar a API administrativa. Configure `SUPABASE_SERVICE_ROLE_KEY` **somente no servidor** (Vercel/local). Nunca use prefixo NEXT_PUBLIC nessa variável, nunca a envie ao cliente e nunca a versione. As duas variáveis NEXT_PUBLIC continuam usando exclusivamente a chave pública. A edição de nome usa RLS e permissão restrita à coluna display_name: não permite promover contas. Administradores são atribuídos separadamente pelo proprietário no Supabase.
+
+A variável `{{usuario}}` representa o nome do usuário conectado; `{{responsavel}}` permanece sendo o contato do lead. Os modelos iniciais passam a incluir “Me chamo {{usuario}}, da InovaLogix.”. Modelos com saudação já personalizada e snapshots de abordagens anteriores são preservados. Novos usuários recebem modelos com essa apresentação. Sem nome cadastrado, a apresentação padrão usa “Sou da InovaLogix.”. Após alterar seu nome, as próximas abordagens usam o nome atualizado.

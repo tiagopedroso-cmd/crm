@@ -88,7 +88,12 @@ function ApproachDialog({
   function choose(id: string) {
     const template = templates.data?.find((t) => t.id === id);
     if (!template) return;
-    const rendered = renderTemplate(template.message, lead, product);
+    const rendered = renderTemplate(
+      template.message,
+      lead,
+      product,
+      profile.display_name,
+    );
     setSelected(id);
     setMessage(rendered.text);
     setNotice(
@@ -103,7 +108,12 @@ function ApproachDialog({
     initialized.current = true;
     const template = suggestTemplate(templates.data, lead, product);
     if (template) {
-      const rendered = renderTemplate(template.message, lead, product);
+      const rendered = renderTemplate(
+        template.message,
+        lead,
+        product,
+        profile.display_name,
+      );
       setSelected(template.id);
       setMessage(rendered.text);
       if (rendered.unknown.length)
@@ -112,7 +122,7 @@ function ApproachDialog({
             rendered.unknown.join(", "),
         );
     }
-  }, [templates.data, refs.data, lead, product]);
+  }, [templates.data, refs.data, lead, product, profile.display_name]);
   const href = whatsappUrl(lead.whatsapp, message);
   const canOpen = Boolean(
     href &&

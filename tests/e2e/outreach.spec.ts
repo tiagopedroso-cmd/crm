@@ -102,6 +102,7 @@ test("configurações de modelos, variável, duplicação e exclusão", async ({
   let dialog = page.getByRole("dialog");
   await dialog.getByLabel("Nome do modelo").fill(name);
   await dialog.getByLabel("Texto do modelo").fill("Olá ");
+  await dialog.getByLabel("Variável disponível").selectOption("responsavel");
   await dialog.getByRole("button", { name: "Inserir variável" }).click();
   await expect(dialog.getByLabel("Texto do modelo")).toHaveValue(
     "Olá {{responsavel}}",
