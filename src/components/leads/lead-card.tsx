@@ -4,6 +4,7 @@ import { ArrowUpRight, Clock3 } from "lucide-react";
 import { actionStatus, dateLabel, money } from "@/lib/utils";
 import type { Lead } from "@/types/crm";
 import { StageControl } from "./stage-control";
+import { CompleteActionButton } from "./complete-action-button";
 import { MessageButton } from "./message-button";
 export function LeadCard({
   lead,
@@ -22,6 +23,7 @@ export function LeadCard({
           {lead.company.slice(0, 2).toUpperCase()}
         </span>
         <div className="actions">
+          {stageControl && <CompleteActionButton lead={lead} compact />}
           {stageControl && <MessageButton lead={lead} compact />}
           <Link
             href={`/leads/${lead.id}`}

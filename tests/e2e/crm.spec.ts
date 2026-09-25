@@ -206,6 +206,50 @@ test("cadastro, edição, interação, agendamento, fechamento e exclusão", asy
       .locator(".detail-summary")
       .getByRole("heading", { name: "Reunião de diagnóstico" }),
   ).toBeVisible();
+  await page
+    .getByRole("button", { name: "Concluir ação de " + company, exact: true })
+    .click();
+  const today = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Sao_Paulo",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(new Date());
+  await expect(
+    page.getByLabel("Data de conclusão", { exact: true }),
+  ).toHaveValue(today);
+  await page
+    .getByLabel("Data de conclusão", { exact: true })
+    .fill("2026-09-20");
+  await page.getByLabel("Nova ação (opcional)").fill("Enviar proposta QA");
+  await page
+    .getByLabel("Data e hora da nova ação (Brasília)")
+    .fill("2026-09-28T10:00");
+  await page.getByRole("button", { name: "Confirmar conclusão" }).click();
+  await expect(page.getByRole("dialog")).not.toBeVisible();
+  await page.getByRole("button", { name: "Histórico", exact: true }).click();
+  await expect(
+    page.getByText("Ação concluída: Reunião de diagnóstico", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    page
+      .locator(".detail-summary")
+      .getByRole("heading", { name: "Enviar proposta QA" }),
+  ).toBeVisible();
+  await page
+    .getByRole("button", { name: "Concluir ação de " + company, exact: true })
+    .click();
+  await page.getByRole("button", { name: "Confirmar conclusão" }).click();
+  await expect(page.getByRole("dialog")).not.toBeVisible();
+  await expect(
+    page.getByRole("button", {
+      name: "Concluir ação de " + company,
+      exact: true,
+    }),
+  ).toHaveCount(0);
+  await expect(
+    page.getByText("Ação concluída: Enviar proposta QA", { exact: true }),
+  ).toBeVisible();
   await page.getByLabel(`Etapa de ${company}`).selectOption("PERDIDO");
   await page.getByRole("button", { name: "Confirmar", exact: true }).click();
   await expect(page.getByRole("dialog")).toBeVisible();

@@ -35,6 +35,7 @@ for (const file of [
   "202609230002_analytics.sql",
   "202609240001_outreach.sql",
   "202609240002_user_names.sql",
+  "202609250001_completed_actions.sql",
 ])
   await db.exec(readFileSync(`supabase/migrations/${file}`, "utf8"));
 await db.exec(
@@ -84,6 +85,7 @@ for (const [i, company] of [
     );
 }
 const tables = [
+  "completed_actions",
   "profiles",
   "products",
   "objections",
@@ -126,6 +128,15 @@ async function rest(url, req, body) {
         "p_expected_at",
       ],
       set_template_default: ["p_id"],
+      complete_pending_action: [
+        "p_id",
+        "p_lead",
+        "p_expected_action",
+        "p_expected_at",
+        "p_completed_on",
+        "p_next_action",
+        "p_next_at",
+      ],
     };
     if (rpc[table]) {
       const keys = rpc[table];

@@ -21,6 +21,7 @@ beforeAll(async () => {
     "202609230002_analytics.sql",
     "202609240001_outreach.sql",
     "202609240002_user_names.sql",
+    "202609250001_completed_actions.sql",
   ])
     await db.exec(readFileSync(`supabase/migrations/${file}`, "utf8"));
   await db.exec(
@@ -478,5 +479,118 @@ describe.sequential("Nomes dos usuários", () => {
     await expect(
       db.query("select add_sender_to_seed_templates($1)", [A]),
     ).rejects.toThrow();
+  });
+});
+
+describe.sequential("Conclusão de ações", () => {
+  let id: string;
+  const first = "10000000-0000-4000-8000-000000000001";
+  const second = "10000000-0000-4000-8000-000000000002";
+  const call = (
+    request = first,
+    action = "Telefonar",
+    at = "2026-09-20T12:00:00Z",
+    date = "2026-09-20",
+    next = "Enviar proposta",
+    nextAt: string | null = "2026-09-28T12:00:00Z",
+  ) =>
+    db.query("select complete_pending_action($1,$2,$3,$4,$5,$6,$7)", [
+      request,
+      id,
+      action,
+      at,
+      date,
+      next,
+      nextAt,
+    ]);
+  it("nega outro vendedor, valida datas e não grava parcialmente", async () => {
+    await asUser(A);
+    id = (
+      await db.query<{ id: string }>(
+        "insert into leads(company,next_action,next_action_at) values('Conclusão QA','Telefonar','2026-09-20T12:00:00Z') returning id",
+      )
+    ).rows[0].id;
+    await asUser(B);
+    await expect(call()).rejects.toThrow("Lead unavailable");
+    await asUser(A);
+    await expect(
+      call(first, "Telefonar", "2026-09-20T12:00:00Z", "2999-01-01"),
+    ).rejects.toThrow("Invalid completion date");
+    await expect(
+      call(
+        first,
+        "Telefonar",
+        "2026-09-20T12:00:00Z",
+        "2026-09-20",
+        "Enviar",
+        null,
+      ),
+    ).rejects.toThrow("Invalid next action");
+    expect(
+      (await db.query("select * from completed_actions where lead_id=$1", [id]))
+        .rows,
+    ).toHaveLength(0);
+  });
+  it("conclui, preserva histórico e agenda sucessora atomicamente", async () => {
+    await call();
+    const audit = (
+      await db.query(
+        "select action,completed_on::text,next_action from completed_actions where id=$1",
+        [first],
+      )
+    ).rows[0];
+    expect(audit).toEqual({
+      action: "Telefonar",
+      completed_on: "2026-09-20",
+      next_action: "Enviar proposta",
+    });
+    const lead = (
+      await db.query(
+        "select next_action,first_contact_at,stage from leads where id=$1",
+        [id],
+      )
+    ).rows[0];
+    expect(lead).toMatchObject({
+      next_action: "Enviar proposta",
+      first_contact_at: null,
+      stage: "NOVO LEAD",
+    });
+    await call();
+    expect(
+      (await db.query("select * from lead_interactions where lead_id=$1", [id]))
+        .rows,
+    ).toHaveLength(1);
+    await expect(call(second)).rejects.toThrow("ACTION_CHANGED");
+  });
+  it("auditoria é imutável e isolada; administrador pode concluir sem sucessora", async () => {
+    await expect(
+      db.query("delete from completed_actions where id=$1", [first]),
+    ).rejects.toThrow();
+    await asUser(B);
+    expect(
+      (await db.query("select * from completed_actions where lead_id=$1", [id]))
+        .rows,
+    ).toHaveLength(0);
+    await asUser(ADMIN);
+    await call(
+      second,
+      "Enviar proposta",
+      "2026-09-28T12:00:00Z",
+      "2026-09-20",
+      "",
+      null,
+    );
+    expect(
+      (
+        await db.query(
+          "select next_action,next_action_at from leads where id=$1",
+          [id],
+        )
+      ).rows[0],
+    ).toEqual({ next_action: "", next_action_at: null });
+    expect(
+      (await db.query("select * from completed_actions where lead_id=$1", [id]))
+        .rows,
+    ).toHaveLength(2);
   });
 });

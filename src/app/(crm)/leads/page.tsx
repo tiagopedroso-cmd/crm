@@ -10,6 +10,7 @@ import { actionStatus, dateLabel, download, money, toCsv } from "@/lib/utils";
 import { LeadFilters } from "@/components/leads/filters";
 import { LeadCard } from "@/components/leads/lead-card";
 import { MessageButton } from "@/components/leads/message-button";
+import { CompleteActionButton } from "@/components/leads/complete-action-button";
 import { StageControl } from "@/components/leads/stage-control";
 import {
   Loading,
@@ -128,6 +129,7 @@ export default function Leads() {
                     </td>
                     <td>
                       <span>{l.next_action || "Defina o próximo passo"}</span>
+                      <CompleteActionButton lead={l} compact />
                       <small
                         className={
                           actionStatus(l) === "Ação atrasada" ? "error" : ""

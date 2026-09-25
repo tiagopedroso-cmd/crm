@@ -197,3 +197,9 @@ Após a atualização de abordagens, aplique `supabase/upgrade-user-names.sql` u
 O endpoint `POST /api/users` valida origem, sessão com Supabase Auth e perfil ADMIN antes de chamar a API administrativa. Configure `SUPABASE_SERVICE_ROLE_KEY` **somente no servidor** (Vercel/local). Nunca use prefixo NEXT_PUBLIC nessa variável, nunca a envie ao cliente e nunca a versione. As duas variáveis NEXT_PUBLIC continuam usando exclusivamente a chave pública. A edição de nome usa RLS e permissão restrita à coluna display_name: não permite promover contas. Administradores são atribuídos separadamente pelo proprietário no Supabase.
 
 A variável `{{usuario}}` representa o nome do usuário conectado; `{{responsavel}}` permanece sendo o contato do lead. Os modelos iniciais passam a incluir “Me chamo {{usuario}}, da InovaLogix.”. Modelos com saudação já personalizada e snapshots de abordagens anteriores são preservados. Novos usuários recebem modelos com essa apresentação. Sem nome cadastrado, a apresentação padrão usa “Sou da InovaLogix.”. Após alterar seu nome, as próximas abordagens usam o nome atualizado.
+
+## Concluir ações pendentes
+
+Em bancos existentes, aplique `supabase/upgrade-completed-actions.sql` uma única vez antes do deploy. A instalação inicial já inclui a migration.
+
+O botão ✓ “Concluir ação” aparece na Agenda, lista de leads, Pipeline e Lead 360 quando há ação com data. O formulário sugere hoje em Brasília, aceita uma data de conclusão anterior e permite cadastrar a próxima ação com data e hora. Sem sucessora, a pendência é removida. A conclusão fica no Histórico e em `completed_actions`, incluída no backup. Etapa e primeiro contato não são alterados. A RPC verifica acesso, detecta ação alterada por outra sessão e evita duplicação em tentativas repetidas.

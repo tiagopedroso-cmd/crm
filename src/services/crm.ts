@@ -207,6 +207,26 @@ export async function scheduleAction(
     .eq("id", id);
   if (error) throw error;
 }
+export async function completePendingAction(input: {
+  id: string;
+  leadId: string;
+  expectedAction: string;
+  expectedAt: string;
+  completedOn: string;
+  nextAction: string;
+  nextAt: string | null;
+}) {
+  const { error } = await browserClient().rpc("complete_pending_action", {
+    p_id: input.id,
+    p_lead: input.leadId,
+    p_expected_action: input.expectedAction,
+    p_expected_at: input.expectedAt,
+    p_completed_on: input.completedOn,
+    p_next_action: input.nextAction,
+    p_next_at: input.nextAt,
+  });
+  if (error) throw error;
+}
 export async function saveGoals(goals: Goals) {
   const { error } = await browserClient()
     .from("sales_goals")
@@ -271,6 +291,7 @@ export async function backup() {
     "after_sales",
     "message_templates",
     "lead_approaches",
+    "completed_actions",
   ]) {
     const rows: unknown[] = [];
     for (let page = 0; ; page++) {

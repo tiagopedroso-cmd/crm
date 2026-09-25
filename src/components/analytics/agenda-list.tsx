@@ -1,5 +1,6 @@
 "use client";
 import { MessageButton } from "@/components/leads/message-button";
+import { CompleteActionButton } from "@/components/leads/complete-action-button";
 import { useState } from "react";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
@@ -78,6 +79,7 @@ export function AgendaList({
                   {actionStatus(l) || "Agendado"}
                 </span>
                 {!l.first_contact_at && <MessageButton lead={l} compact />}
+                <CompleteActionButton lead={l} compact />
                 <Link
                   href={`/leads/${l.id}`}
                   className="icon-btn"

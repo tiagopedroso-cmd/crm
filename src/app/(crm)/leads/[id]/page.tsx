@@ -8,6 +8,7 @@ import { getLead, deleteLead } from "@/services/crm";
 import { useReference, useRefresh } from "@/hooks/use-crm";
 import { dateLabel, money, actionStatus, whatsappUrl } from "@/lib/utils";
 import { MessageButton } from "@/components/leads/message-button";
+import { CompleteActionButton } from "@/components/leads/complete-action-button";
 import { LeadForm } from "@/components/leads/lead-form";
 import { StageControl } from "@/components/leads/stage-control";
 import { LeadTimeline } from "@/components/leads/lead-timeline";
@@ -170,6 +171,7 @@ export default function Lead360({
             <p className="eyebrow">PRÓXIMO MOVIMENTO</p>
             <h3>{l.next_action || "Defina uma próxima ação"}</h3>
             <p>{dateLabel(l.next_action_at, true)}</p>
+            <CompleteActionButton lead={l} />
             {actionStatus(l) && (
               <span
                 className={`badge ${actionStatus(l) === "Ação atrasada" ? "red" : "amber"}`}
