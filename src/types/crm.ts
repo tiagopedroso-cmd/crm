@@ -80,6 +80,8 @@ export interface Objection {
   name: string;
 }
 export interface Lead {
+  created_by: string | null;
+  creator_name: string;
   id: string;
   owner_id: string;
   company: string;
@@ -198,7 +200,20 @@ export interface Metrics {
   loss_products: MetricGroup[];
   loss_niches: MetricGroup[];
 }
+export const LEAD_SORTS = {
+  company_sort: "Empresa / contato",
+  contact_sort: "Contato",
+  stage: "Etapa",
+  product_sort: "Produto",
+  potential_value: "Valor",
+  next_action_at: "Próximo passo",
+  creator_sort: "Cadastrado por",
+} as const;
+export type LeadSort = keyof typeof LEAD_SORTS;
 export interface Filters {
+  created_by: string;
+  sort?: LeadSort;
+  direction?: "asc" | "desc";
   search: string;
   stage: string;
   product_id: string;
@@ -213,6 +228,7 @@ export interface Filters {
   action: string;
 }
 export const EMPTY_FILTERS: Filters = {
+  created_by: "",
   search: "",
   stage: "",
   product_id: "",

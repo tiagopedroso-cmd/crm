@@ -279,3 +279,52 @@ test("logout bloqueia retorno à área comercial", async ({ page }, testInfo) =>
   await page.goto("/dashboard");
   await expect(page).toHaveURL(/\/login$/);
 });
+
+test("autoria, filtros e ordenação dos leads", async ({ page }, testInfo) => {
+  await page.goto("/leads");
+  await expect(page.getByLabel("Ordenar por", { exact: true })).toHaveValue(
+    "company_sort",
+  );
+  await page.getByRole("button", { name: "Filtros", exact: true }).click();
+  await page
+    .getByLabel("Cadastrado por", { exact: true })
+    .selectOption({ label: "Tiago" });
+  await expect(
+    page.locator(
+      testInfo.project.name === "desktop"
+        ? ".table-desktop tbody"
+        : ".mobile-leads",
+    ),
+  ).toContainText("Tiago");
+  const response = page.waitForResponse(
+    (r) =>
+      r.url().includes("/rest/v1/lead_listing") &&
+      r.url().includes("order=") &&
+      decodeURIComponent(r.url()).includes("potential_value.desc"),
+  );
+  await page
+    .getByLabel("Ordenar por", { exact: true })
+    .selectOption("potential_value");
+  await page.getByRole("button", { name: "Crescente ↑", exact: true }).click();
+  expect((await response).ok()).toBeTruthy();
+  if (testInfo.project.name === "desktop") {
+    await page.getByRole("button", { name: /Empresa \/ contato/ }).click();
+    await expect(
+      page.getByRole("columnheader", { name: /Empresa \/ contato/ }),
+    ).toHaveAttribute("aria-sort", "ascending");
+  }
+  await page
+    .getByRole("button", { name: "Limpar filtros", exact: true })
+    .click();
+  await expect(page.getByLabel("Cadastrado por", { exact: true })).toHaveValue(
+    "",
+  );
+  await expect(page.getByLabel("Ordenar por", { exact: true })).toHaveValue(
+    "company_sort",
+  );
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBeTruthy();
+});

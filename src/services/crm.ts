@@ -41,7 +41,7 @@ export async function listLeads(
   page = 0,
   limit = PAGE_SIZE,
 ) {
-  let q = browserClient().from("leads").select("*", { count: "exact" });
+  let q = browserClient().from("lead_listing").select("*", { count: "exact" });
   if (filters.search) {
     const safe = filters.search.replace(/[,().%_\\"]/g, " ").trim();
     if (safe)
@@ -57,6 +57,7 @@ export async function listLeads(
     "source",
     "channel",
     "owner_id",
+    "created_by",
     "state",
   ] as const)
     if (filters[field]) q = q.eq(field, filters[field]);
@@ -80,11 +81,13 @@ export async function listLeads(
         .lte("next_action_at", `${dayKey()}T23:59:59.999-03:00`);
     if (filters.action === "agenda") q = q.not("next_action_at", "is", null);
   }
+  q = q.order(
+    filters.sort || (filters.action ? "next_action_at" : "company_sort"),
+    { ascending: filters.direction !== "desc", nullsFirst: false },
+  );
+  if (!filters.sort || filters.sort === "company_sort")
+    q = q.order("contact_sort", { ascending: filters.direction !== "desc" });
   const { data, error, count } = await q
-    .order(filters.action ? "next_action_at" : "inserted_on", {
-      ascending: Boolean(filters.action),
-      nullsFirst: false,
-    })
     .order("id")
     .range(page * limit, (page + 1) * limit - 1);
   if (error) throw error;

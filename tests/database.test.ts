@@ -22,6 +22,7 @@ beforeAll(async () => {
     "202609240001_outreach.sql",
     "202609240002_user_names.sql",
     "202609250001_completed_actions.sql",
+    "202609250002_lead_creator_sort.sql",
   ])
     await db.exec(readFileSync(`supabase/migrations/${file}`, "utf8"));
   await db.exec(
@@ -592,5 +593,81 @@ describe.sequential("Conclusão de ações", () => {
       (await db.query("select * from completed_actions where lead_id=$1", [id]))
         .rows,
     ).toHaveLength(2);
+  });
+});
+
+describe.sequential("Autoria e ordenação dos leads", () => {
+  let created: string;
+  it("registra o autor real e preserva autoria ao trocar responsável", async () => {
+    await asUser(ADMIN);
+    await db.query(
+      "update profiles set display_name='Administrador QA' where id=$1",
+      [ADMIN],
+    );
+    created = (
+      await db.query<{ id: string }>(
+        "insert into leads(company,owner_id,created_by,creator_name) values('Autoria QA',$1,$1,'Nome forjado') returning id",
+        [A],
+      )
+    ).rows[0].id;
+    expect(
+      (
+        await db.query(
+          "select created_by,creator_name from leads where id=$1",
+          [created],
+        )
+      ).rows[0],
+    ).toEqual({ created_by: ADMIN, creator_name: "Administrador QA" });
+    await db.query(
+      "update leads set owner_id=$1,created_by=$1,creator_name=$2 where id=$3",
+      [B, "Forjado", created],
+    );
+    expect(
+      (
+        await db.query(
+          "select created_by,creator_name from leads where id=$1",
+          [created],
+        )
+      ).rows[0],
+    ).toEqual({ created_by: ADMIN, creator_name: "Administrador QA" });
+  });
+  it("view respeita RLS e permite ao responsável ver autoria", async () => {
+    await asUser(A);
+    expect(
+      (await db.query("select * from lead_listing where id=$1", [created]))
+        .rows,
+    ).toHaveLength(0);
+    await asUser(B);
+    expect(
+      (
+        await db.query("select creator_name from lead_listing where id=$1", [
+          created,
+        ])
+      ).rows[0],
+    ).toEqual({ creator_name: "Administrador QA" });
+  });
+  it("ordena e filtra antes de paginar, com desempate pelo contato", async () => {
+    await asUser(A);
+    for (const [company, contact] of [
+      ["Sort Z", "Ana"],
+      ["Sort a", "Zeca"],
+      ["Sort a", "Ana"],
+    ])
+      await db.query("insert into leads(company,contact_name) values($1,$2)", [
+        company,
+        contact,
+      ]);
+    const rows = (
+      await db.query(
+        "select company,contact_name from lead_listing where created_by=$1 and company like $2 order by company_sort,contact_sort,id limit 2",
+        [A, "Sort%"],
+      )
+    ).rows;
+    expect(rows).toEqual([
+      { company: "Sort a", contact_name: "Ana" },
+      { company: "Sort a", contact_name: "Zeca" },
+    ]);
+    await db.exec("reset role;set role anon");
+    await expect(db.query("select * from lead_listing")).rejects.toThrow();
   });
 });

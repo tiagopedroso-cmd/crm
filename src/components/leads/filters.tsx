@@ -126,6 +126,21 @@ export function LeadFilters({
             </label>
           )}
           <label>
+            Cadastrado por
+            <select
+              aria-label="Cadastrado por"
+              value={value.created_by}
+              onChange={(e) => set("created_by", e.target.value)}
+            >
+              <option value="">Todos</option>
+              {refs.data?.profiles.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.display_name || "Usuário sem nome"}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
             Inserido de
             <input
               type="date"

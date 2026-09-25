@@ -36,6 +36,7 @@ for (const file of [
   "202609240001_outreach.sql",
   "202609240002_user_names.sql",
   "202609250001_completed_actions.sql",
+  "202609250002_lead_creator_sort.sql",
 ])
   await db.exec(readFileSync(`supabase/migrations/${file}`, "utf8"));
 await db.exec(
@@ -85,6 +86,7 @@ for (const [i, company] of [
     );
 }
 const tables = [
+  "lead_listing",
   "completed_actions",
   "profiles",
   "products",

@@ -203,3 +203,9 @@ A variável `{{usuario}}` representa o nome do usuário conectado; `{{responsave
 Em bancos existentes, aplique `supabase/upgrade-completed-actions.sql` uma única vez antes do deploy. A instalação inicial já inclui a migration.
 
 O botão ✓ “Concluir ação” aparece na Agenda, lista de leads, Pipeline e Lead 360 quando há ação com data. O formulário sugere hoje em Brasília, aceita uma data de conclusão anterior e permite cadastrar a próxima ação com data e hora. Sem sucessora, a pendência é removida. A conclusão fica no Histórico e em `completed_actions`, incluída no backup. Etapa e primeiro contato não são alterados. A RPC verifica acesso, detecta ação alterada por outra sessão e evita duplicação em tentativas repetidas.
+
+## Autoria e ordenação
+
+Aplique `supabase/upgrade-lead-creator-sort.sql` uma vez nos bancos existentes. A autoria dos registros antigos é recuperada do evento inicial do histórico; sem autor registrado, é exibido “Não identificado”, sem atribuir o cadastro por suposição. Novos leads recebem o usuário autenticado e seu nome no momento do cadastro. Esses campos permanecem imutáveis mesmo ao trocar responsável.
+
+Meus leads inicia em ordem alfabética por empresa, com contato como desempate. Os cabeçalhos alternam crescente/decrescente; o seletor oferece a mesma ordenação no celular. Produto e valor têm ordenações independentes. A view `lead_listing` aplica RLS do usuário e a ordenação ocorre antes da paginação; o CSV respeita a ordem e os filtros. “Cadastrado por” está nos filtros avançados, separado de Responsável.

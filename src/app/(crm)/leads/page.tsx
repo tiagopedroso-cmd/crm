@@ -5,7 +5,12 @@ import { useQuery } from "@tanstack/react-query";
 import { Download, ArrowUpRight } from "lucide-react";
 import { listLeads, exportLeads } from "@/services/crm";
 import { useReference } from "@/hooks/use-crm";
-import { EMPTY_FILTERS, type Filters } from "@/types/crm";
+import {
+  EMPTY_FILTERS,
+  LEAD_SORTS,
+  type LeadSort,
+  type Filters,
+} from "@/types/crm";
 import { actionStatus, dateLabel, download, money, toCsv } from "@/lib/utils";
 import { LeadFilters } from "@/components/leads/filters";
 import { LeadCard } from "@/components/leads/lead-card";
@@ -20,7 +25,11 @@ import {
   Notice,
 } from "@/components/ui";
 export default function Leads() {
-  const [filters, setFilters] = useState<Filters>({ ...EMPTY_FILTERS });
+  const [filters, setFilters] = useState<Filters>({
+    ...EMPTY_FILTERS,
+    sort: "company_sort",
+    direction: "asc",
+  });
   const [debounced, setDebounced] = useState(filters);
   const [page, setPage] = useState(0);
   const [message, setMessage] = useState("");
@@ -41,8 +50,18 @@ export default function Leads() {
   }, [filters]);
   const query = useQuery({
     queryKey: ["leads", debounced, page],
-    queryFn: () => listLeads(debounced, page),
+    queryFn: () =>
+      listLeads({ ...debounced, sort: debounced.sort || "company_sort" }, page),
   });
+  const sort = filters.sort || "company_sort";
+  const changeSort = (key: LeadSort) => {
+    setPage(0);
+    setFilters((f) => ({
+      ...f,
+      sort: key,
+      direction: sort === key && f.direction !== "desc" ? "desc" : "asc",
+    }));
+  };
   return (
     <>
       <div className="page-heading">
@@ -57,7 +76,10 @@ export default function Leads() {
           onClick={async () => {
             setExporting(true);
             try {
-              const rows = await exportLeads(debounced);
+              const rows = await exportLeads({
+                ...debounced,
+                sort: debounced.sort || "company_sort",
+              });
               download(
                 toCsv(
                   rows.map((l) => ({
@@ -86,6 +108,32 @@ export default function Leads() {
       </div>
       <Notice text={message} />
       <LeadFilters value={filters} onChange={setFilters} />
+      <div className="toolbar">
+        <label>
+          Ordenar por{" "}
+          <select
+            aria-label="Ordenar por"
+            value={sort}
+            onChange={(e) => {
+              setPage(0);
+              setFilters((f) => ({
+                ...f,
+                sort: e.target.value as LeadSort,
+                direction: "asc",
+              }));
+            }}
+          >
+            {Object.entries(LEAD_SORTS).map(([key, label]) => (
+              <option key={key} value={key}>
+                {label}
+              </option>
+            ))}
+          </select>
+        </label>
+        <button className="btn" onClick={() => changeSort(sort)}>
+          {filters.direction === "desc" ? "Decrescente ↓" : "Crescente ↑"}
+        </button>
+      </div>
       {query.isLoading ? (
         <Loading />
       ) : query.isError ? (
@@ -98,10 +146,39 @@ export default function Leads() {
             <table>
               <thead>
                 <tr>
-                  <th>Empresa / contato</th>
-                  <th>Etapa</th>
-                  <th>Produto / valor</th>
-                  <th>Próximo passo</th>
+                  {(
+                    [
+                      "company_sort",
+                      "stage",
+                      "product_sort",
+                      "potential_value",
+                      "next_action_at",
+                      "creator_sort",
+                    ] as LeadSort[]
+                  ).map((key) => (
+                    <th
+                      key={key}
+                      aria-sort={
+                        sort === key
+                          ? filters.direction === "desc"
+                            ? "descending"
+                            : "ascending"
+                          : "none"
+                      }
+                    >
+                      <button
+                        className="text-button"
+                        onClick={() => changeSort(key)}
+                      >
+                        {LEAD_SORTS[key]}{" "}
+                        {sort === key
+                          ? filters.direction === "desc"
+                            ? "↓"
+                            : "↑"
+                          : "↕"}
+                      </button>
+                    </th>
+                  ))}
                   <th aria-label="Abrir" />
                 </tr>
               </thead>
@@ -121,11 +198,13 @@ export default function Leads() {
                       <StageControl lead={l} />
                     </td>
                     <td>
-                      <strong>{money(l.potential_value)}</strong>
                       <small>
                         {refs.data?.products.find((p) => p.id === l.product_id)
                           ?.name || "Não definido"}
                       </small>
+                    </td>
+                    <td>
+                      <strong>{money(l.potential_value)}</strong>
                     </td>
                     <td>
                       <span>{l.next_action || "Defina o próximo passo"}</span>
@@ -140,6 +219,7 @@ export default function Leads() {
                           : "Sem próxima ação"}
                       </small>
                     </td>
+                    <td>{l.creator_name}</td>
                     <td>
                       <MessageButton lead={l} compact />
                       <Link

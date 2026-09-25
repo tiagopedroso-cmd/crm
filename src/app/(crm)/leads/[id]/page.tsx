@@ -128,6 +128,7 @@ export default function Lead360({
             </div>
             <dl className="facts">
               {[
+                ["Cadastrado por", l.creator_name],
                 ["WhatsApp", l.whatsapp],
                 ["E-mail", l.email],
                 ["Nicho", l.niche],

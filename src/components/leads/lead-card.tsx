@@ -38,6 +38,7 @@ export function LeadCard({
         {lead.company}
       </Link>
       <p className="muted">{lead.contact_name || "Contato a identificar"}</p>
+      <p className="muted">Cadastrado por: {lead.creator_name}</p>
       <div className="card-money">
         <span>{product || "Produto a definir"}</span>
         <strong>{money(lead.potential_value)}</strong>
