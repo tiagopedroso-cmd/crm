@@ -573,6 +573,75 @@ hr {
   color: #9eb3c7;
   margin: 10px 0 0;
 }
+.pipeline-values {
+  margin-bottom: 24px;
+}
+.negotiating-total {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 22px 24px;
+  border: 1px solid #cfe2f3;
+  border-radius: 10px;
+  background: #f0f7fc;
+}
+.negotiating-total span {
+  font-weight: 650;
+}
+.negotiating-total p {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+.negotiating-total strong {
+  font-size: clamp(24px, 3vw, 34px);
+  letter-spacing: -1px;
+  color: #0c4165;
+  overflow-wrap: anywhere;
+}
+.stage-values {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(145px, 100%), 1fr));
+  gap: 12px;
+  margin: 18px 0;
+}
+.stage-values > div {
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  min-width: 0;
+}
+.stage-values > .negotiating-stage {
+  border-top: 3px solid var(--cyan);
+  padding-top: 12px;
+}
+.stage-values dt {
+  text-transform: capitalize;
+  font-size: 12px;
+  color: var(--muted);
+}
+.stage-values dd {
+  margin: 8px 0 2px;
+  font-size: 18px;
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+.stage-values small {
+  color: var(--muted);
+  font-size: 11px;
+}
+.stage-values-note {
+  margin-bottom: 0;
+}
+.lead-card > .followup-link {
+  margin: 12px 0 4px;
+}
+.followup-link:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 3px;
+}
 .kpi-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -2294,3 +2363,5 @@ td small {
     flex-basis: 100%;
   }
 }
+
+.pipeline-filters{display:grid;grid-template-columns:repeat(6,minmax(150px,1fr));gap:12px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:18px;align-items:end}.pipeline-filters label{font-size:11px;color:var(--muted);display:grid;gap:5px}.pipeline-filters input,.pipeline-filters select{font-size:12px}.cadence-strip{border:1px solid #dbeafe;background:#f8fbff;border-radius:8px;padding:9px 10px;margin-bottom:10px;display:grid;gap:2px;font-size:11px}.cadence-strip strong{color:#2563eb}.cadence-strip small{color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}@media(max-width:1100px){.pipeline-filters{grid-template-columns:repeat(3,minmax(150px,1fr))}}@media(max-width:700px){.pipeline-filters{grid-template-columns:1fr 1fr}}

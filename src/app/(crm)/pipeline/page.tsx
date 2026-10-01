@@ -13,7 +13,7 @@ import {
   type DragEndEvent,
 } from "@dnd-kit/core";
 import { GripVertical } from "lucide-react";
-import { STAGES, type Lead, type Stage } from "@/types/crm";
+import { STAGES, type Lead, type Stage, type Filters } from "@/types/crm";
 import { listLeads, changeStage } from "@/services/crm";
 import { useReference, useRefresh } from "@/hooks/use-crm";
 import { LeadCard } from "@/components/leads/lead-card";
@@ -38,12 +38,12 @@ function DraggableCard({ lead, product }: { lead: Lead; product?: string }) {
     </div>
   );
 }
-function Column({ stage }: { stage: Stage }) {
+function Column({ stage, filters }: { stage: Stage; filters: Partial<Filters> }) {
   const [page, setPage] = useState(0);
   const refs = useReference();
   const q = useQuery({
-    queryKey: ["pipeline", stage, page],
-    queryFn: () => listLeads({ stage }, page, 20),
+    queryKey: ["pipeline", stage, page, filters],
+    queryFn: () => listLeads({ ...filters, stage }, page, 20),
   });
   const drop = useDroppable({ id: stage });
   return (
@@ -103,6 +103,8 @@ export default function Pipeline() {
   const cache = useQueryClient();
   const refresh = useRefresh();
   const [group, setGroup] = useState("prospeccao");
+  const refs = useReference();
+  const [filters, setFilters] = useState<Partial<Filters>>({});
   const [active, setActive] = useState<Lead | null>(null);
   const [pending, setPending] = useState<{ lead: Lead; stage: Stage } | null>(
     null,
@@ -201,6 +203,15 @@ export default function Pipeline() {
           </button>
         ))}
       </div>
+      <div className="pipeline-filters">
+        <label>Responsável<select value={filters.owner_id || ""} onChange={e=>setFilters(f=>({...f,owner_id:e.target.value}))}><option value="">Todos</option>{refs.data?.profiles.map(p=><option key={p.id} value={p.id}>{p.display_name || "Sem nome"}</option>)}</select></label>
+        <label>Inserido de<input type="date" value={filters.from || ""} onChange={e=>setFilters(f=>({...f,from:e.target.value}))}/></label>
+        <label>Inserido até<input type="date" value={filters.to || ""} onChange={e=>setFilters(f=>({...f,to:e.target.value}))}/></label>
+        <label>Status da cadência<select value={filters.cadence_status || ""} onChange={e=>setFilters(f=>({...f,cadence_status:e.target.value}))}><option value="">Todos</option><option value="IN_PROGRESS">Em andamento</option><option value="COMPLETED">Concluída</option><option value="RESPONDED">Respondida</option><option value="PAUSED">Pausada</option></select></label>
+        <label>Campanha<input placeholder="Ex.: PLANILHAS" value={filters.campaign || ""} onChange={e=>setFilters(f=>({...f,campaign:e.target.value}))}/></label>
+        <label>Próximo follow-up<select value={filters.followup || ""} onChange={e=>setFilters(f=>({...f,followup:e.target.value}))}><option value="">Todos</option><option value="scheduled">Agendado</option><option value="overdue">Atrasado</option><option value="unscheduled">Sem agendamento</option></select></label>
+        <button className="btn" onClick={()=>setFilters({})}>Limpar filtros</button>
+      </div>
       <Notice text={message} />
       <DndContext
         sensors={sensors}
@@ -210,7 +221,7 @@ export default function Pipeline() {
       >
         <div className={`kanban ${saving ? "saving" : ""}`}>
           {stages.map((stage) => (
-            <Column key={stage} stage={stage} />
+            <Column key={stage} stage={stage} filters={filters} />
           ))}
         </div>
         <DragOverlay>

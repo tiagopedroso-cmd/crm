@@ -1,0 +1,162 @@
+INOVALOGIX — SEQUÊNCIA DE PROSPECÇÃO ATIVA SEGMENTO: TÉCNICO —
+AUTORIDADE
+
+Objetivo: Abordar empresas de serviços técnicos cuja reputação é
+fortalecida por indicações, mostrando a importância de fazer a presença
+digital confirmar a confiança que já existe no boca a boca.
+
+Variáveis: {{responsavel}} = Nome do responsável (opcional) {{usuario}}
+= Nome do usuário/comercial {{empresa}} = Nome da empresa {{nicho}} =
+Segmento/nicho
+
+REGRA DE PERSONALIZAÇÃO: Manter {{responsavel}} nas mensagens. Caso o
+nome não esteja disponível, o CRM deve remover a variável e ajustar
+automaticamente a pontuação/saudação.
+
+Exemplo: Com nome: “Oi, {{responsavel}}! Tudo bem?” Sem nome: “Oi! Tudo
+bem?”
+
+REGRA DE CTA: Todas as mensagens devem terminar com um CTA de escolha A
+ou B. As duas alternativas devem ser simples e fazer a conversa avançar.
+
+============================================================ MENSAGEM 1
+— PRIMEIRO CONTATO OBJETIVO: CURIOSIDADE / INDICAÇÃO + PESQUISA
+============================================================
+
+Oi, {{responsavel}}! Tudo bem?
+
+Meu nome é {{usuario}}.
+
+Conheci a {{empresa}} e vi que vocês trabalham com {{nicho}}.
+
+Nesse tipo de serviço acontece algo interessante: muitas vezes a pessoa
+recebe uma indicação e, antes de entrar em contato, pesquisa a empresa
+para conhecer melhor o trabalho.
+
+Notei um ponto na forma como a {{empresa}} aparece nesse momento de
+pesquisa.
+
+Você prefere que eu te explique o que observei por aqui ou que eu te
+mostre visualmente?
+
+============================================================ MENSAGEM 2
+— FOLLOW-UP 1 SUGESTÃO: ~2 DIAS APÓS O PRIMEIRO CONTATO OBJETIVO: A
+INDICAÇÃO NÃO ENCERRA A DECISÃO
+============================================================
+
+Oi, {{responsavel}}!
+
+O ponto que me chamou atenção é que receber uma indicação não significa
+necessariamente que a decisão já foi tomada.
+
+É comum a pessoa pesquisar o nome da empresa, olhar trabalhos
+realizados, serviços, avaliações e tentar entender se encontrou um
+prestador em quem pode confiar.
+
+Ou seja: a indicação abre a porta, mas a presença digital ajuda a
+confirmar essa escolha.
+
+Você prefere que eu te mostre como a {{empresa}} aparece hoje para quem
+faz essa pesquisa ou como eu estruturaria essa apresentação?
+
+============================================================ MENSAGEM 3
+— FOLLOW-UP 2 SUGESTÃO: ~3 DIAS APÓS O FOLLOW-UP 1 OBJETIVO: TESTE DA
+INDICAÇÃO ============================================================
+
+{{responsavel}}, tem um teste simples que gosto de fazer:
+
+Imagine que alguém acabou de receber uma indicação da {{empresa}}.
+
+Ela pega o celular e pesquisa o nome de vocês.
+
+Nos primeiros minutos, ela tenta descobrir:
+
+“O que exatamente eles fazem?” “Que tipo de trabalho já realizaram?”
+“Atendem minha região?” “Parecem uma empresa estruturada?” “Como peço um
+orçamento?”
+
+É nesse momento que a autoridade construída no boca a boca precisa
+continuar no digital.
+
+Você prefere que eu faça esse teste com a presença atual da {{empresa}}
+ou que eu te mostre os pontos que eu priorizaria para fortalecer essa
+percepção?
+
+============================================================ MENSAGEM 4
+— FOLLOW-UP 3 SUGESTÃO: ~3 A 4 DIAS APÓS O FOLLOW-UP 2 OBJETIVO:
+CENTRALIZAR A AUTORIDADE DIGITAL
+============================================================
+
+Um ponto importante, {{responsavel}}:
+
+Instagram, Google e WhatsApp são ótimos canais, mas cada um mostra
+apenas uma parte da empresa.
+
+Um espaço próprio permite reunir em um único lugar:
+
+• serviços; • trabalhos realizados; • avaliações; • regiões atendidas; •
+diferenciais; • informações da empresa; • e um caminho direto para
+orçamento.
+
+Assim, quando alguém recebe uma indicação, encontra uma apresentação
+organizada para validar a confiança que já veio de outra pessoa.
+
+Você prefere que eu te mostre como eu organizaria essas informações para
+a {{empresa}} ou uma sugestão visual de como essa apresentação poderia
+ficar?
+
+============================================================ MENSAGEM 5
+— FOLLOW-UP 4 SUGESTÃO: ~4 A 5 DIAS APÓS O FOLLOW-UP 3 OBJETIVO:
+DEMONSTRAÇÃO PERSONALIZADA
+============================================================
+
+{{responsavel}}, pensei em tornar isso mais prático.
+
+Posso montar uma prévia de como eu apresentaria a {{empresa}} para
+alguém que acabou de receber uma indicação e está pesquisando vocês pela
+primeira vez.
+
+A ideia seria trabalhar principalmente autoridade, serviços, trabalhos
+realizados e facilidade para pedir orçamento.
+
+Assim você consegue avaliar a ideia aplicada à própria empresa, em vez
+de olhar um exemplo genérico.
+
+Você prefere que eu monte primeiro uma versão para celular ou uma versão
+para computador?
+
+============================================================ MENSAGEM 6
+— FOLLOW-UP 5 SUGESTÃO: ~5 A 7 DIAS APÓS O FOLLOW-UP 4 OBJETIVO:
+ENCERRAMENTO COM CTA
+============================================================
+
+{{responsavel}}, vou encerrar meus contatos por aqui para não ficar
+insistindo no seu WhatsApp. 😅
+
+Te procurei porque acredito que a autoridade que a {{empresa}} já
+construiu através de indicações pode ser melhor aproveitada quando
+alguém pesquisa vocês antes de entrar em contato.
+
+Antes de encerrar, posso deixar uma ideia pronta para você avaliar
+quando tiver um tempo.
+
+Você prefere receber uma prévia visual de como eu apresentaria a
+{{empresa}} ou um resumo dos principais pontos por aqui?
+
+============================================================ FLUXO DA
+SEQUÊNCIA ============================================================
+
+1.  Primeiro contato → Curiosidade / indicação + pesquisa
+2.  Follow-up 1 → Indicação não encerra a decisão
+3.  Follow-up 2 → Teste da indicação
+4.  Follow-up 3 → Centralizar autoridade digital
+5.  Follow-up 4 → Demonstração personalizada
+6.  Follow-up 5 → Encerramento com CTA A/B
+
+REGRA IMPORTANTE PARA O CRM: Se o prospect responder em qualquer etapa,
+interromper imediatamente a sequência de follow-ups sem resposta e mover
+o contato para conversa/qualificação.
+
+{{responsavel}} deve permanecer salvo nos textos como variável opcional.
+Caso esteja vazio, o CRM deve remover a variável e ajustar a pontuação
+para que a mensagem continue natural.

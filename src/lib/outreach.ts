@@ -43,6 +43,99 @@ export interface Approach {
   interaction_id: string;
   responded_at: string | null;
 }
+export type FollowupApproach = Pick<
+  Approach,
+  | "id"
+  | "lead_id"
+  | "message"
+  | "template_group"
+  | "confirmed_at"
+  | "responded_at"
+>;
+export interface FollowupContext {
+  previous: FollowupApproach | null;
+  responded: boolean;
+}
+
+export function followupContext(
+  approaches: FollowupApproach[],
+): FollowupContext {
+  return {
+    previous: approaches.reduce<FollowupApproach | null>(
+      (latest, item) =>
+        !latest ||
+        item.confirmed_at > latest.confirmed_at ||
+        (item.confirmed_at === latest.confirmed_at && item.id > latest.id)
+          ? item
+          : latest,
+      null,
+    ),
+    responded: approaches.some((item) => Boolean(item.responded_at)),
+  };
+}
+
+export function canFollowup(
+  lead: Pick<Lead, "stage">,
+  context?: FollowupContext,
+) {
+  return lead.stage === "CONTATADO" && Boolean(context) && !context!.responded;
+}
+
+export function renderFollowup(lead: Lead, previous: FollowupApproach | null) {
+  const company = lead.company.trim() || "sua empresa";
+  const contact = lead.contact_name.trim();
+  const greeting = /^oi\b/i.test(previous?.message.trim() || "") ? "Oi" : "Olá";
+  const opening = `${greeting}, ${contact || `equipe da ${company}`}! Tudo bem?`;
+  // The sent text takes precedence over the current product or an edited template.
+  const sent = normalize(previous?.message || "");
+  const group = previous?.template_group || suggestGroup(lead);
+  let subject = "as soluções digitais";
+  if (/retrabalho|mesma informa/.test(sent))
+    subject = "como reduzir o retrabalho na operação";
+  else if (/planilh|excel|lancamento manual/.test(sent))
+    subject = "a organização dos processos e controles da operação";
+  else if (/sistema|automa|processos operacionais/.test(sent))
+    subject = "sistemas e automações para os processos internos";
+  else if (/agendamento|procedimento/.test(sent))
+    subject = "como facilitar o contato e os agendamentos pela internet";
+  else if (/orcamento/.test(sent))
+    subject = "a apresentação dos serviços e os pedidos de orçamento pelo site";
+  else if (/site|pagina|presenca digital/.test(sent))
+    subject = "a apresentação dos serviços na internet";
+  else if (!previous) {
+    if (group === "Saúde / Estética")
+      subject = "a apresentação dos serviços e os agendamentos pela internet";
+    if (group === "Serviços Técnicos")
+      subject = "a apresentação dos serviços e os pedidos de orçamento";
+    if (group === "Transporte / Logística")
+      subject = "a organização dos processos operacionais";
+  }
+  const questions: Record<string, string> = {
+    "Saúde / Estética":
+      "Hoje, como as pessoas conhecem os serviços de vocês e entram em contato para agendar?",
+    "Serviços Técnicos": `Como vocês costumam apresentar os serviços${lead.niche.trim() ? ` de ${lead.niche.trim()}` : ""} para quem pede um orçamento?`,
+    "Transporte / Logística":
+      "Existe algum processo da operação que vocês gostariam de simplificar hoje?",
+    Indicação:
+      "Faz sentido conversarmos sobre alguma melhoria no site, no atendimento ou nos processos internos?",
+    Geral:
+      "Faz sentido conversarmos sobre o que vocês gostariam de melhorar no negócio hoje?",
+  };
+  // Reuse the actual last question, including manually personalized approaches.
+  const priorQuestion = previous?.message
+    .match(/[^.!?\n]+\?/g)
+    ?.at(-1)
+    ?.trim();
+  const question =
+    priorQuestion &&
+    priorQuestion.length <= 350 &&
+    !/^(tudo bem|como vai)\?$/i.test(priorQuestion)
+      ? priorQuestion
+      : previous
+        ? "Faz sentido retomarmos esse assunto por aqui?"
+        : questions[group] || questions.Geral;
+  return `${opening}\n\nPassando para retomar minha mensagem sobre ${subject} para a ${company}.\n\n${question}\n\nQuando puder, me conta por aqui.`;
+}
 const normalize = (value: string) =>
   value
     .normalize("NFD")
@@ -74,6 +167,12 @@ export function suggestTemplate(
 ) {
   const active = templates.filter((t) => t.is_active);
   const group = active.filter((t) => t.niche_group === suggestGroup(lead));
+  const context = normalize([product, lead.pain, lead.objective, lead.discovery_notes].filter(Boolean).join(" "));
+  if (suggestGroup(lead) === "Transporte / Logística") {
+    if (/planilh|excel/.test(context)) { const t=group.find(x=>/planilh/.test(normalize(x.name))); if(t) return t; }
+    if (/retrabalho|duplic|repet|mesma informa/.test(context)) { const t=group.find(x=>/retrabalho/.test(normalize(x.name))); if(t) return t; }
+    if (/sistema|automa|process/.test(context)) { const t=group.find(x=>/process/.test(normalize(x.name))); if(t) return t; }
+  }
   const preferred = group.find((t) => t.is_default);
   if (preferred) return preferred;
   if (["Saúde / Estética", "Serviços Técnicos"].includes(suggestGroup(lead))) {
@@ -102,8 +201,9 @@ export function renderTemplate(
   if (!lead.contact_name?.trim()) {
     text = text.replace(
       /(?:Oi|Olá|Ola)[,!]?\s*\{\{\s*responsavel\s*\}\}[.!?,]?\s*(?:Tudo bem\?)?/gi,
-      "Olá! Tudo bem?",
+      "Oi! Tudo bem?",
     );
+    text = text.replace(/^\s*\{\{\s*responsavel\s*\}\}\s*[,!:.—-]*\s*/gim, "");
   }
   if (!lead.referred_by?.trim()) {
     text = text.replace(
@@ -135,6 +235,11 @@ export function renderTemplate(
 }
 export function followupDate(now = new Date()) {
   const date = new Date(`${dayKey(now)}T12:00:00-03:00`);
-  date.setUTCDate(date.getUTCDate() + 2);
+  let added = 0;
+  while (added < 2) {
+    date.setUTCDate(date.getUTCDate() + 1);
+    const weekday = date.getUTCDay();
+    if (weekday !== 0 && weekday !== 6) added += 1;
+  }
   return `${dayKey(date)}T09:00`;
 }

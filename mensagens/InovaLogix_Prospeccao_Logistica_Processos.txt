@@ -1,0 +1,172 @@
+INOVALOGIX — SEQUÊNCIA DE PROSPECÇÃO ATIVA SEGMENTO: LOGÍSTICA —
+PROCESSOS
+
+Objetivo: Abordar empresas de diferentes nichos apresentando
+oportunidades reais de automação de processos manuais e repetitivos, sem
+presumir ou inventar problemas internos da empresa.
+
+Variáveis: {{responsavel}} = Nome do responsável (opcional) {{usuario}}
+= Nome do usuário/comercial {{empresa}} = Nome da empresa {{nicho}} =
+Segmento/nicho da empresa
+
+REGRA DE PERSONALIZAÇÃO: Manter {{responsavel}} nas mensagens. Caso o
+nome não esteja disponível, o CRM deve remover a variável e ajustar
+automaticamente a pontuação/saudação.
+
+REGRA DE ABORDAGEM: Não afirmar que foi identificado um problema
+específico na operação da empresa sem uma análise real. A abordagem deve
+gerar curiosidade apresentando oportunidades comuns de automação e
+permitindo que o prospect escolha entre conhecer um caso prático ou
+apresentar um processo próprio.
+
+REGRA DE CTA: Todas as mensagens devem terminar com uma escolha A/B. As
+duas alternativas devem fazer a conversa avançar.
+
+============================================================ MENSAGEM 1
+— PRIMEIRO CONTATO OBJETIVO: CURIOSIDADE + OPORTUNIDADE
+============================================================
+
+Oi, {{responsavel}}! Tudo bem?
+
+Meu nome é {{usuario}}.
+
+Conheci a {{empresa}} pesquisando empresas de {{nicho}} e uma coisa me
+chamou atenção.
+
+Existem alguns processos que muitas empresas mantêm manuais simplesmente
+porque sempre foram feitos assim — mas que hoje poderiam acontecer
+praticamente sozinhos.
+
+Já fizemos esse tipo de trabalho em outras empresas.
+
+Você prefere que eu te mostre um caso prático ou me conta um processo
+que hoje é manual na {{empresa}} e eu monto um esboço de como poderíamos
+automatizá-lo, sem compromisso?
+
+============================================================ MENSAGEM 2
+— FOLLOW-UP 1 SUGESTÃO: ~2 DIAS APÓS O PRIMEIRO CONTATO OBJETIVO: TORNAR
+A OPORTUNIDADE CONCRETA
+============================================================
+
+Oi, {{responsavel}}!
+
+Só para deixar mais claro o tipo de processo que mencionei:
+
+Imagine uma informação que chega pelo WhatsApp, alguém confere, lança em
+uma planilha ou sistema, avisa outra pessoa e depois precisa acompanhar
+até a conclusão.
+
+Dependendo do processo, várias dessas etapas podem acontecer
+automaticamente.
+
+E não necessariamente é preciso substituir os sistemas que a {{empresa}}
+já utiliza.
+
+Você prefere que eu te mostre um exemplo de um processo antes e depois
+da automação ou me conta uma tarefa repetitiva daí e eu te mostro o que
+poderia ser automatizado?
+
+============================================================ MENSAGEM 3
+— FOLLOW-UP 2 SUGESTÃO: ~3 DIAS APÓS O FOLLOW-UP 1 OBJETIVO:
+RECONHECIMENTO DE OPORTUNIDADES
+============================================================
+
+{{responsavel}}, uma forma simples de encontrar oportunidades de
+automação é observar algumas frases que se repetem no dia a dia:
+
+“me manda no WhatsApp” “coloca na planilha” “avisa o responsável”
+“depois atualiza no sistema” “preciso conferir” “me cobra depois”
+
+Quando uma dessas ações acontece várias vezes por dia, vale analisar se
+realmente precisa continuar dependendo de alguém para acontecer.
+
+Você prefere que eu te envie alguns exemplos do que já pode ser
+automatizado hoje ou me conta qual dessas situações mais acontece na
+{{empresa}} e pensamos em cima dela?
+
+============================================================ MENSAGEM 4
+— FOLLOW-UP 3 SUGESTÃO: ~3 A 4 DIAS APÓS O FOLLOW-UP 2 OBJETIVO: MOSTRAR
+O ANTES E DEPOIS
+============================================================
+
+{{responsavel}}, vou te dar um exemplo bem simples.
+
+Um processo que hoje funciona assim:
+
+Solicitação → WhatsApp → conferência → planilha → responsável →
+atualização → acompanhamento.
+
+Dependendo da operação, poderia funcionar assim:
+
+Solicitação → registro automático → responsável acionado → atualização
+de status → gestão acompanha tudo em um único lugar.
+
+O objetivo não é simplesmente colocar mais um sistema na empresa, mas
+retirar etapas que não precisam mais ser manuais.
+
+Você prefere que eu te mostre esse fluxo visualmente ou me passa um
+processo da {{empresa}} para eu desenhar um exemplo mais próximo da
+realidade de vocês?
+
+============================================================ MENSAGEM 5
+— FOLLOW-UP 4 SUGESTÃO: ~4 A 5 DIAS APÓS O FOLLOW-UP 3 OBJETIVO: QUEBRAR
+A OBJEÇÃO “JÁ TEMOS SISTEMA”
+============================================================
+
+Um detalhe importante, {{responsavel}}:
+
+Mesmo empresas que já possuem ERP, sistema de gestão ou outras
+ferramentas costumam manter algumas tarefas manuais entre uma etapa e
+outra.
+
+Às vezes a oportunidade está justamente aí: integrar informações,
+disparar avisos automaticamente, gerar documentos, atualizar status ou
+centralizar acompanhamentos.
+
+Ou seja, nem sempre é preciso trocar o que já funciona. Podemos atuar
+somente no processo que ainda gera trabalho manual.
+
+Você prefere que eu te mostre um exemplo de automação integrada a um
+sistema existente ou um exemplo de solução criada para um processo
+específico?
+
+============================================================ MENSAGEM 6
+— FOLLOW-UP 5 SUGESTÃO: ~5 A 7 DIAS APÓS O FOLLOW-UP 4 OBJETIVO:
+ENCERRAMENTO COM OPORTUNIDADE
+============================================================
+
+{{responsavel}}, vou encerrar meus contatos por aqui para não ficar
+insistindo no seu WhatsApp. 😅
+
+Entrei em contato porque às vezes existe um processo que a equipe
+executa todos os dias e ninguém questiona muito, porque “sempre foi
+feito assim”.
+
+É justamente aí que uma automação simples pode economizar várias etapas
+sem mudar toda a operação.
+
+Se fizer sentido deixar algo para você avaliar, você prefere que eu te
+envie um caso prático ou me passa um processo manual da {{empresa}} e eu
+monto um esboço de solução sem compromisso?
+
+============================================================ FLUXO DA
+SEQUÊNCIA ============================================================
+
+1.  Primeiro contato → Curiosidade + oportunidade
+2.  Follow-up 1 → Tornar a oportunidade concreta
+3.  Follow-up 2 → Fazer o prospect reconhecer oportunidades
+4.  Follow-up 3 → Antes e depois da automação
+5.  Follow-up 4 → Quebrar a objeção “já temos sistema”
+6.  Follow-up 5 → Encerramento + entrega de valor
+
+REGRA IMPORTANTE PARA O CRM: Se o prospect responder em qualquer etapa,
+interromper imediatamente a sequência de follow-ups sem resposta e mover
+o contato para conversa/qualificação.
+
+{{responsavel}} deve permanecer salvo nos textos como variável opcional.
+Caso esteja vazio, o CRM deve remover a variável e ajustar a pontuação
+para que a mensagem continue natural.
+
+Apesar do nome interno do segmento ser “LOGÍSTICA — PROCESSOS”, a
+sequência utiliza {{nicho}} para permitir aplicação em diferentes
+segmentos.

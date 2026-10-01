@@ -1,0 +1,192 @@
+INOVALOGIX — SEQUÊNCIA DE PROSPECÇÃO ATIVA SEGMENTO: GERAL — PRIMEIRO
+CONTATO
+
+Objetivo: Criar uma abordagem ampla para empresas em que ainda não foi
+identificada uma dor específica, permitindo que o próprio prospect
+indique qual frente faz mais sentido: presença digital/captação,
+atendimento, sistemas, automações ou processos internos.
+
+Variáveis: {{responsavel}} = Nome do responsável (opcional) {{usuario}}
+= Nome do usuário/comercial {{empresa}} = Nome da empresa {{nicho}} =
+Segmento/nicho da empresa
+
+REGRA DE PERSONALIZAÇÃO: Manter {{responsavel}} nas mensagens. Caso o
+nome não esteja disponível, o CRM deve remover a variável e ajustar
+automaticamente a pontuação/saudação.
+
+REGRA DE ABORDAGEM: Não presumir problemas internos ou afirmar que foi
+identificado algo que não foi realmente analisado. A campanha GERAL deve
+ser utilizada quando ainda não há informação suficiente para escolher
+uma dor específica de entrada. Apresentar possibilidades e permitir que
+o prospect se autossegmente durante a conversa.
+
+REGRA DE CTA: Apresentar duas possibilidades de avanço de forma natural
+e finalizar com: “O que prefere?”
+
+Se o prospect responder em qualquer etapa, interromper imediatamente a
+sequência de follow-ups sem resposta e mover o contato para
+conversa/qualificação.
+
+============================================================ MENSAGEM 1
+— PRIMEIRO CONTATO OBJETIVO: CURIOSIDADE + ABERTURA
+============================================================
+
+Oi, {{responsavel}}! Tudo bem?
+
+Meu nome é {{usuario}}.
+
+Conheci a {{empresa}} pesquisando empresas de {{nicho}} e resolvi entrar
+em contato porque trabalhamos com algo que pode fazer sentido para
+vocês.
+
+Ajudamos empresas a usar tecnologia tanto para melhorar a forma como
+conquistam e atendem clientes quanto para simplificar processos que
+ainda dão trabalho no dia a dia.
+
+Já desenvolvemos algumas soluções bem interessantes nesse sentido.
+
+Posso te mostrar alguns exemplos ou, se preferir, me conta algo que você
+gostaria de melhorar hoje na {{empresa}} e eu te mostro o que poderíamos
+fazer. Sem compromisso nenhum!
+
+O que prefere?
+
+============================================================ MENSAGEM 2
+— FOLLOW-UP 1 SUGESTÃO: ~2 DIAS APÓS O PRIMEIRO CONTATO OBJETIVO:
+MOSTRAR AS DUAS FRENTES PRINCIPAIS
+============================================================
+
+Oi, {{responsavel}}!
+
+Só para deixar mais claro o tipo de trabalho que comentei.
+
+Normalmente ajudamos empresas em duas frentes:
+
+De um lado, melhorar a presença digital e transformar mais pessoas
+interessadas em contatos.
+
+Do outro, criar sistemas e automações para reduzir tarefas manuais e
+organizar processos internos.
+
+Posso te mostrar um exemplo de cada frente ou, se preferir, me diz qual
+delas faria mais sentido hoje para a {{empresa}}.
+
+O que prefere?
+
+============================================================ MENSAGEM 3
+— FOLLOW-UP 2 SUGESTÃO: ~3 DIAS APÓS O FOLLOW-UP 1 OBJETIVO: GERAR
+IDENTIFICAÇÃO
+============================================================
+
+{{responsavel}}, vou te dar alguns exemplos para ficar mais fácil
+visualizar.
+
+Às vezes a oportunidade está em:
+
+— receber mais contatos pelo site; — apresentar melhor os serviços da
+empresa; — facilitar pedidos de orçamento; — automatizar uma tarefa
+repetitiva; — substituir um controle que cresceu demais no Excel; —
+centralizar informações que hoje ficam espalhadas.
+
+São projetos bem diferentes, mas todos têm algo em comum: usar
+tecnologia para facilitar alguma parte do negócio.
+
+Posso te mostrar alguns exemplos que já desenvolvemos ou, se preferir,
+me fala qual desses pontos chamou mais sua atenção.
+
+O que prefere?
+
+============================================================ MENSAGEM 4
+— FOLLOW-UP 3 SUGESTÃO: ~3 A 4 DIAS APÓS O FOLLOW-UP 2 OBJETIVO:
+TRANSFORMAR A IDEIA EM ALGO VISUAL
+============================================================
+
+{{responsavel}}, uma coisa que fazemos quando identificamos uma
+oportunidade é transformar a ideia em algo mais visual antes mesmo de
+falar em projeto.
+
+Pode ser o esboço de uma página, um fluxo de automação, uma tela de
+sistema ou uma sugestão de como organizar determinado processo.
+
+Assim fica muito mais fácil entender se a ideia realmente faria sentido
+para a empresa.
+
+Posso te mostrar um exemplo desse tipo de esboço ou, se preferir, me
+conta algo que gostaria de melhorar na {{empresa}} e eu penso em uma
+ideia para vocês.
+
+O que prefere?
+
+============================================================ MENSAGEM 5
+— FOLLOW-UP 4 SUGESTÃO: ~4 A 5 DIAS APÓS O FOLLOW-UP 3 OBJETIVO: REDUZIR
+A PERCEPÇÃO DE COMPLEXIDADE
+============================================================
+
+Um detalhe importante, {{responsavel}}:
+
+Nem sempre uma melhoria precisa começar com um projeto grande.
+
+Às vezes uma página específica, uma pequena automação ou um sistema
+simples para resolver um único processo já consegue gerar uma diferença
+interessante no dia a dia.
+
+Por isso normalmente preferimos começar entendendo onde existe uma
+oportunidade e depois pensar na solução.
+
+Posso te mostrar algumas soluções menores que podem ser implementadas
+primeiro ou, se preferir, me conta uma situação da {{empresa}} que você
+gostaria de simplificar.
+
+O que prefere?
+
+============================================================ MENSAGEM 6
+— FOLLOW-UP 5 SUGESTÃO: ~5 A 7 DIAS APÓS O FOLLOW-UP 4 OBJETIVO:
+ENCERRAMENTO + ENTREGA DE VALOR
+============================================================
+
+{{responsavel}}, vou encerrar meus contatos por aqui para não ficar
+insistindo no seu WhatsApp. 😅
+
+Entrei em contato porque acredito que tecnologia faz mais sentido quando
+resolve algo concreto — seja ajudando a empresa a conquistar mais
+clientes ou retirando trabalho manual da operação.
+
+Então, se em algum momento vocês quiserem avaliar alguma ideia nesse
+sentido, fico à disposição.
+
+Posso te deixar alguns exemplos do que desenvolvemos ou, se preferir,
+você me conta algo que gostaria de melhorar na {{empresa}} e eu te
+devolvo uma sugestão inicial. Sem compromisso nenhum!
+
+O que prefere?
+
+============================================================ FLUXO DA
+SEQUÊNCIA ============================================================
+
+1.  Primeiro contato → Curiosidade + abertura
+2.  Follow-up 1 → Apresentação das duas grandes frentes
+3.  Follow-up 2 → Situações reconhecíveis
+4.  Follow-up 3 → Transformar oportunidade em algo visual
+5.  Follow-up 4 → Mostrar que a solução não precisa começar grande
+6.  Follow-up 5 → Encerramento + entrega de valor
+
+DIRECIONAMENTO APÓS A RESPOSTA:
+
+Se demonstrar interesse em captação, site ou apresentação digital: →
+direcionar para Site / Landing Page.
+
+Se mencionar Excel ou controles em planilhas: → direcionar para
+PLANILHAS.
+
+Se mencionar tarefas manuais, etapas ou fluxo operacional: → direcionar
+para PROCESSOS / AUTOMAÇÃO.
+
+Se mencionar duplicidade, lançamentos repetidos, conferências ou repasse
+da mesma informação: → direcionar para RETRABALHO.
+
+Se surgir uma necessidade diferente: → continuar a qualificação
+normalmente.
+
+REGRA IMPORTANTE PARA O CRM: {{responsavel}} deve permanecer salvo como
+variável opcional. Caso esteja vazio, remover a variável e ajustar a
+pontuação para que a mensagem continue natural.

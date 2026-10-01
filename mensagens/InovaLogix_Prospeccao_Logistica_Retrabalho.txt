@@ -1,0 +1,198 @@
+INOVALOGIX — SEQUÊNCIA DE PROSPECÇÃO ATIVA SEGMENTO: LOGÍSTICA —
+RETRABALHO
+
+Objetivo: Abordar empresas que possuem tarefas repetitivas envolvendo a
+mesma informação, apresentando oportunidades de automação para reduzir
+lançamentos duplicados, conferências, atualizações e repasses manuais.
+
+Variáveis: {{responsavel}} = Nome do responsável (opcional) {{usuario}}
+= Nome do usuário/comercial {{empresa}} = Nome da empresa {{nicho}} =
+Segmento/nicho da empresa
+
+REGRA DE PERSONALIZAÇÃO: Manter {{responsavel}} nas mensagens. Caso o
+nome não esteja disponível, o CRM deve remover a variável e ajustar
+automaticamente a pontuação/saudação.
+
+REGRA DE ABORDAGEM: Não afirmar que a empresa possui retrabalho sem
+conhecer sua operação. Apresentar situações comuns do mercado para que o
+próprio prospect reconheça possíveis oportunidades.
+
+REGRA DE CTA: Apresentar duas possibilidades de avanço de forma natural
+e finalizar com: “O que prefere?”
+
+Se o prospect responder em qualquer etapa, interromper imediatamente a
+sequência de follow-ups sem resposta e mover o contato para
+conversa/qualificação.
+
+============================================================ MENSAGEM 1
+— PRIMEIRO CONTATO OBJETIVO: CURIOSIDADE + RETRABALHO
+============================================================
+
+Oi, {{responsavel}}! Tudo bem?
+
+Meu nome é {{usuario}}.
+
+Conheci a {{empresa}} pesquisando empresas de {{nicho}} e queria
+compartilhar uma situação que encontramos com frequência.
+
+Em muitas empresas, a mesma informação acaba passando por várias pessoas
+e sendo copiada, conferida ou lançada mais de uma vez em planilhas,
+sistemas e WhatsApp.
+
+São pequenas tarefas que parecem normais no dia a dia, mas que, quando
+se repetem várias vezes, acabam consumindo bastante tempo da equipe.
+
+Já automatizamos processos justamente para eliminar esse tipo de
+retrabalho.
+
+Posso te mostrar um caso prático ou, se preferir, me conta uma tarefa
+repetitiva que vocês têm hoje na {{empresa}} e eu te mostro como ela
+poderia ser simplificada. Sem compromisso nenhum!
+
+O que prefere?
+
+============================================================ MENSAGEM 2
+— FOLLOW-UP 1 SUGESTÃO: ~2 DIAS APÓS O PRIMEIRO CONTATO OBJETIVO:
+QUANTAS VEZES A MESMA INFORMAÇÃO É MANIPULADA?
+============================================================
+
+Oi, {{responsavel}}!
+
+Tem uma pergunta simples que ajuda bastante a encontrar esse tipo de
+retrabalho:
+
+Depois que uma informação entra na empresa, quantas vezes alguém precisa
+mexer nela até o processo terminar?
+
+Às vezes ela chega pelo WhatsApp, alguém copia para uma planilha, depois
+lança no sistema, avisa outra pessoa e mais tarde precisa atualizar tudo
+novamente.
+
+Dependendo do processo, uma única entrada de informação poderia
+alimentar várias dessas etapas automaticamente.
+
+Posso te mostrar um exemplo desse fluxo automatizado ou, se preferir, me
+conta como uma informação importante circula hoje na {{empresa}} e eu
+desenho uma alternativa.
+
+O que prefere?
+
+============================================================ MENSAGEM 3
+— FOLLOW-UP 2 SUGESTÃO: ~3 DIAS APÓS O FOLLOW-UP 1 OBJETIVO:
+RECONHECIMENTO DE RETRABALHO
+============================================================
+
+{{responsavel}}, alguns sinais de retrabalho são tão comuns que acabam
+parecendo parte normal da operação:
+
+“me manda de novo” “já lançou no sistema?” “atualiza a planilha também”
+“avisa no grupo” “preciso conferir antes” “depois consolida tudo”
+
+O problema não é fazer isso uma vez.
+
+É quando a equipe precisa repetir essas pequenas tarefas dezenas de
+vezes ao longo da semana.
+
+Posso te mostrar como eliminar algumas dessas etapas ou, se preferir, me
+conta qual tarefa mais se repete por aí e eu penso em uma forma de
+simplificar.
+
+O que prefere?
+
+============================================================ MENSAGEM 4
+— FOLLOW-UP 3 SUGESTÃO: ~3 A 4 DIAS APÓS O FOLLOW-UP 2 OBJETIVO: UMA
+INFORMAÇÃO, VÁRIOS DESTINOS
+============================================================
+
+{{responsavel}}, vou te dar um exemplo simples.
+
+Hoje uma informação pode seguir assim:
+
+Recebimento → conferência → planilha → sistema → WhatsApp → responsável
+→ atualização.
+
+Com uma automação, dependendo do processo:
+
+Informação registrada uma vez → sistema atualiza → responsável recebe →
+status muda → gestão acompanha.
+
+Ou seja: a equipe deixa de transportar a mesma informação manualmente de
+um lugar para outro.
+
+Posso te mostrar esse antes e depois visualmente ou, se preferir, um
+exemplo de sistema que centraliza esse tipo de fluxo.
+
+O que prefere?
+
+============================================================ MENSAGEM 5
+— FOLLOW-UP 4 SUGESTÃO: ~4 A 5 DIAS APÓS O FOLLOW-UP 3 OBJETIVO:
+AUTOMATIZAR SEM TROCAR TUDO
+============================================================
+
+Um detalhe importante, {{responsavel}}:
+
+Eliminar retrabalho não significa necessariamente trocar os sistemas que
+a {{empresa}} já utiliza.
+
+Muitas vezes podemos manter o que já funciona e automatizar justamente
+as etapas entre as ferramentas e as pessoas.
+
+Pode ser um lançamento duplicado, envio de aviso, atualização de status,
+geração de documento, conferência ou consolidação de informações.
+
+Posso te mostrar um exemplo de automação integrada ao que a empresa já
+usa ou, se preferir, você me passa uma tarefa repetitiva e eu monto um
+esboço de solução.
+
+O que prefere?
+
+============================================================ MENSAGEM 6
+— FOLLOW-UP 5 SUGESTÃO: ~5 A 7 DIAS APÓS O FOLLOW-UP 4 OBJETIVO:
+ENCERRAMENTO + ENTREGA DE VALOR
+============================================================
+
+{{responsavel}}, vou encerrar meus contatos por aqui para não ficar
+insistindo no seu WhatsApp. 😅
+
+Só queria deixar uma última reflexão:
+
+Se alguém da equipe precisa copiar, conferir, lançar, atualizar ou
+repassar a mesma informação várias vezes, talvez exista uma oportunidade
+de fazer parte desse trabalho acontecer automaticamente.
+
+É exatamente esse tipo de retrabalho que buscamos eliminar.
+
+Posso te deixar um caso prático para consultar ou, se preferir, você me
+passa uma tarefa repetitiva da {{empresa}} e eu monto um esboço de como
+simplificaria esse fluxo. Sem compromisso nenhum!
+
+O que prefere?
+
+============================================================ FLUXO DA
+SEQUÊNCIA ============================================================
+
+1.  Primeiro contato → Curiosidade + situação comum de retrabalho
+2.  Follow-up 1 → Quantas vezes a mesma informação é manipulada?
+3.  Follow-up 2 → Reconhecimento de situações repetitivas
+4.  Follow-up 3 → Uma informação, vários destinos
+5.  Follow-up 4 → Automatizar sem trocar os sistemas atuais
+6.  Follow-up 5 → Encerramento + entrega de valor
+
+DIFERENCIAÇÃO DAS CAMPANHAS:
+
+PLANILHAS: “Essa planilha talvez já tenha virado um sistema sem vocês
+perceberem.”
+
+PROCESSOS: “Essa sequência de tarefas talvez não precise mais ser
+manual.”
+
+RETRABALHO: “Por que sua equipe precisa mexer várias vezes na mesma
+informação?”
+
+REGRA IMPORTANTE PARA O CRM: {{responsavel}} deve permanecer salvo como
+variável opcional. Caso esteja vazio, remover a variável e ajustar a
+pontuação para que a mensagem continue natural.
+
+Apesar do nome interno do segmento ser “LOGÍSTICA — RETRABALHO”, as
+mensagens utilizam {{nicho}} para permitir aplicação em diferentes
+segmentos.

@@ -1,0 +1,155 @@
+INOVALOGIX — SEQUÊNCIA DE PROSPECÇÃO ATIVA SEGMENTO: SAÚDE — LANDING
+PAGE
+
+Objetivo: Abordar clínicas, consultórios e profissionais da área da
+saúde que já utilizam redes sociais para divulgar seus serviços,
+mostrando a oportunidade de criar uma página específica para transformar
+interesse em contato ou agendamento.
+
+Variáveis: {{responsavel}} = Nome do responsável (opcional) {{usuario}}
+= Nome do usuário/comercial {{empresa}} = Nome da empresa/clínica
+{{servico}} = Serviço ou procedimento {{cidade}} = Cidade/região
+
+REGRA DE PERSONALIZAÇÃO: Manter {{responsavel}} nas mensagens. Caso o
+nome não esteja disponível, o CRM deve remover a variável e ajustar
+automaticamente a pontuação/saudação.
+
+Exemplo: Com nome: “Oi, {{responsavel}}! Tudo bem?” Sem nome: “Oi! Tudo
+bem?”
+
+REGRA DE CTA: Todas as mensagens devem terminar com um CTA de escolha A
+ou B. As duas alternativas devem ser simples e fazer a conversa avançar.
+
+============================================================ MENSAGEM 1
+— PRIMEIRO CONTATO OBJETIVO: CURIOSIDADE
+============================================================
+
+Oi, {{responsavel}}! Tudo bem?
+
+Meu nome é {{usuario}}.
+
+Conheci o trabalho da {{empresa}} e vi que vocês utilizam as redes
+sociais para divulgar os serviços.
+
+Notei um ponto no caminho entre alguém conhecer vocês pelo Instagram e
+realmente entrar em contato ou agendar.
+
+Você prefere que eu te explique o que observei por aqui ou que eu te
+mostre visualmente?
+
+============================================================ MENSAGEM 2
+— FOLLOW-UP 1 SUGESTÃO: ~2 DIAS APÓS O PRIMEIRO CONTATO OBJETIVO:
+MOSTRAR O CAMINHO DO PACIENTE
+============================================================
+
+Oi, {{responsavel}}!
+
+O ponto que observei é o seguinte:
+
+Quando alguém vê um conteúdo ou anúncio sobre um procedimento, nem
+sempre essa pessoa está pronta para chamar no WhatsApp naquele momento.
+
+Antes disso, ela pode querer entender melhor o procedimento, conhecer o
+profissional, ver avaliações, tirar dúvidas e sentir segurança para dar
+o próximo passo.
+
+Quando todo esse caminho depende apenas do Instagram → WhatsApp, parte
+dessas informações acaba ficando espalhada.
+
+Você prefere que eu te mostre como eu estruturaria esse caminho para a
+{{empresa}} ou um exemplo visual de como ele poderia funcionar?
+
+============================================================ MENSAGEM 3
+— FOLLOW-UP 2 SUGESTÃO: ~3 DIAS APÓS O FOLLOW-UP 1 OBJETIVO: TRANSFORMAR
+INTERESSE EM AÇÃO
+============================================================
+
+{{responsavel}}, pensando como alguém que acabou de conhecer a
+{{empresa}}:
+
+Antes de entrar em contato, essa pessoa provavelmente quer responder
+algumas perguntas:
+
+“Esse serviço é indicado para mim?” “Quem vai me atender?” “Posso
+confiar?” “Como funciona?” “Como faço para agendar?”
+
+É justamente nesse intervalo entre descobrir vocês e tomar uma decisão
+que uma página específica pode ajudar.
+
+Você prefere que eu te envie a estrutura que eu usaria para um dos
+serviços de vocês ou uma prévia visual de como essa página poderia
+ficar?
+
+============================================================ MENSAGEM 4
+— FOLLOW-UP 3 SUGESTÃO: ~3 A 4 DIAS APÓS O FOLLOW-UP 2 OBJETIVO:
+COMPLEMENTAR O INSTAGRAM
+============================================================
+
+Um detalhe importante, {{responsavel}}:
+
+A ideia não é substituir o Instagram.
+
+É justamente aproveitar melhor o interesse que ele já gera.
+
+A pessoa conhece o trabalho de vocês → acessa uma página específica →
+entende o serviço → conhece melhor o profissional → encontra respostas
+para as principais dúvidas → e então entra em contato ou agenda.
+
+Assim, o WhatsApp recebe alguém muito mais informado sobre o serviço.
+
+Você prefere que eu monte esse fluxo pensando no serviço mais procurado
+da {{empresa}} ou naquele que vocês mais gostariam de divulgar?
+
+============================================================ MENSAGEM 5
+— FOLLOW-UP 4 SUGESTÃO: ~4 A 5 DIAS APÓS O FOLLOW-UP 3 OBJETIVO:
+DEMONSTRAÇÃO PERSONALIZADA
+============================================================
+
+{{responsavel}}, ao invés de ficar só te explicando essa ideia por
+mensagem, posso tornar isso mais prático.
+
+Posso montar uma sugestão de página pensando na identidade da
+{{empresa}}, mostrando como eu organizaria apresentação, serviço,
+profissional, dúvidas e chamada para contato ou agendamento.
+
+Assim você consegue avaliar a ideia aplicada ao trabalho de vocês, e não
+em um exemplo genérico.
+
+Você prefere que eu prepare primeiro uma versão para celular ou uma
+versão para computador?
+
+============================================================ MENSAGEM 6
+— FOLLOW-UP 5 SUGESTÃO: ~5 A 7 DIAS APÓS O FOLLOW-UP 4 OBJETIVO:
+ENCERRAMENTO COM CTA
+============================================================
+
+{{responsavel}}, vou encerrar meus contatos por aqui para não ficar
+insistindo no seu WhatsApp. 😅
+
+Te procurei porque vi que a {{empresa}} já produz conteúdo e gera
+interesse pelas redes sociais, e acredito que existe uma oportunidade de
+aproveitar melhor esse interesse antes de a pessoa chegar ao WhatsApp.
+
+Antes de encerrar, posso deixar uma sugestão pronta para você avaliar
+quando tiver um tempo.
+
+Você prefere receber uma prévia visual de como ficaria ou um resumo com
+a estrutura que eu recomendaria para a página?
+
+============================================================ FLUXO DA
+SEQUÊNCIA ============================================================
+
+1.  Primeiro contato → Curiosidade
+2.  Follow-up 1 → Caminho do paciente
+3.  Follow-up 2 → Transformar interesse em ação
+4.  Follow-up 3 → Complementar Instagram
+5.  Follow-up 4 → Demonstração personalizada
+6.  Follow-up 5 → Encerramento com CTA A/B
+
+REGRA IMPORTANTE PARA O CRM: Se o prospect responder em qualquer etapa,
+interromper imediatamente a sequência de follow-ups sem resposta e mover
+o contato para conversa/qualificação.
+
+{{responsavel}} deve permanecer salvo nos textos como variável opcional.
+Caso esteja vazio, o CRM deve remover a variável e ajustar a pontuação
+para que a mensagem continue natural.

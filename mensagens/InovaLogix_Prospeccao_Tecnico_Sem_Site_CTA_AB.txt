@@ -1,0 +1,153 @@
+INOVALOGIX — SEQUÊNCIA DE PROSPECÇÃO ATIVA SEGMENTO: TÉCNICO — SEM SITE
+
+Objetivo: Abordar empresas de serviços técnicos que ainda não possuem
+site próprio, gerando curiosidade, percepção de oportunidade e abertura
+para apresentação de uma solução.
+
+Variáveis utilizadas: {{responsavel}} = Nome do responsável {{usuario}}
+= Nome do usuário/comercial {{empresa}} = Nome da empresa {{nicho}} =
+Segmento/nicho {{servico}} = Serviço principal {{cidade}} =
+Cidade/região
+
+============================================================ MENSAGEM 1
+— PRIMEIRO CONTATO OBJETIVO: CURIOSIDADE
+============================================================
+
+Oi, {{responsavel}}, tudo bem?
+
+Meu nome é {{usuario}}.
+
+Encontrei a {{empresa}} pesquisando empresas de {{nicho}} na região.
+
+Notei uma coisa na presença de vocês no Google que pode estar fazendo
+alguns clientes pesquisarem a empresa e acabarem procurando outro
+prestador.
+
+Posso te explicar rapidinho o que vi? É coisa de 1 minuto.
+
+============================================================ MENSAGEM 2
+— FOLLOW-UP 1 SUGESTÃO: ~2 DIAS APÓS O PRIMEIRO CONTATO OBJETIVO:
+INFORMAÇÃO / EDUCAÇÃO
+============================================================
+
+Oi, {{responsavel}}. Vou te deixar um dado que explica por que te
+chamei.
+
+Uma pesquisa recente mostrou que 84% dos consumidores pesquisaram
+empresas locais pela internet nos últimos 3 meses.
+
+E tem um detalhe interessante: depois de encontrar avaliações positivas,
+54% ainda vão até o site da empresa para conhecer melhor antes de
+decidir.
+
+No caso da {{empresa}}, hoje quem procura vocês encontra outras
+informações, mas não encontra um site próprio para fazer essa validação.
+
+Foi esse ponto que me chamou atenção.
+
+Você prefere que eu te mostre como isso pode impactar a busca pela
+{{empresa}} ou um exemplo visual de como a página da sua empresa pode ficar?
+
+============================================================ MENSAGEM 3
+— FOLLOW-UP 2 SUGESTÃO: ~3 DIAS APÓS O FOLLOW-UP 1 OBJETIVO: PERCEPÇÃO
+DO PROBLEMA ============================================================
+
+{{responsavel}}, fiz um teste simples:
+
+Imagine alguém pesquisando no Google:
+
+“{{servico}} em {{cidade}}”
+
+Ela encontra 2 empresas parecidas.
+
+Uma tem só telefone/Instagram.
+
+Outra tem um site mostrando serviços, região atendida, fotos dos
+trabalhos, avaliações e um botão para pedir orçamento.
+
+Mesmo sem conhecer nenhuma das duas, qual delas parece mais estruturada?
+
+É exatamente esse comportamento que eu penso quando desenvolvo uma
+página para uma empresa de serviços.
+
+Você prefere que eu te mostre os pontos que eu priorizaria para a
+{{empresa}} ou uma sugestão visual de como isso poderia ficar?
+
+============================================================ MENSAGEM 4
+— FOLLOW-UP 3 SUGESTÃO: ~3 A 4 DIAS APÓS O FOLLOW-UP 2 OBJETIVO:
+MICROCOMPROMISSO / DEMONSTRAÇÃO
+============================================================
+
+{{responsavel}}, tive uma ideia.
+
+Ao invés de ficar tentando te explicar por mensagem como um site poderia
+ajudar a {{empresa}}, posso montar uma prévia visual de como eu
+estruturaria a página de vocês.
+
+Sem compromisso.
+
+Aí você consegue olhar e decidir se faria sentido ou não para a empresa.
+
+Você prefere que eu monte primeiro uma prévia visual da página ou um
+resumo com a estrutura recomendada?
+
+============================================================ MENSAGEM 5
+— FOLLOW-UP 4 SUGESTÃO: ~4 A 5 DIAS APÓS O FOLLOW-UP 3 OBJETIVO: QUEBRA
+DE OBJEÇÃO ============================================================
+
+Uma coisa que escuto bastante, {{responsavel}}, é:
+
+“Mas meus clientes já chegam pelo Instagram/indicação.”
+
+E isso é ótimo.
+
+O site não precisa substituir esses canais.
+
+Ele pode funcionar justamente para a pessoa que recebeu uma indicação da
+{{empresa}}, pesquisou o nome de vocês no Google e quer confirmar se
+encontrou uma empresa profissional antes de chamar.
+
+É mais sobre não perder quem já está procurando vocês do que depender do
+site para conseguir todos os clientes.
+
+Você quer eu te mostre como uma página poderia complementar o
+Instagram da {{empresa}}?
+
+============================================================ MENSAGEM 6
+— FOLLOW-UP 5 SUGESTÃO: ~5 A 7 DIAS APÓS O FOLLOW-UP 4 OBJETIVO:
+ENCERRAMENTO ELEGANTE
+============================================================
+
+{{responsavel}}, vou encerrar meus contatos por aqui para não ficar
+enchendo seu WhatsApp. 😅
+
+Só quis te procurar porque realmente acredito que a {{empresa}} tem
+espaço para apresentar melhor o trabalho de vocês quando alguém pesquisa
+pela empresa na internet.
+
+Antes de encerrar, posso deixar uma ideia pronta para você consultar
+quando quiser.
+
+Você prefere receber uma sugestão visual da página ou um resumo dos
+principais pontos por aqui mesmo?
+
+Abraço! {{usuario}}
+
+============================================================ FLUXO DA
+SEQUÊNCIA ============================================================
+
+1.  Primeiro contato → Curiosidade
+2.  Follow-up 1 → Informação / dado relevante
+3.  Follow-up 2 → Percepção do problema
+4.  Follow-up 3 → Demonstração / microcompromisso
+5.  Follow-up 4 → Quebra da objeção Instagram/indicação
+6.  Follow-up 5 → Encerramento elegante
+
+REGRA IMPORTANTE PARA O CRM: Se o prospect responder em qualquer etapa,
+interromper a sequência de follow-ups sem resposta e mover o contato
+para a etapa de conversa/qualificação.
+
+REGRA DE CTA: Todas as mensagens devem terminar com um CTA de escolha A
+ou B. Evitar CTAs de sim/não, como “Posso preparar?” ou “Tem
+interesse?”. As duas alternativas devem ser simples e fazer a conversa
+avançar.

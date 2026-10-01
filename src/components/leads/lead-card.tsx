@@ -6,6 +6,7 @@ import type { Lead } from "@/types/crm";
 import { StageControl } from "./stage-control";
 import { CompleteActionButton } from "./complete-action-button";
 import { MessageButton } from "./message-button";
+import { FollowupButton } from "./followup-button";
 export function LeadCard({
   lead,
   product,
@@ -24,7 +25,9 @@ export function LeadCard({
         </span>
         <div className="actions">
           {stageControl && <CompleteActionButton lead={lead} compact />}
-          {stageControl && <MessageButton lead={lead} compact />}
+          {stageControl && (
+            <MessageButton lead={lead} compact showFollowup={false} />
+          )}
           <Link
             href={`/leads/${lead.id}`}
             className="icon-btn"
@@ -43,6 +46,12 @@ export function LeadCard({
         <span>{product || "Produto a definir"}</span>
         <strong>{money(lead.potential_value)}</strong>
       </div>
+      {lead.stage === "CONTATADO" && lead.cadence_status && (
+        <div className="cadence-strip">
+          <strong>{lead.cadence_status === "COMPLETED" ? "Cadência concluída" : `Follow-up ${lead.cadence_step || 0}/${lead.cadence_total || 5}`}</strong>
+          <small>{lead.cadence_campaign || "Cadência comercial"}</small>
+        </div>
+      )}
       <div
         className={`next-action ${status === "Ação atrasada" ? "overdue" : ""}`}
       >
@@ -56,7 +65,7 @@ export function LeadCard({
           </small>
         </div>
       </div>
-      {status && (
+      {status && status !== "Sem próxima ação" && (
         <span
           className={`badge ${status === "Ação atrasada" ? "red" : "amber"}`}
         >
@@ -64,6 +73,7 @@ export function LeadCard({
         </span>
       )}
       {lead.is_demo && <span className="badge">Demonstração</span>}
+      {stageControl && <FollowupButton lead={lead} />}
       {stageControl && <StageControl lead={lead} />}
     </article>
   );

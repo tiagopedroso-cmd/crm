@@ -120,6 +120,11 @@ export interface Lead {
   is_demo: boolean;
   created_at: string;
   updated_at: string;
+  cadence_status?: "NOT_STARTED" | "IN_PROGRESS" | "RESPONDED" | "COMPLETED" | "PAUSED" | null;
+  cadence_step?: number | null;
+  cadence_total?: number | null;
+  cadence_campaign?: string | null;
+  cadence_next_at?: string | null;
 }
 export interface Interaction {
   id: string;
@@ -226,6 +231,9 @@ export interface Filters {
   from: string;
   to: string;
   action: string;
+  cadence_status?: string;
+  campaign?: string;
+  followup?: string;
 }
 export const EMPTY_FILTERS: Filters = {
   created_by: "",
@@ -241,4 +249,7 @@ export const EMPTY_FILTERS: Filters = {
   from: "",
   to: "",
   action: "",
+  cadence_status: "",
+  campaign: "",
+  followup: "",
 };

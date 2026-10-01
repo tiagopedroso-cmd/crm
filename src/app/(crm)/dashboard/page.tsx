@@ -14,6 +14,7 @@ import { money, dayKey } from "@/lib/utils";
 import { PeriodFilter } from "@/components/analytics/period-filter";
 import { AgendaList } from "@/components/analytics/agenda-list";
 import { Funnel } from "@/components/analytics/funnel";
+import { PipelineValues } from "@/components/analytics/pipeline-values";
 import { Loading, ErrorState, Progress } from "@/components/ui";
 export default function Dashboard() {
   const profile = useProfile();
@@ -87,6 +88,7 @@ export default function Dashboard() {
               </p>
             </div>
           </section>
+          <PipelineValues owner={profile.id} />
           <div className="kpi-grid">
             {[
               [

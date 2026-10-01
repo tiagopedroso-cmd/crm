@@ -1,0 +1,152 @@
+INOVALOGIX — SEQUÊNCIA DE PROSPECÇÃO ATIVA SEGMENTO: TÉCNICO — SITE
+EXISTENTE
+
+Objetivo: Abordar empresas de serviços técnicos que já possuem site,
+despertando percepção sobre oportunidades de conversão, autoridade,
+apresentação dos serviços e facilidade para solicitar orçamento.
+
+Variáveis: {{responsavel}} = Nome do responsável {{usuario}} = Nome do
+usuário/comercial {{empresa}} = Nome da empresa {{nicho}} =
+Segmento/nicho
+
+REGRA DA SEQUÊNCIA: Todas as mensagens devem terminar com um CTA claro e
+fácil de responder. Sempre que possível, utilizar CTA de escolha em vez
+de perguntas genéricas como “tem interesse?”.
+
+============================================================ MENSAGEM 1
+— PRIMEIRO CONTATO OBJETIVO: CURIOSIDADE
+============================================================
+
+Oi, {{responsavel}}, tudo bem?
+
+Meu nome é {{usuario}}.
+
+Encontrei a {{empresa}} pesquisando empresas de {{nicho}} na região e
+acabei entrando no site de vocês.
+
+Notei alguns pontos que podem estar dificultando o caminho de quem entra
+no site até pedir um orçamento.
+
+Posso te mostrar rapidamente o que observei?
+
+============================================================ MENSAGEM 2
+— FOLLOW-UP 1 SUGESTÃO: ~2 DIAS APÓS O PRIMEIRO CONTATO OBJETIVO:
+DIAGNÓSTICO / CONVERSÃO
+============================================================
+
+Oi, {{responsavel}}.
+
+Só para contextualizar melhor o motivo da minha mensagem:
+
+Ter um site é importante, mas existe uma diferença grande entre ele
+apenas apresentar a empresa e realmente ajudar a gerar pedidos de
+orçamento.
+
+Quando analiso um site de serviços, normalmente olho 3 pontos:
+
+• se fica claro rapidamente o que a empresa faz; • se existem elementos
+que passam confiança; • e se é fácil para o visitante pedir um
+orçamento.
+
+Foi olhando esses pontos que encontrei algumas oportunidades no site da
+{{empresa}}.
+
+Você prefere que eu te envie uma análise completa em PDF ou um resumo
+dos principais pontos por aqui mesmo?
+
+============================================================ MENSAGEM 3
+— FOLLOW-UP 2 SUGESTÃO: ~3 DIAS APÓS O FOLLOW-UP 1 OBJETIVO:
+AUTOAVALIAÇÃO / TESTE PRÁTICO
+============================================================
+
+{{responsavel}}, tem um teste bem simples que costumo fazer quando
+analiso um site de serviços.
+
+Entro como se fosse um cliente que nunca conheceu a empresa e tento
+responder rapidamente:
+
+“O que eles fazem?” “Por que eu deveria confiar neles?” “Como peço um
+orçamento agora?”
+
+Se essas respostas não aparecem com facilidade, o visitante pode
+simplesmente voltar para o Google e continuar procurando.
+
+Fiz esse exercício olhando o site da {{empresa}}.
+
+Quer que eu te mostre os 3 pontos que mais me chamaram atenção?
+
+============================================================ MENSAGEM 4
+— FOLLOW-UP 3 SUGESTÃO: ~3 A 4 DIAS APÓS O FOLLOW-UP 2 OBJETIVO:
+DEMONSTRAÇÃO VISUAL / MICROCOMPROMISSO
+============================================================
+
+{{responsavel}}, pensei em uma forma ainda mais prática de te mostrar
+isso.
+
+Posso pegar a página principal da {{empresa}} e montar uma sugestão
+visual de como eu reorganizaria alguns desses pontos.
+
+Sem compromisso e sem precisar alterar o site atual.
+
+Assim você consegue colocar o atual e a sugestão lado a lado e avaliar a
+diferença.
+
+Você prefere que eu faça uma sugestão visual da página ou te mande
+primeiro os pontos que eu mudaria?
+
+============================================================ MENSAGEM 5
+— FOLLOW-UP 4 SUGESTÃO: ~4 A 5 DIAS APÓS O FOLLOW-UP 3 OBJETIVO: QUEBRA
+DE OBJEÇÃO / APROVEITAR SITE ATUAL
+============================================================
+
+Um ponto importante, {{responsavel}}:
+
+Melhorar um site não significa necessariamente jogar tudo fora e começar
+novamente.
+
+Às vezes algumas mudanças pontuais já fazem bastante diferença:
+
+• deixar a proposta da empresa mais clara; • destacar melhor os
+principais serviços; • reforçar avaliações, trabalhos e outros sinais de
+confiança; • facilitar o pedido de orçamento pelo WhatsApp.
+
+A ideia é primeiro identificar onde estão as oportunidades e aproveitar
+o que a {{empresa}} já construiu.
+
+Se eu tivesse que te apontar somente as 3 mudanças que eu priorizaria no
+site hoje, você gostaria que eu te enviasse?
+
+============================================================ MENSAGEM 6
+— FOLLOW-UP 5 SUGESTÃO: ~5 A 7 DIAS APÓS O FOLLOW-UP 4 OBJETIVO:
+ENCERRAMENTO COM CTA
+============================================================
+
+{{responsavel}}, vou encerrar meus contatos por aqui para não ficar
+insistindo no seu WhatsApp. 😅
+
+Te procurei porque vi que a {{empresa}} já tem uma presença digital
+construída e encontrei algumas oportunidades que podem ajudar o site a
+trabalhar melhor na geração de contatos.
+
+Antes de encerrar, posso te deixar essa análise pronta para você
+consultar quando quiser.
+
+Prefere que eu envie por aqui mesmo ou em PDF?
+
+============================================================ FLUXO DA
+SEQUÊNCIA ============================================================
+
+1.  Primeiro contato → Curiosidade
+2.  Follow-up 1 → Diagnóstico + escolha PDF/WhatsApp
+3.  Follow-up 2 → Autoavaliação + 3 pontos
+4.  Follow-up 3 → Demonstração visual
+5.  Follow-up 4 → Quebra da objeção de refazer o site
+6.  Follow-up 5 → Encerramento + última oportunidade de resposta
+
+REGRA IMPORTANTE PARA O CRM: Se o prospect responder em qualquer etapa,
+interromper imediatamente a sequência de follow-ups sem resposta e mover
+o contato para conversa/qualificação.
+
+REGRA DE CTA: Nenhuma mensagem da sequência deve terminar sem uma ação
+sugerida. Priorizar perguntas simples, CTAs de escolha e
+microcompromissos.

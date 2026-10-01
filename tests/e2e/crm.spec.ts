@@ -9,6 +9,22 @@ test.beforeEach(async ({ page }) => {
   ).toBeVisible();
 });
 test("dashboard, navegação e responsividade", async ({ page }, testInfo) => {
+  const values = page.getByRole("region", { name: "Seu funil em valores" });
+  await expect(
+    values.getByText("Valor total em negociação", { exact: true }),
+  ).toBeVisible();
+  await expect(values.locator(".stage-values > div")).toHaveCount(11);
+  await expect(page.locator(".daily-focus + .pipeline-values")).toBeVisible();
+  const currency = (text: string) =>
+    Number(text.replace(/[^\d,]/g, "").replace(",", "."));
+  const stageValues = await values
+    .locator(".negotiating-stage dd")
+    .allTextContents();
+  const total = await values.locator(".negotiating-total strong").innerText();
+  expect(currency(total)).toBeCloseTo(
+    stageValues.reduce((sum, value) => sum + currency(value), 0),
+    2,
+  );
   await expect(page.locator("body")).not.toContainText("NaN");
   await expect(
     page.getByText("Agenda de hoje", { exact: true }).last(),

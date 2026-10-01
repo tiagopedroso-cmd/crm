@@ -1,0 +1,151 @@
+INOVALOGIX — SEQUÊNCIA DE PROSPECÇÃO ATIVA SEGMENTO: SAÚDE — TEM SITE
+
+Objetivo: Abordar clínicas, consultórios e profissionais da área da
+saúde que já possuem site, identificando oportunidades para melhorar o
+caminho entre interesse, confiança, contato e agendamento.
+
+Variáveis: {{responsavel}} = Nome do responsável (opcional) {{usuario}}
+= Nome do usuário/comercial {{empresa}} = Nome da empresa/clínica
+
+REGRA DE PERSONALIZAÇÃO: Manter {{responsavel}} nas mensagens. Caso o
+nome não esteja disponível, o CRM deve remover a variável e ajustar
+automaticamente a pontuação/saudação.
+
+Exemplo: Com nome: “Oi, {{responsavel}}! Tudo bem?” Sem nome: “Oi! Tudo
+bem?”
+
+REGRA DE CTA: Todas as mensagens devem terminar com um CTA de escolha A
+ou B. As duas alternativas devem ser simples e fazer a conversa avançar.
+
+============================================================ MENSAGEM 1
+— PRIMEIRO CONTATO OBJETIVO: CURIOSIDADE
+============================================================
+
+Oi, {{responsavel}}! Tudo bem?
+
+Meu nome é {{usuario}}.
+
+Conheci o trabalho da {{empresa}} e acabei entrando no site de vocês.
+
+Notei alguns pontos no caminho entre alguém conhecer os serviços, sentir
+segurança e realmente entrar em contato ou agendar.
+
+Você prefere que eu te explique o que observei por aqui ou que eu te
+mostre visualmente?
+
+============================================================ MENSAGEM 2
+— FOLLOW-UP 1 SUGESTÃO: ~2 DIAS APÓS O PRIMEIRO CONTATO OBJETIVO:
+APRESENTAR X CONDUZIR
+============================================================
+
+Oi, {{responsavel}}!
+
+O ponto que observei é que existe uma diferença entre um site que
+apresenta bem uma clínica e um site que também conduz quem está
+interessado até o próximo passo.
+
+Na área da saúde, normalmente essa pessoa ainda quer entender o serviço,
+conhecer melhor o profissional, encontrar respostas para algumas dúvidas
+e sentir segurança antes de entrar em contato.
+
+Foi olhando esse caminho que encontrei algumas oportunidades no site da
+{{empresa}}.
+
+Você prefere que eu te mostre os 3 pontos que mais me chamaram atenção
+ou uma sugestão visual de como eu trabalharia esses pontos?
+
+============================================================ MENSAGEM 3
+— FOLLOW-UP 2 SUGESTÃO: ~3 DIAS APÓS O FOLLOW-UP 1 OBJETIVO: TESTE DO
+PACIENTE ============================================================
+
+{{responsavel}}, tem um exercício simples que costumo fazer quando
+analiso um site na área da saúde.
+
+Entro como se fosse alguém que nunca conheceu a {{empresa}} e tento
+encontrar rapidamente:
+
+“O atendimento que procuro está aqui?” “Quem vai me atender?” “Por que
+eu deveria confiar?” “Como funciona?” “Como entro em contato ou agendo?”
+
+Quanto mais simples for esse caminho, mais fácil fica para quem já
+demonstrou interesse avançar.
+
+Você prefere que eu te mostre como o site da {{empresa}} se comporta
+nesse teste ou os pontos que eu priorizaria primeiro?
+
+============================================================ MENSAGEM 4
+— FOLLOW-UP 3 SUGESTÃO: ~3 A 4 DIAS APÓS O FOLLOW-UP 2 OBJETIVO: QUEBRA
+DE OBJEÇÃO / APROVEITAR SITE ATUAL
+============================================================
+
+Um ponto importante, {{responsavel}}:
+
+Encontrar oportunidades no site não significa necessariamente que vocês
+precisam descartar tudo e começar novamente.
+
+Às vezes algumas mudanças estratégicas já podem melhorar bastante o
+caminho de quem acessa:
+
+• apresentação dos serviços; • informações sobre os profissionais; •
+avaliações e elementos de confiança; • respostas para dúvidas
+importantes; • chamadas para WhatsApp ou agendamento.
+
+A ideia é aproveitar o que a {{empresa}} já possui e identificar onde
+existem oportunidades de melhoria.
+
+Você prefere que eu te mostre o que eu manteria no site atual ou o que
+eu priorizaria mudar primeiro?
+
+============================================================ MENSAGEM 5
+— FOLLOW-UP 4 SUGESTÃO: ~4 A 5 DIAS APÓS O FOLLOW-UP 3 OBJETIVO:
+DEMONSTRAÇÃO PERSONALIZADA
+============================================================
+
+{{responsavel}}, pensei em uma maneira mais prática de te mostrar isso.
+
+Posso pegar uma parte do site atual da {{empresa}} e montar uma sugestão
+visual de como eu reorganizaria a experiência pensando em confiança,
+apresentação e contato/agendamento.
+
+Assim você consegue comparar o atual com uma outra possibilidade antes
+de tomar qualquer decisão.
+
+Você prefere que eu trabalhe primeiro a página inicial ou uma página de
+serviço/procedimento?
+
+============================================================ MENSAGEM 6
+— FOLLOW-UP 5 SUGESTÃO: ~5 A 7 DIAS APÓS O FOLLOW-UP 4 OBJETIVO:
+ENCERRAMENTO COM CTA
+============================================================
+
+{{responsavel}}, vou encerrar meus contatos por aqui para não ficar
+insistindo no seu WhatsApp. 😅
+
+Te procurei porque a {{empresa}} já possui uma presença digital
+construída, mas encontrei algumas oportunidades para fazer o site
+participar mais ativamente do caminho entre interesse, confiança e
+contato/agendamento.
+
+Antes de encerrar, posso deixar essa análise pronta para você consultar
+quando tiver um tempo.
+
+Você prefere receber um resumo dos principais pontos por aqui ou uma
+análise visual em PDF?
+
+============================================================ FLUXO DA
+SEQUÊNCIA ============================================================
+
+1.  Primeiro contato → Curiosidade
+2.  Follow-up 1 → Diferença entre apresentar e conduzir
+3.  Follow-up 2 → Teste do paciente
+4.  Follow-up 3 → Aproveitar o site atual
+5.  Follow-up 4 → Demonstração personalizada
+6.  Follow-up 5 → Encerramento com CTA A/B
+
+REGRA IMPORTANTE PARA O CRM: Se o prospect responder em qualquer etapa,
+interromper imediatamente a sequência de follow-ups sem resposta e mover
+o contato para conversa/qualificação.
+
+{{responsavel}} deve permanecer salvo nos textos como variável opcional.
+Caso esteja vazio, o CRM deve remover a variável e ajustar a pontuação
+para que a mensagem continue natural.

@@ -31,7 +31,8 @@ test("abordagem individual, confirmação e follow-up sem sobrescrita silenciosa
   await expect(dialog.getByLabel("Modelo")).toHaveValue(/.+/);
   const rendered = await message.inputValue();
   expect(rendered).toContain("não têm um site próprio");
-  const text = "Olá, Ana! Uma conversa para Clínica Sorriso & equipe.";
+  const text =
+    "Olá, Ana! Uma conversa para Clínica Sorriso & equipe. Hoje vocês recebem agendamentos pelo site?";
   await message.fill(text);
   await dialog.getByRole("button", { name: "Copiar mensagem" }).click();
   await expect(dialog.getByRole("status")).toContainText("Mensagem copiada");
@@ -90,6 +91,40 @@ test("abordagem individual, confirmação e follow-up sem sobrescrita silenciosa
     "Primeira abordagem enviada via WhatsApp.",
   );
   await expect(page.locator("body")).toContainText("1º follow-up WhatsApp");
+  const followup = page.getByRole("link", {
+    name: "Enviar follow-up para Clínica Sorriso",
+    exact: true,
+  });
+  await expect(followup).toBeVisible();
+  const followupUrl = new URL((await followup.getAttribute("href"))!);
+  expect(followupUrl.pathname).toBe("/5511999998888");
+  expect(followupUrl.searchParams.get("text")).toContain(
+    "Hoje vocês recebem agendamentos pelo site?",
+  );
+  expect(followupUrl.searchParams.get("text")).toContain("Clínica Sorriso");
+  const writes: string[] = [];
+  page.on("request", (request) => {
+    if (request.url().includes("/rest/v1/") && request.method() !== "GET")
+      writes.push(request.url());
+  });
+  const followupPopup = context.waitForEvent("page");
+  await followup.click();
+  await (await followupPopup).close();
+  await expect(page.getByLabel("Etapa de Clínica Sorriso")).toHaveValue(
+    "CONTATADO",
+  );
+  expect(writes).toEqual([]);
+  await page.goto("/pipeline");
+  await expect(
+    page.getByRole("link", {
+      name: "Enviar follow-up para Clínica Sorriso",
+      exact: true,
+    }),
+  ).toBeVisible();
+  await page.screenshot({
+    path: `artifacts/followup-${info.project.name}.png`,
+    fullPage: true,
+  });
 });
 test("configurações de modelos, variável, duplicação e exclusão", async ({
   page,

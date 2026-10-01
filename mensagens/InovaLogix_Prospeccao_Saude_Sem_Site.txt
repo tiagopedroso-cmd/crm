@@ -1,0 +1,152 @@
+INOVALOGIX — SEQUÊNCIA DE PROSPECÇÃO ATIVA SEGMENTO: SAÚDE — SEM SITE
+
+Objetivo: Abordar clínicas, consultórios e profissionais da área da
+saúde que ainda não possuem site próprio, mostrando a oportunidade de
+fortalecer confiança, autoridade e facilitar o caminho até o contato ou
+agendamento.
+
+Variáveis: {{responsavel}} = Nome do responsável (opcional) {{usuario}}
+= Nome do usuário/comercial {{empresa}} = Nome da empresa/clínica
+
+REGRA DE PERSONALIZAÇÃO: Manter {{responsavel}} nas mensagens. Caso o
+nome não esteja disponível, o CRM deve remover a variável e ajustar
+automaticamente a pontuação/saudação.
+
+Exemplo: Com nome: “Oi, {{responsavel}}! Tudo bem?” Sem nome: “Oi! Tudo
+bem?”
+
+REGRA DE CTA: Todas as mensagens devem terminar com um CTA de escolha A
+ou B. As duas alternativas devem ser simples e fazer a conversa avançar.
+
+============================================================ MENSAGEM 1
+— PRIMEIRO CONTATO OBJETIVO: CURIOSIDADE
+============================================================
+
+Oi, {{responsavel}}! Tudo bem?
+
+Meu nome é {{usuario}}.
+
+Conheci o trabalho da {{empresa}} e percebi que hoje vocês concentram
+bastante da presença digital nas redes sociais.
+
+Notei um ponto que pode fazer diferença quando alguém conhece vocês pela
+primeira vez e começa a pesquisar mais antes de entrar em contato.
+
+Você prefere que eu te explique o que observei por aqui ou que eu te
+mostre visualmente?
+
+============================================================ MENSAGEM 2
+— FOLLOW-UP 1 SUGESTÃO: ~2 DIAS APÓS O PRIMEIRO CONTATO OBJETIVO:
+COMPORTAMENTO ANTES DO CONTATO
+============================================================
+
+Oi, {{responsavel}}!
+
+O ponto que me chamou atenção foi o seguinte:
+
+Na área da saúde, antes de entrar em contato, é natural que a pessoa
+queira conhecer melhor o profissional ou a clínica, entender os
+serviços, ver avaliações e encontrar informações que transmitam
+segurança.
+
+Hoje, no caso da {{empresa}}, boa parte dessa validação acaba dependendo
+das redes sociais.
+
+Um site próprio pode organizar essas informações em um único lugar e
+complementar o trabalho que vocês já fazem no Instagram.
+
+Você prefere que eu te mostre quais informações eu priorizaria nesse
+site ou um exemplo visual de como ele poderia ficar?
+
+============================================================ MENSAGEM 3
+— FOLLOW-UP 2 SUGESTÃO: ~3 DIAS APÓS O FOLLOW-UP 1 OBJETIVO: TESTE DE
+CONFIANÇA ============================================================
+
+{{responsavel}}, tem um exercício simples que costumo fazer:
+
+Imagine alguém que recebeu uma indicação da {{empresa}}, mas ainda não
+conhece vocês.
+
+Essa pessoa pesquisa o nome no Google para entender:
+
+“Quem são os profissionais?” “Quais serviços oferecem?” “Como funciona o
+atendimento?” “Onde atendem?” “Como entro em contato ou agendo?”
+
+Quanto mais fácil for encontrar essas respostas, menor é a distância
+entre a indicação e o contato.
+
+Você prefere que eu te mostre como organizaria essas informações para a
+{{empresa}} ou como ficaria o caminho até o agendamento?
+
+============================================================ MENSAGEM 4
+— FOLLOW-UP 3 SUGESTÃO: ~3 A 4 DIAS APÓS O FOLLOW-UP 2 OBJETIVO:
+INTEGRAR INSTAGRAM + SITE
+============================================================
+
+Um ponto importante, {{responsavel}}:
+
+Ter um site não significa deixar o Instagram de lado.
+
+Os dois podem cumprir funções diferentes.
+
+O Instagram ajuda alguém a descobrir e acompanhar o trabalho de vocês.
+
+O site pode concentrar serviços, profissionais, informações importantes,
+localização, avaliações e caminhos para contato ou agendamento.
+
+Assim, um canal fortalece o outro.
+
+Você prefere que eu te mostre como conectaria Instagram + site +
+WhatsApp ou como estruturaria somente a página inicial da {{empresa}}?
+
+============================================================ MENSAGEM 5
+— FOLLOW-UP 4 SUGESTÃO: ~4 A 5 DIAS APÓS O FOLLOW-UP 3 OBJETIVO:
+DEMONSTRAÇÃO PERSONALIZADA
+============================================================
+
+{{responsavel}}, pensei em tornar essa ideia mais concreta.
+
+Posso montar uma prévia de como eu imaginaria o site da {{empresa}},
+seguindo a identidade e os serviços de vocês.
+
+Não seria um modelo genérico de clínica: a ideia é mostrar como poderia
+ficar aplicado à realidade de vocês.
+
+Você prefere que eu monte primeiro uma versão para celular ou uma versão
+para computador?
+
+============================================================ MENSAGEM 6
+— FOLLOW-UP 5 SUGESTÃO: ~5 A 7 DIAS APÓS O FOLLOW-UP 4 OBJETIVO:
+ENCERRAMENTO COM CTA
+============================================================
+
+{{responsavel}}, vou encerrar meus contatos por aqui para não ficar
+insistindo no seu WhatsApp. 😅
+
+Te procurei porque acredito que o trabalho que a {{empresa}} já
+apresenta nas redes sociais poderia ter também um espaço próprio para
+quem pesquisa vocês e quer conhecer melhor antes de entrar em contato.
+
+Antes de encerrar, posso deixar uma ideia pronta para você avaliar
+quando tiver um tempo.
+
+Você prefere receber uma prévia visual de como o site poderia ficar ou
+um resumo com a estrutura que eu recomendaria?
+
+============================================================ FLUXO DA
+SEQUÊNCIA ============================================================
+
+1.  Primeiro contato → Curiosidade
+2.  Follow-up 1 → Comportamento antes do contato
+3.  Follow-up 2 → Confiança e validação
+4.  Follow-up 3 → Instagram + site
+5.  Follow-up 4 → Demonstração personalizada
+6.  Follow-up 5 → Encerramento com CTA A/B
+
+REGRA IMPORTANTE PARA O CRM: Se o prospect responder em qualquer etapa,
+interromper imediatamente a sequência de follow-ups sem resposta e mover
+o contato para conversa/qualificação.
+
+{{responsavel}} deve permanecer salvo nos textos como variável opcional.
+Caso esteja vazio, o CRM deve remover a variável e ajustar a pontuação
+para que a mensagem continue natural.

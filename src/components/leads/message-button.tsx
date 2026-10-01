@@ -10,17 +10,21 @@ import {
   listTemplates,
   confirmApproach,
   scheduleFollowup,
+  scheduleCadenceFollowup,
 } from "@/services/outreach";
 import { getLead } from "@/services/crm";
 import type { Lead } from "@/types/crm";
 import { Modal, Loading, Notice } from "@/components/ui";
+import { FollowupButton } from "./followup-button";
 
 export function MessageButton({
   lead,
   compact = false,
+  showFollowup = true,
 }: {
   lead: Lead;
   compact?: boolean;
+  showFollowup?: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const valid = whatsappUrl(lead.whatsapp);
@@ -49,6 +53,7 @@ export function MessageButton({
         </small>
       )}
       {open && <ApproachDialog lead={lead} onClose={() => setOpen(false)} />}
+      {showFollowup && <FollowupButton lead={lead} compact={compact} />}
     </>
   );
 }
@@ -154,12 +159,7 @@ function ApproachDialog({
     try {
       const instant = inputToInstant(at);
       if (!instant || new Date(instant) <= new Date()) throw new Error("date");
-      const saved = await scheduleFollowup(
-        lead.id,
-        instant,
-        current.next_action,
-        current.next_action_at,
-      );
+      const saved = await scheduleCadenceFollowup(lead.id, instant);
       if (!saved) {
         setCurrent(await getLead(lead.id));
         setReplace(false);

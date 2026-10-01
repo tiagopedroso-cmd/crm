@@ -1,6 +1,7 @@
 import type { Approach } from "@/lib/outreach";
 import { browserClient } from "@/lib/supabase/client";
 import { dayKey } from "@/lib/utils";
+import { summarizePipeline, type ValuedLead } from "@/lib/pipeline-values";
 import { leadSchema } from "@/schemas/lead";
 import type {
   Filters,
@@ -66,6 +67,11 @@ export async function listLeads(
       q = q.ilike(field, `%${filters[field]!.replace(/[%_]/g, "")}%`);
   if (filters.from) q = q.gte("inserted_on", filters.from);
   if (filters.to) q = q.lte("inserted_on", filters.to);
+  if (filters.cadence_status) q = q.eq("cadence_status", filters.cadence_status);
+  if (filters.campaign) q = q.ilike("cadence_campaign", `%${filters.campaign.replace(/[%_]/g, "")}%`);
+  if (filters.followup === "overdue") q = q.eq("stage", "CONTATADO").eq("cadence_status", "IN_PROGRESS").lt("cadence_next_at", new Date().toISOString());
+  if (filters.followup === "scheduled") q = q.eq("stage", "CONTATADO").eq("cadence_status", "IN_PROGRESS").not("cadence_next_at", "is", null);
+  if (filters.followup === "unscheduled") q = q.eq("stage", "CONTATADO").eq("cadence_status", "IN_PROGRESS").is("cadence_next_at", null);
   if (filters.action === "missing")
     q = q
       .is("next_action_at", null)
@@ -145,6 +151,23 @@ export async function metrics(start: string, end: string, owner?: string) {
   });
   if (error) throw error;
   return data as Metrics;
+}
+export async function pipelineValues(owner: string) {
+  const db = browserClient();
+  const rows: ValuedLead[] = [];
+  const size = 500;
+  for (let offset = 0; ; offset += size) {
+    const { data, error } = await db
+      .from("leads")
+      .select("stage,potential_value,closed_value")
+      .eq("owner_id", owner)
+      .order("id")
+      .range(offset, offset + size - 1);
+    if (error) throw error;
+    rows.push(...(data as ValuedLead[]));
+    if (data.length < size) break;
+  }
+  return summarizePipeline(rows);
 }
 export async function leadDetails(id: string, page = 0) {
   const db = browserClient();

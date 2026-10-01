@@ -1,0 +1,189 @@
+INOVALOGIX — SEQUÊNCIA DE PROSPECÇÃO ATIVA SEGMENTO: LOGÍSTICA —
+PLANILHAS
+
+Objetivo: Abordar empresas que utilizam planilhas em processos
+importantes, mostrando de forma prática como controles que cresceram
+junto com a operação podem evoluir para sistemas próprios, automações e
+dashboards.
+
+Variáveis: {{responsavel}} = Nome do responsável (opcional) {{usuario}}
+= Nome do usuário/comercial {{empresa}} = Nome da empresa {{nicho}} =
+Segmento/nicho da empresa
+
+REGRA DE PERSONALIZAÇÃO: Manter {{responsavel}} nas mensagens. Caso o
+nome não esteja disponível, o CRM deve remover a variável e ajustar
+automaticamente a pontuação/saudação.
+
+REGRA DE ABORDAGEM: Não afirmar que a empresa possui um problema
+específico sem conhecer sua operação. Apresentar situações comuns, gerar
+identificação e mostrar uma oportunidade concreta antes de pedir
+informações ao prospect.
+
+REGRA DE CTA: Apresentar duas possibilidades de avanço de forma natural
+e finalizar com: “O que prefere?”
+
+Se o prospect responder em qualquer etapa, interromper imediatamente a
+sequência de follow-ups sem resposta e mover o contato para
+conversa/qualificação.
+
+============================================================ MENSAGEM 1
+— PRIMEIRO CONTATO OBJETIVO: CURIOSIDADE + OPORTUNIDADE
+============================================================
+
+Oi, {{responsavel}}! Tudo bem?
+
+Meu nome é {{usuario}}.
+
+Conheci a {{empresa}} pesquisando empresas de {{nicho}} e queria
+compartilhar uma situação que encontramos com frequência.
+
+Muitas empresas começam controlando a operação em planilhas porque é
+simples e funciona bem.
+
+O problema é que, conforme a operação cresce, algumas dessas planilhas
+acabam virando praticamente um sistema — só que ainda dependem de
+atualização, conferência e acompanhamento manual.
+
+Já transformamos controles assim em sistemas próprios.
+
+Posso te mostrar um caso prático ou, se preferir, me conta uma planilha
+importante que vocês usam hoje na {{empresa}} e eu te mostro como ela
+poderia ser transformada em um sistema. Sem compromisso nenhum!
+
+O que prefere?
+
+============================================================ MENSAGEM 2
+— FOLLOW-UP 1 SUGESTÃO: ~2 DIAS APÓS O PRIMEIRO CONTATO OBJETIVO: QUANDO
+A PLANILHA COMEÇA A VIRAR SISTEMA
+============================================================
+
+Oi, {{responsavel}}!
+
+Só complementando o que te falei sobre as planilhas.
+
+Quando uma planilha começa a ter várias abas, fórmulas, responsáveis,
+atualizações diárias e informações que outras pessoas precisam
+consultar, na prática ela já está fazendo o papel de um pequeno sistema.
+
+A diferença é que muita coisa ainda depende de alguém alimentar,
+conferir e compartilhar manualmente.
+
+Posso te mostrar um exemplo de uma planilha que virou sistema ou, se
+preferir, um modelo de dashboard que centraliza essas informações.
+
+O que prefere?
+
+============================================================ MENSAGEM 3
+— FOLLOW-UP 2 SUGESTÃO: ~3 DIAS APÓS O FOLLOW-UP 1 OBJETIVO:
+RECONHECIMENTO
+============================================================
+
+{{responsavel}}, alguns sinais costumam aparecer quando uma planilha
+começa a ficar pequena para o processo:
+
+“não mexe nessa fórmula” “qual é a versão atual?” “faltou atualizar”
+“preciso juntar esses dados” “me manda a planilha depois”
+
+Se alguma dessas situações acontece por aí, provavelmente existe uma
+oportunidade interessante de simplificar esse controle.
+
+Posso te mostrar como essas situações ficam dentro de um sistema ou, se
+preferir, me conta qual controle em Excel mais exige trabalho hoje na
+{{empresa}} e eu penso em uma alternativa.
+
+O que prefere?
+
+============================================================ MENSAGEM 4
+— FOLLOW-UP 3 SUGESTÃO: ~3 A 4 DIAS APÓS O FOLLOW-UP 2 OBJETIVO: ANTES X
+DEPOIS ============================================================
+
+{{responsavel}}, vou te dar um exemplo simples.
+
+Um controle pode funcionar hoje assim:
+
+Planilha → preenchimento → conferência → envio → atualização →
+consolidação.
+
+Dependendo do processo, poderia funcionar assim:
+
+Sistema → informação registrada uma vez → atualização automática →
+equipe consulta → gestão acompanha em tempo real.
+
+E as regras que a {{empresa}} já criou na própria planilha podem servir
+como ponto de partida para desenvolver a solução.
+
+Posso te mostrar visualmente um antes e depois ou, se preferir, um
+exemplo de dashboard criado para substituir esse tipo de controle.
+
+O que prefere?
+
+============================================================ MENSAGEM 5
+— FOLLOW-UP 4 SUGESTÃO: ~4 A 5 DIAS APÓS O FOLLOW-UP 3 OBJETIVO:
+VALORIZAR O CONTROLE EXISTENTE
+============================================================
+
+Um detalhe importante, {{responsavel}}:
+
+Quando uma empresa usa a mesma planilha há bastante tempo, ela
+normalmente já carrega algo muito valioso: as regras reais de como
+aquele processo funciona.
+
+Então a ideia não é simplesmente jogar esse controle fora.
+
+Podemos aproveitar o que já funciona e evoluir para uma solução com
+acessos, histórico, automações, indicadores e informações centralizadas.
+
+Posso te mostrar um exemplo dessa evolução ou, se preferir, me passa um
+controle que vocês usam na {{empresa}} e eu te digo como eu estruturaria
+isso em um sistema.
+
+O que prefere?
+
+============================================================ MENSAGEM 6
+— FOLLOW-UP 5 SUGESTÃO: ~5 A 7 DIAS APÓS O FOLLOW-UP 4 OBJETIVO:
+ENCERRAMENTO + ENTREGA DE VALOR
+============================================================
+
+{{responsavel}}, vou encerrar meus contatos por aqui para não ficar
+insistindo no seu WhatsApp. 😅
+
+Só queria deixar uma última ideia:
+
+Se existe hoje na {{empresa}} alguma planilha que é essencial para a
+operação e precisa ser atualizada, conferida ou compartilhada
+constantemente, talvez ela já seja uma boa candidata para virar algo
+mais automatizado.
+
+É exatamente esse tipo de projeto que desenvolvemos.
+
+Posso te deixar um caso prático para consultar ou, se preferir, você me
+passa uma planilha/processo que usam hoje e eu monto um esboço de
+solução sem compromisso nenhum.
+
+O que prefere?
+
+============================================================ FLUXO DA
+SEQUÊNCIA ============================================================
+
+1.  Primeiro contato → Curiosidade + oportunidade
+2.  Follow-up 1 → Quando a planilha começa a virar sistema
+3.  Follow-up 2 → Reconhecimento de situações do dia a dia
+4.  Follow-up 3 → Antes e depois
+5.  Follow-up 4 → Valorizar as regras já existentes na planilha
+6.  Follow-up 5 → Encerramento + entrega de valor
+
+DIFERENCIAÇÃO DA CAMPANHA:
+
+PLANILHAS: “Essa planilha talvez já tenha virado um sistema sem vocês
+perceberem.”
+
+PROCESSOS: “Essa sequência de tarefas talvez não precise mais ser
+manual.”
+
+REGRA IMPORTANTE PARA O CRM: {{responsavel}} deve permanecer salvo como
+variável opcional. Caso esteja vazio, remover a variável e ajustar a
+pontuação para que a mensagem continue natural.
+
+Apesar do nome interno do segmento ser “LOGÍSTICA — PLANILHAS”, as
+mensagens utilizam {{nicho}} para permitir aplicação em diferentes
+segmentos.
