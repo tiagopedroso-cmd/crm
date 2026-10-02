@@ -51,21 +51,166 @@ async function allRows<T>(build: (from: number, to: number) => any) {
   return rows;
 }
 
-export async function dailyProspectingPlan(ownerId: string): Promise<DailyProspectingPlan> {
+
+export interface DailyProspectingFilters {
+  responsibleId?: string;
+  campaign?: string;
+  niche?: string;
+}
+
+export interface DailyProspectingFilterOptions {
+  responsibles: { id: string; name: string }[];
+  campaigns: string[];
+  niches: string[];
+}
+
+function applyLeadFilters(
+  query: any,
+  filters: DailyProspectingFilters,
+): any {
+  let q = query;
+
+  if (filters.responsibleId) {
+    q = q.eq("owner_id", filters.responsibleId);
+  }
+
+  if (filters.campaign) {
+    q = q.eq("cadence_campaign", filters.campaign);
+  }
+
+  if (filters.niche) {
+    q = q.eq("niche", filters.niche);
+  }
+
+  return q;
+}
+
+export async function dailyProspectingFilterOptions(
+  defaultOwnerId: string,
+): Promise<DailyProspectingFilterOptions> {
+  const db = browserClient();
+
+  const [{ data: profiles, error: profilesError }, leads] = await Promise.all([
+    db.from("profiles").select("id,display_name").order("display_name"),
+    allRows<{
+      owner_id: string;
+      niche: string | null;
+      cadence_campaign: string | null;
+    }>((from, to) =>
+      db
+        .from("lead_listing")
+        .select("owner_id,niche,cadence_campaign")
+        .range(from, to),
+    ),
+  ]);
+
+  if (profilesError) throw profilesError;
+
+  const visibleOwnerIds = new Set(leads.map((lead) => lead.owner_id));
+  const responsibles = (profiles || [])
+    .filter((profile) =>
+      visibleOwnerIds.size ? visibleOwnerIds.has(profile.id) : profile.id === defaultOwnerId,
+    )
+    .map((profile) => ({
+      id: profile.id,
+      name: profile.display_name || "Sem nome",
+    }));
+
+  if (!responsibles.some((item) => item.id === defaultOwnerId)) {
+    const ownProfile = (profiles || []).find((profile) => profile.id === defaultOwnerId);
+    if (ownProfile) {
+      responsibles.unshift({
+        id: ownProfile.id,
+        name: ownProfile.display_name || "Meu usuário",
+      });
+    }
+  }
+
+  return {
+    responsibles,
+    campaigns: Array.from(
+      new Set(
+        leads
+          .map((lead) => (lead.cadence_campaign || "").trim())
+          .filter(Boolean),
+      ),
+    ).sort((a, b) => a.localeCompare(b, "pt-BR")),
+    niches: Array.from(
+      new Set(
+        leads.map((lead) => (lead.niche || "").trim()).filter(Boolean),
+      ),
+    ).sort((a, b) => a.localeCompare(b, "pt-BR")),
+  };
+}
+
+export async function dailyProspectingPlan(
+  ownerId: string,
+  filters: DailyProspectingFilters = {},
+): Promise<DailyProspectingPlan> {
+
   const db = browserClient();
   const today = dateOnly(new Date());
   const start = `${today}T00:00:00-03:00`;
   const end = `${today}T23:59:59.999-03:00`;
 
   const [followups, newLeads, approaches] = await Promise.all([
-    allRows<Lead>((from, to) => db.from("lead_listing").select("*").eq("owner_id", ownerId).eq("stage", "CONTATADO").eq("cadence_status", "IN_PROGRESS").not("cadence_next_at", "is", null).lte("cadence_next_at", end).order("cadence_next_at", { ascending: true }).range(from, to)),
-    allRows<Lead>((from, to) => db.from("lead_listing").select("*").eq("owner_id", ownerId).eq("stage", "NOVO LEAD").order("inserted_on", { ascending: true }).order("created_at", { ascending: true }).range(from, to)),
-    allRows<{ interaction_id: string }>((from, to) => db.from("lead_approaches").select("interaction_id").eq("user_id", ownerId).gte("confirmed_at", start).lte("confirmed_at", end).order("confirmed_at").range(from, to)),
+    allRows<Lead>((from, to) => {
+      let q = db
+        .from("lead_listing")
+        .select("*")
+        .eq("stage", "CONTATADO")
+        .eq("cadence_status", "IN_PROGRESS")
+        .not("cadence_next_at", "is", null)
+        .lte("cadence_next_at", end);
+      q = applyLeadFilters(q, filters);
+      if (!filters.responsibleId) q = q.eq("owner_id", ownerId);
+      return q.order("cadence_next_at", { ascending: true }).range(from, to);
+    }),
+    allRows<Lead>((from, to) => {
+      let q = db.from("lead_listing").select("*").eq("stage", "NOVO LEAD");
+      if (filters.responsibleId) q = q.eq("owner_id", filters.responsibleId);
+      else q = q.eq("owner_id", ownerId);
+      if (filters.niche) q = q.eq("niche", filters.niche);
+      // Lead novo ainda não possui campanha iniciada; ao filtrar campanha,
+      // ele não entra na capacidade recomendada.
+      if (filters.campaign) q = q.eq("id", "00000000-0000-0000-0000-000000000000");
+      return q
+        .order("inserted_on", { ascending: true })
+        .order("created_at", { ascending: true })
+        .range(from, to);
+    }),
+    allRows<{ interaction_id: string; lead_id: string }>((from, to) => {
+      let q = db
+        .from("lead_approaches")
+        .select("interaction_id,lead_id")
+        .gte("confirmed_at", start)
+        .lte("confirmed_at", end);
+      if (filters.responsibleId) q = q.eq("user_id", filters.responsibleId);
+      else q = q.eq("user_id", ownerId);
+      if (filters.niche) q = q.eq("niche", filters.niche);
+      return q.order("confirmed_at").range(from, to);
+    }),
   ]);
+
+  let filteredApproaches = approaches;
+  if (filters.campaign && approaches.length) {
+    const approachLeadIds = Array.from(new Set(approaches.map((a) => a.lead_id).filter(Boolean)));
+    const campaignLeadIds = new Set<string>();
+    for (let i = 0; i < approachLeadIds.length; i += 100) {
+      const { data, error } = await db
+        .from("lead_listing")
+        .select("id,cadence_campaign")
+        .in("id", approachLeadIds.slice(i, i + 100))
+        .eq("cadence_campaign", filters.campaign);
+      if (error) throw error;
+      for (const lead of data || []) campaignLeadIds.add(lead.id);
+    }
+    filteredApproaches = approaches.filter((a) => campaignLeadIds.has(a.lead_id));
+  }
 
   let performedFollowups = 0;
   let performedNew = 0;
-  const interactionIds = approaches.map((a) => a.interaction_id).filter(Boolean);
+  const interactionIds = filteredApproaches.map((a) => a.interaction_id).filter(Boolean);
   for (let i = 0; i < interactionIds.length; i += 100) {
     const { data, error } = await db.from("lead_interactions").select("id,type").in("id", interactionIds.slice(i, i + 100));
     if (error) throw error;
@@ -98,7 +243,16 @@ export async function dailyProspectingPlan(ownerId: string): Promise<DailyProspe
 
   const futureDays = nextBusinessDays(today, 4);
   const futureEnd = `${futureDays.at(-1)}T23:59:59.999-03:00`;
-  const { data: future, error: futureError } = await db.from("lead_listing").select("cadence_next_at").eq("owner_id", ownerId).eq("stage", "CONTATADO").eq("cadence_status", "IN_PROGRESS").gt("cadence_next_at", end).lte("cadence_next_at", futureEnd);
+  let futureQuery = db
+    .from("lead_listing")
+    .select("cadence_next_at")
+    .eq("stage", "CONTATADO")
+    .eq("cadence_status", "IN_PROGRESS")
+    .gt("cadence_next_at", end)
+    .lte("cadence_next_at", futureEnd);
+  futureQuery = applyLeadFilters(futureQuery, filters);
+  if (!filters.responsibleId) futureQuery = futureQuery.eq("owner_id", ownerId);
+  const { data: future, error: futureError } = await futureQuery;
   if (futureError) throw futureError;
   const forecast = futureDays.map((day) => ({ day, followups: (future || []).filter((x) => String(x.cadence_next_at).slice(0, 10) === day).length }));
 
