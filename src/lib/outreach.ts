@@ -1,5 +1,6 @@
 import type { Lead } from "@/types/crm";
 import { dayKey } from "@/lib/utils";
+import { addBusinessDays } from "@/lib/business-days";
 export const TEMPLATE_GROUPS = [
   "Saúde / Estética",
   "Serviços Técnicos",
@@ -234,12 +235,5 @@ export function renderTemplate(
   return { text, unknown };
 }
 export function followupDate(now = new Date()) {
-  const date = new Date(`${dayKey(now)}T12:00:00-03:00`);
-  let added = 0;
-  while (added < 2) {
-    date.setUTCDate(date.getUTCDate() + 1);
-    const weekday = date.getUTCDay();
-    if (weekday !== 0 && weekday !== 6) added += 1;
-  }
-  return `${dayKey(date)}T09:00`;
+  return `${addBusinessDays(dayKey(now), 3)}T09:00`;
 }

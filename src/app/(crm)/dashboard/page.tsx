@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import Link from "next/link";
 import {
   Users,
@@ -15,6 +15,7 @@ import { PeriodFilter } from "@/components/analytics/period-filter";
 import { AgendaList } from "@/components/analytics/agenda-list";
 import { Funnel } from "@/components/analytics/funnel";
 import { PipelineValues } from "@/components/analytics/pipeline-values";
+import { DailyProspectingTarget } from "@/components/analytics/daily-prospecting-target";
 import { Loading, ErrorState, Progress } from "@/components/ui";
 export default function Dashboard() {
   const profile = useProfile();
@@ -36,7 +37,7 @@ export default function Dashboard() {
     <>
       <div className="page-heading">
         <div>
-          <p className="eyebrow">SEU DIA, COM DIREÇÃO</p>
+          <p className="eyebrow">SEU DIA, COM DIREÃ‡ÃƒO</p>
           <h1>
             Vamos fazer acontecer
             {profile.display_name
@@ -55,64 +56,37 @@ export default function Dashboard() {
       </div>
       {!valid && (
         <p role="alert" className="error">
-          O fim do período deve ser igual ou posterior ao início.
+          O fim do perÃ­odo deve ser igual ou posterior ao inÃ­cio.
         </p>
       )}
       {m && goals && (
         <>
-          <section className="daily-focus">
-            <div className="focus-copy">
-              <span className="eyebrow">FOCO DE HOJE</span>
-              <h2>
-                {Math.max(0, goals.daily_leads - m.new_today)} novas conversas
-                <br /> para alcançar sua meta.
-              </h2>
-              <p>Os leads de hoje são os negócios de amanhã.</p>
-              <Link className="focus-link" href="/leads">
-                Cuidar dos meus leads <ArrowUpRight size={18} />
-              </Link>
-            </div>
-            <div className="focus-goal">
-              <div className="goal-label">
-                <span>Novos leads qualificados</span>
-                <Target size={20} />
-              </div>
-              <div className="goal-number">
-                {m.new_today}
-                <span>/ {goals.daily_leads}</span>
-              </div>
-              <Progress value={m.new_today} max={goals.daily_leads} />
-              <p>
-                {Math.round((m.new_today / goals.daily_leads) * 100)}% da meta
-                diária · {m.new_week} nesta semana
-              </p>
-            </div>
-          </section>
+          <DailyProspectingTarget owner={profile.id} />
           <PipelineValues owner={profile.id} />
           <div className="kpi-grid">
             {[
               [
-                "Leads no período",
+                "Leads no perÃ­odo",
                 m.leads,
-                `${m.new_today} hoje · ${m.new_month} no mês`,
+                `${m.new_today} hoje Â· ${m.new_month} no mÃªs`,
                 Users,
               ],
               [
                 "Oportunidades abertas",
                 m.opportunities,
-                `${m.negotiations} em negociação`,
+                `${m.negotiations} em negociaÃ§Ã£o`,
                 TrendingUp,
               ],
               [
                 "Faturamento",
                 money(m.revenue),
-                `${m.closings} negócios fechados`,
+                `${m.closings} negÃ³cios fechados`,
                 Wallet,
               ],
               [
-                "Conversão",
+                "ConversÃ£o",
                 `${m.conversion}%`,
-                "Leads do período → clientes",
+                "Leads do perÃ­odo â†’ clientes",
                 Target,
               ],
             ].map(([label, value, hint, Icon]) => {
@@ -136,14 +110,14 @@ export default function Dashboard() {
             </div>
             <Link href="/agenda">
               {m.due_today}
-              <span>Ações para hoje · {m.followups_today} follow-ups</span>
+              <span>AÃ§Ãµes para hoje Â· {m.followups_today} follow-ups</span>
             </Link>
             <Link
               className={m.overdue ? "overdue" : ""}
               href="/agenda?f=overdue"
             >
               {m.overdue}
-              <span>Ações atrasadas · {m.followups_overdue} follow-ups</span>
+              <span>AÃ§Ãµes atrasadas Â· {m.followups_overdue} follow-ups</span>
             </Link>
             <div>
               <strong>{m.awaiting_proposals}</strong>
@@ -151,11 +125,11 @@ export default function Dashboard() {
             </div>
             <div>
               <strong>{m.meetings}</strong>
-              <span>Reuniões agendadas</span>
+              <span>ReuniÃµes agendadas</span>
             </div>
             <Link href="/agenda?f=missing">
               {m.missing_action}
-              <span>Sem próxima ação</span>
+              <span>Sem prÃ³xima aÃ§Ã£o</span>
             </Link>
           </section>
           <div className="dashboard-columns">
@@ -163,14 +137,14 @@ export default function Dashboard() {
             <section className="card panel weekly-goal">
               <div className="section-heading">
                 <div>
-                  <p className="eyebrow">CONSISTÊNCIA TRAZ RESULTADO</p>
+                  <p className="eyebrow">CONSISTÃŠNCIA TRAZ RESULTADO</p>
                   <h2>Seu ritmo da semana</h2>
                 </div>
                 <Target size={21} />
               </div>
               <div className="weekly-value">{money(m.weekly_revenue)}</div>
               <p className="muted">
-                de {money(goals.weekly_revenue)} em negócios fechados
+                de {money(goals.weekly_revenue)} em negÃ³cios fechados
               </p>
               <Progress value={m.weekly_revenue} max={goals.weekly_revenue} />
               <div className="remaining">
@@ -182,11 +156,11 @@ export default function Dashboard() {
               <div className="mini-metrics">
                 <div>
                   <strong>{m.proposals}</strong>
-                  <span>Propostas no período</span>
+                  <span>Propostas no perÃ­odo</span>
                 </div>
                 <div>
                   <strong>{money(m.ticket)}</strong>
-                  <span>Ticket médio</span>
+                  <span>Ticket mÃ©dio</span>
                 </div>
               </div>
               <Link className="text-button" href="/placar">
@@ -201,7 +175,7 @@ export default function Dashboard() {
               <h2>Potencial em movimento</h2>
               <p className="pipeline-value">{money(m.pipeline)}</p>
               <p className="muted">
-                Valor potencial de todos os negócios ativos.
+                Valor potencial de todos os negÃ³cios ativos.
               </p>
               <hr />
               <h3>Meta mensal total</h3>
@@ -217,7 +191,7 @@ export default function Dashboard() {
                 max={goals.monthly_revenue + goals.monthly_system_revenue}
               />
               <p className="small muted">
-                Principal: {money(goals.monthly_revenue)} · Sistemas:{" "}
+                Principal: {money(goals.monthly_revenue)} Â· Sistemas:{" "}
                 {money(goals.monthly_system_revenue)}
               </p>
               <Link className="btn" href="/pipeline">
@@ -230,3 +204,4 @@ export default function Dashboard() {
     </>
   );
 }
+

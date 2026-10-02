@@ -37,6 +37,14 @@
   ],
   "exclude": [
     "node_modules",
-    ".next-e2e"
+    ".next-e2e",
+    "CRM InovaLogix",
+    "CRM InovaLogix/**",
+    "CRM",
+    "CRM/**",
+    "Patch_CRM_Reativar_Cadencia",
+    "Patch_CRM_Reativar_Cadencia/**",
+    "versões",
+    "versões/**"
   ]
 }

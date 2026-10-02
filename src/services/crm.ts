@@ -72,6 +72,10 @@ export async function listLeads(
   if (filters.followup === "overdue") q = q.eq("stage", "CONTATADO").eq("cadence_status", "IN_PROGRESS").lt("cadence_next_at", new Date().toISOString());
   if (filters.followup === "scheduled") q = q.eq("stage", "CONTATADO").eq("cadence_status", "IN_PROGRESS").not("cadence_next_at", "is", null);
   if (filters.followup === "unscheduled") q = q.eq("stage", "CONTATADO").eq("cadence_status", "IN_PROGRESS").is("cadence_next_at", null);
+  if (filters.followup === "today") q = q.eq("stage", "CONTATADO").eq("cadence_status", "IN_PROGRESS").gte("cadence_next_at", `${dayKey()}T00:00:00-03:00`).lte("cadence_next_at", `${dayKey()}T23:59:59.999-03:00`);
+  if (filters.followup === "upcoming") q = q.eq("stage", "CONTATADO").eq("cadence_status", "IN_PROGRESS").gt("cadence_next_at", `${dayKey()}T23:59:59.999-03:00`);
+  if (filters.attempt && /^[1-5]$/.test(filters.attempt)) q = q.eq("cadence_step", Number(filters.attempt) - 1);
+  if (filters.attempt === "completed") q = q.eq("cadence_status", "COMPLETED");
   if (filters.action === "missing")
     q = q
       .is("next_action_at", null)

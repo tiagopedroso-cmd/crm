@@ -209,7 +209,8 @@ export default function Pipeline() {
         <label>Inserido até<input type="date" value={filters.to || ""} onChange={e=>setFilters(f=>({...f,to:e.target.value}))}/></label>
         <label>Status da cadência<select value={filters.cadence_status || ""} onChange={e=>setFilters(f=>({...f,cadence_status:e.target.value}))}><option value="">Todos</option><option value="IN_PROGRESS">Em andamento</option><option value="COMPLETED">Concluída</option><option value="RESPONDED">Respondida</option><option value="PAUSED">Pausada</option></select></label>
         <label>Campanha<input placeholder="Ex.: PLANILHAS" value={filters.campaign || ""} onChange={e=>setFilters(f=>({...f,campaign:e.target.value}))}/></label>
-        <label>Próximo follow-up<select value={filters.followup || ""} onChange={e=>setFilters(f=>({...f,followup:e.target.value}))}><option value="">Todos</option><option value="scheduled">Agendado</option><option value="overdue">Atrasado</option><option value="unscheduled">Sem agendamento</option></select></label>
+        <label>Tentativa<select value={filters.attempt || ""} onChange={e=>setFilters(f=>({...f,attempt:e.target.value}))}><option value="">Todas</option><option value="1">1/5</option><option value="2">2/5</option><option value="3">3/5</option><option value="4">4/5</option><option value="5">5/5</option><option value="completed">Concluída</option></select></label>
+        <label>Próximo follow-up<select value={filters.followup || ""} onChange={e=>setFilters(f=>({...f,followup:e.target.value}))}><option value="">Todos</option><option value="today">Hoje</option><option value="overdue">Atrasado</option><option value="upcoming">Próximos</option><option value="scheduled">Agendado</option><option value="unscheduled">Sem agendamento</option></select></label>
         <button className="btn" onClick={()=>setFilters({})}>Limpar filtros</button>
       </div>
       <Notice text={message} />

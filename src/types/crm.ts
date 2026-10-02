@@ -125,6 +125,7 @@ export interface Lead {
   cadence_total?: number | null;
   cadence_campaign?: string | null;
   cadence_next_at?: string | null;
+  cadence_last_sent_at?: string | null;
 }
 export interface Interaction {
   id: string;
@@ -234,6 +235,7 @@ export interface Filters {
   cadence_status?: string;
   campaign?: string;
   followup?: string;
+  attempt?: string;
 }
 export const EMPTY_FILTERS: Filters = {
   created_by: "",
@@ -252,4 +254,5 @@ export const EMPTY_FILTERS: Filters = {
   cadence_status: "",
   campaign: "",
   followup: "",
+  attempt: "",
 };
