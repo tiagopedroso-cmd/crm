@@ -110,7 +110,7 @@ export function DailyProspectingTarget({ owner }: { owner: string }) {
                 }))
               }
             >
-              <option value="">Meu usuário</option>
+              <option value="">Todos</option>
               {(options.data?.responsibles || []).map((item) => (
                 <option key={item.id} value={item.id}>
                   {item.name}
