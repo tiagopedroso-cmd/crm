@@ -162,15 +162,18 @@ export async function dailyProspectingPlan(
         .eq("cadence_status", "IN_PROGRESS")
         .not("cadence_next_at", "is", null)
         .lte("cadence_next_at", end);
-      q = applyLeadFilters(q, filters);
-      if (!filters.responsibleId) q = q.eq("owner_id", ownerId);
-      return q.order("cadence_next_at", { ascending: true }).range(from, to);
+q = applyLeadFilters(q, filters);
+return q.order("cadence_next_at", { ascending: true }).range(from, to);
     }),
     allRows<Lead>((from, to) => {
       let q = db.from("lead_listing").select("*").eq("stage", "NOVO LEAD");
-      if (filters.responsibleId) q = q.eq("owner_id", filters.responsibleId);
-      else q = q.eq("owner_id", ownerId);
-      if (filters.niche) q = q.eq("niche", filters.niche);
+if (filters.responsibleId) {
+  q = q.eq("owner_id", filters.responsibleId);
+}
+
+if (filters.niche) {
+  q = q.eq("niche", filters.niche);
+}
       // Lead novo ainda não possui campanha iniciada; ao filtrar campanha,
       // ele não entra na capacidade recomendada.
       if (filters.campaign) q = q.eq("id", "00000000-0000-0000-0000-000000000000");
@@ -185,9 +188,13 @@ export async function dailyProspectingPlan(
         .select("interaction_id,lead_id")
         .gte("confirmed_at", start)
         .lte("confirmed_at", end);
-      if (filters.responsibleId) q = q.eq("user_id", filters.responsibleId);
-      else q = q.eq("user_id", ownerId);
-      if (filters.niche) q = q.eq("niche", filters.niche);
+if (filters.responsibleId) {
+  q = q.eq("user_id", filters.responsibleId);
+}
+
+if (filters.niche) {
+  q = q.eq("niche", filters.niche);
+}
       return q.order("confirmed_at").range(from, to);
     }),
   ]);
@@ -250,8 +257,7 @@ export async function dailyProspectingPlan(
     .eq("cadence_status", "IN_PROGRESS")
     .gt("cadence_next_at", end)
     .lte("cadence_next_at", futureEnd);
-  futureQuery = applyLeadFilters(futureQuery, filters);
-  if (!filters.responsibleId) futureQuery = futureQuery.eq("owner_id", ownerId);
+futureQuery = applyLeadFilters(futureQuery, filters);
   const { data: future, error: futureError } = await futureQuery;
   if (futureError) throw futureError;
   const forecast = futureDays.map((day) => ({ day, followups: (future || []).filter((x) => String(x.cadence_next_at).slice(0, 10) === day).length }));
