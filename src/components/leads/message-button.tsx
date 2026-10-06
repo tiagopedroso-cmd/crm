@@ -21,10 +21,12 @@ export function MessageButton({
   lead,
   compact = false,
   showFollowup = true,
+  returnTo,
 }: {
   lead: Lead;
   compact?: boolean;
   showFollowup?: boolean;
+  returnTo?: string;
 }) {
   const [open, setOpen] = useState(false);
   const valid = whatsappUrl(lead.whatsapp);
@@ -53,7 +55,7 @@ export function MessageButton({
         </small>
       )}
       {open && <ApproachDialog lead={lead} onClose={() => setOpen(false)} />}
-      {showFollowup && <FollowupButton lead={lead} compact={compact} />}
+      {showFollowup && <FollowupButton lead={lead} compact={compact} returnTo={returnTo} />}
     </>
   );
 }

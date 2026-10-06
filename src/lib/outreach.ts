@@ -167,6 +167,13 @@ export function suggestTemplate(
   product = "",
 ) {
   const active = templates.filter((t) => t.is_active);
+  const normalizedProduct = normalize(product);
+  if (!lead.contact_name.trim() && /\bsistema(s)?\b/.test(normalizedProduct)) {
+    const decisionMaker = active.find((t) =>
+      /sistemas.*identificar decisor/.test(normalize(t.name)),
+    );
+    if (decisionMaker) return decisionMaker;
+  }
   const group = active.filter((t) => t.niche_group === suggestGroup(lead));
   const context = normalize([product, lead.pain, lead.objective, lead.discovery_notes].filter(Boolean).join(" "));
   if (suggestGroup(lead) === "Transporte / Logística") {

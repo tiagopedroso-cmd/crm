@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import {
   AlertTriangle,
@@ -38,7 +39,37 @@ function dayLabel(day: string, index: number) {
 }
 
 export function DailyProspectingTarget({ owner }: { owner: string }) {
+  const router = useRouter();
   const [filters, setFilters] = useState<DailyProspectingFilters>({});
+
+  useEffect(() => {
+    const responsible = new URLSearchParams(window.location.search).get("responsible");
+    if (responsible && responsible !== "all") {
+      setFilters((current) => ({ ...current, responsibleId: responsible }));
+    }
+  }, []);
+
+  function setResponsible(responsibleId?: string) {
+    setFilters((current) => ({ ...current, responsibleId }));
+    const params = new URLSearchParams(window.location.search);
+    params.set("responsible", responsibleId || "all");
+    router.replace(`/dashboard?${params.toString()}`, { scroll: false });
+  }
+
+  function clearFilters() {
+    setFilters({});
+    const params = new URLSearchParams(window.location.search);
+    params.set("responsible", "all");
+    router.replace(`/dashboard?${params.toString()}`, { scroll: false });
+  }
+
+  function leadHref(leadId: string) {
+    const params = new URLSearchParams({
+      from: "dashboard",
+      responsible: filters.responsibleId || "all",
+    });
+    return `/leads/${leadId}?${params.toString()}`;
+  }
 
   const options = useQuery({
     queryKey: ["daily-prospecting-filter-options", owner],
@@ -103,12 +134,7 @@ export function DailyProspectingTarget({ owner }: { owner: string }) {
             <span>Responsável</span>
             <select
               value={filters.responsibleId || ""}
-              onChange={(e) =>
-                setFilters((current) => ({
-                  ...current,
-                  responsibleId: e.target.value || undefined,
-                }))
-              }
+              onChange={(e) => setResponsible(e.target.value || undefined)}
             >
               <option value="">Todos</option>
               {(options.data?.responsibles || []).map((item) => (
@@ -163,7 +189,7 @@ export function DailyProspectingTarget({ owner }: { owner: string }) {
             type="button"
             className="btn daily-filter-clear"
             disabled={!hasFilters}
-            onClick={() => setFilters({})}
+            onClick={clearFilters}
           >
             <X size={15} />
             Limpar
@@ -199,7 +225,7 @@ export function DailyProspectingTarget({ owner }: { owner: string }) {
             <h3>Quem contatar agora</h3>
             {p.queue.slice(0, 5).map((item, index) => (
               <Link
-                href={`/leads/${item.lead.id}`}
+                href={leadHref(item.lead.id)}
                 key={item.lead.id}
                 className="queue-row"
               >
@@ -227,7 +253,7 @@ export function DailyProspectingTarget({ owner }: { owner: string }) {
             )}
 
             {next && (
-              <Link className="btn primary" href={`/leads/${next.lead.id}`}>
+              <Link className="btn primary" href={leadHref(next.lead.id)}>
                 Próximo lead <ArrowRight size={16} />
               </Link>
             )}
@@ -254,7 +280,7 @@ export function DailyProspectingTarget({ owner }: { owner: string }) {
         </div>
       </section>
 
-      <ProspectingEvolutionChart owner={filters.responsibleId || owner} />
+      <ProspectingEvolutionChart owner={filters.responsibleId} />
     </>
   );
 }

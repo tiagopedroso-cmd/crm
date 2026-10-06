@@ -1,5 +1,5 @@
 "use client";
-import { use, useState } from "react";
+import { use, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
@@ -26,6 +26,15 @@ export default function Lead360({
   const refs = useReference();
   const refresh = useRefresh();
   const router = useRouter();
+  const [returnTo, setReturnTo] = useState<string>();
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("from") === "dashboard") {
+      setReturnTo(
+        `/dashboard?responsible=${encodeURIComponent(params.get("responsible") || "all")}`,
+      );
+    }
+  }, []);
   const [quickAction, setQuickAction] = useState<{
     tab: string;
     type: string;
@@ -95,7 +104,7 @@ export default function Lead360({
             </div>
             <div className="lead-quick-actions">
               <h3>Ações</h3>
-              <MessageButton lead={l} />
+              <MessageButton lead={l} returnTo={returnTo} />
               {whatsappUrl(l.whatsapp) && (
                 <a
                   className="btn wide"

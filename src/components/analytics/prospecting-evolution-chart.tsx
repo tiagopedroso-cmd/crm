@@ -88,7 +88,7 @@ function metricFor(
   return data.totals.stages[key as PipelineEvolutionStage];
 }
 
-export function ProspectingEvolutionChart({ owner }: { owner: string }) {
+export function ProspectingEvolutionChart({ owner }: { owner?: string }) {
   const [preset, setPreset] =
     useState<ProspectingEvolutionPreset>("30");
   const [status, setStatus] =

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { MessageCircle, RotateCcw } from "lucide-react";
 import { useProfile, useReference, useRefresh } from "@/hooks/use-crm";
@@ -20,11 +21,14 @@ function formatCadenceDate(value: string) {
 export function FollowupButton({
   lead,
   compact = false,
+  returnTo,
 }: {
   lead: Lead;
   compact?: boolean;
+  returnTo?: string;
 }) {
   const profile = useProfile();
+  const router = useRouter();
   const refs = useReference();
   const refresh = useRefresh();
 
@@ -260,9 +264,12 @@ export function FollowupButton({
               <div className="modal-actions">
                 <button
                   className="btn primary"
-                  onClick={() => setOpen(false)}
+                  onClick={() => {
+                    setOpen(false);
+                    if (returnTo) router.push(returnTo);
+                  }}
                 >
-                  Concluir
+                  {returnTo ? "Concluir e voltar à Visão Geral" : "Concluir"}
                 </button>
               </div>
             )}

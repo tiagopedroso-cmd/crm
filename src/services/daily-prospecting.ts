@@ -2,7 +2,7 @@ import { browserClient } from "@/lib/supabase/client";
 import { businessDaysLate, dateOnly, nextBusinessDays } from "@/lib/business-days";
 import type { Lead } from "@/types/crm";
 
-export const DAILY_MESSAGE_CAPACITY = 30;
+export const DAILY_MESSAGE_CAPACITY_PER_USER = 40;
 export const STRUCTURAL_NEW_LEADS = 6;
 export const RECOVERY_NEW_LEADS = 5;
 export const RECOVERY_FOLLOWUP_REFERENCE = 25;
@@ -153,6 +153,18 @@ export async function dailyProspectingPlan(
   const start = `${today}T00:00:00-03:00`;
   const end = `${today}T23:59:59.999-03:00`;
 
+  const visibleOwnerRows = await allRows<{ owner_id: string }>((from, to) =>
+    db.from("lead_listing").select("owner_id").range(from, to),
+  );
+  const visibleOwnerIds = new Set(
+    visibleOwnerRows.map((lead) => lead.owner_id).filter(Boolean),
+  );
+  if (ownerId) visibleOwnerIds.add(ownerId);
+  const responsibleCount = filters.responsibleId
+    ? 1
+    : Math.max(1, visibleOwnerIds.size);
+  const dailyCapacity = DAILY_MESSAGE_CAPACITY_PER_USER * responsibleCount;
+
   const [followups, newLeads, approaches] = await Promise.all([
     allRows<Lead>((from, to) => {
       let q = db
@@ -228,7 +240,7 @@ if (filters.niche) {
   }
 
   const performed = performedFollowups + performedNew;
-  const remaining = Math.max(0, DAILY_MESSAGE_CAPACITY - performed);
+  const remaining = Math.max(0, dailyCapacity - performed);
   const overdueFollowups = followups.filter((l) => (l.cadence_next_at || "").slice(0, 10) < today).length;
   const recoveryMode = overdueFollowups > 0 || followups.length > RECOVERY_FOLLOWUP_REFERENCE;
   const queuedFollowups = Math.min(followups.length, remaining);
@@ -246,7 +258,15 @@ if (filters.niche) {
   ];
 
   const programmed = performed + followups.length + Math.min(newLeads.length, recoveryMode ? RECOVERY_NEW_LEADS : STRUCTURAL_NEW_LEADS);
-  const status = programmed > 30 ? "BACKLOG" : programmed >= 28 ? "ALMOST_FULL" : programmed >= 21 ? "ATTENTION" : "AVAILABLE";
+  const almostFullAt = Math.ceil(dailyCapacity * 0.93);
+  const attentionAt = Math.ceil(dailyCapacity * 0.7);
+  const status = programmed > dailyCapacity
+    ? "BACKLOG"
+    : programmed >= almostFullAt
+      ? "ALMOST_FULL"
+      : programmed >= attentionAt
+        ? "ATTENTION"
+        : "AVAILABLE";
 
   const futureDays = nextBusinessDays(today, 4);
   const futureEnd = `${futureDays.at(-1)}T23:59:59.999-03:00`;
@@ -263,7 +283,7 @@ futureQuery = applyLeadFilters(futureQuery, filters);
   const forecast = futureDays.map((day) => ({ day, followups: (future || []).filter((x) => String(x.cadence_next_at).slice(0, 10) === day).length }));
 
   return {
-    capacity: DAILY_MESSAGE_CAPACITY,
+    capacity: dailyCapacity,
     performed,
     performedFollowups,
     performedNew,
@@ -381,7 +401,7 @@ function effectiveLeadValue(lead: {
 }
 
 export async function prospectingEvolution(
-  ownerId: string,
+  ownerId?: string,
   preset: ProspectingEvolutionPreset = "30",
   customStart?: string,
   customEnd?: string,
@@ -415,18 +435,19 @@ export async function prospectingEvolution(
     created_at: string;
     potential_value: number | string | null;
     closed_value: number | string | null;
-  }>((from, to) =>
-    db
+  }>((from, to) => {
+    let query = db
       .from("leads")
       .select(
         "id,stage,inserted_on,created_at,potential_value,closed_value",
       )
-      .eq("owner_id", ownerId)
       .gte("created_at", start)
-      .lte("created_at", end)
+      .lte("created_at", end);
+    if (ownerId) query = query.eq("owner_id", ownerId);
+    return query
       .order("created_at", { ascending: true })
-      .range(from, to),
-  );
+      .range(from, to);
+  });
 
   const days = pipelineEnumerateDays(startDay, endDay);
 

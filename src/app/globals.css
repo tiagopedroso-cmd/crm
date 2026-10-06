@@ -2425,3 +2425,47 @@ td small {
     grid-column: auto;
   }
 }
+
+/* Mantém cada card estritamente dentro da sua coluna do Pipeline. */
+.kanban-column,
+.kanban-cards,
+.kanban-cards > *,
+.lead-card {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.lead-card {
+  width: 100%;
+  overflow: hidden;
+}
+
+.lead-card .card-top,
+.lead-card .card-money,
+.lead-card .next-action,
+.lead-card .cadence-card,
+.lead-card .stage-select {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.lead-card strong,
+.lead-card p,
+.lead-card small,
+.lead-card span,
+.lead-card a,
+.lead-card button {
+  overflow-wrap: anywhere;
+}
+.lead-card .cadence-strip,
+.lead-card .card-top > *,
+.lead-card .card-top .actions,
+.lead-card .next-action > div {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.lead-card .card-top .actions {
+  flex-shrink: 1;
+}
