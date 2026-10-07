@@ -175,6 +175,7 @@ export interface MetricGroup {
 }
 export interface Metrics {
   leads: number;
+  contacts: number;
   new_today: number;
   new_week: number;
   new_month: number;

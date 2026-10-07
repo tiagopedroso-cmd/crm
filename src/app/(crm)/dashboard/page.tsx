@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import Link from "next/link";
 import {
   Users,
@@ -11,7 +11,6 @@ import {
 import { useMetrics } from "@/hooks/use-metrics";
 import { useProfile, useReference } from "@/hooks/use-crm";
 import { money, dayKey } from "@/lib/utils";
-import { PeriodFilter } from "@/components/analytics/period-filter";
 import { AgendaList } from "@/components/analytics/agenda-list";
 import { Funnel } from "@/components/analytics/funnel";
 import { PipelineValues } from "@/components/analytics/pipeline-values";
@@ -19,7 +18,7 @@ import { DailyProspectingTarget } from "@/components/analytics/daily-prospecting
 import { Loading, ErrorState, Progress } from "@/components/ui";
 export default function Dashboard() {
   const profile = useProfile();
-  const { query, filterProps, valid } = useMetrics("month", profile.id);
+  const { query } = useMetrics("month", profile.id);
   const refs = useReference();
   if (query.isLoading || refs.isLoading) return <Loading />;
   if (query.isError || refs.isError)
@@ -52,13 +51,7 @@ export default function Dashboard() {
             }).format(new Date(`${dayKey()}T12:00:00-03:00`))}
           </p>
         </div>
-        <PeriodFilter {...filterProps} />
       </div>
-      {!valid && (
-        <p role="alert" className="error">
-          O fim do período deve ser igual ou posterior ao início.
-        </p>
-      )}
       {m && goals && (
         <>
           <DailyProspectingTarget owner={profile.id} />

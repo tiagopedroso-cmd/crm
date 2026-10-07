@@ -26,8 +26,12 @@ export function periodRange(period: string, start = "", end = "") {
   const today = dayKey();
   const d = new Date(`${today}T12:00:00Z`);
   if (period === "custom") return { start: start || today, end: end || today };
-  if (period === "week")
+  if (period === "week") {
     d.setUTCDate(d.getUTCDate() - ((d.getUTCDay() + 6) % 7));
+    const weekStart = d.toISOString().slice(0, 10);
+    d.setUTCDate(d.getUTCDate() + 6);
+    return { start: weekStart, end: d.toISOString().slice(0, 10) };
+  }
   if (period === "month") d.setUTCDate(1);
   return { start: d.toISOString().slice(0, 10), end: today };
 }

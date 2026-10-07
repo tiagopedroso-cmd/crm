@@ -52,10 +52,7 @@ export default function Reports() {
             <div className="report-metrics">
               {[
                 ["Leads adicionados", m.leads],
-                [
-                  "Contatos realizados",
-                  m.events.find((e) => e.stage === "CONTATADO")?.total || 0,
-                ],
+                ["Contatos realizados", m.contacts],
                 [
                   "Respostas",
                   m.events.find((e) => e.stage === "RESPONDEU")?.total || 0,
