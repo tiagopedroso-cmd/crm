@@ -257,3 +257,27 @@ export const EMPTY_FILTERS: Filters = {
   followup: "",
   attempt: "",
 };
+
+export const MARKETING_CHANNELS = ["Instagram", "Google Meu Negócio", "Facebook"] as const;
+export const MARKETING_STATUSES = ["IDEIA", "EM_PRODUCAO", "REVISAO", "APROVADO", "PROGRAMADO", "PUBLICADO"] as const;
+export const MARKETING_PILLARS = ["Ensino", "Autoridade", "Bastidores", "Prova social", "Institucional"] as const;
+export type MarketingChannel = (typeof MARKETING_CHANNELS)[number];
+export type MarketingStatus = (typeof MARKETING_STATUSES)[number];
+export interface MarketingCampaign {
+  id: string; owner_id: string; name: string; objective: string; start_date: string; end_date: string;
+  channels: MarketingChannel[]; budget: number; audience: string; goals: string; status: "PLANEJAMENTO"|"ATIVA"|"CONCLUIDA"|"PAUSADA";
+  created_at: string; updated_at: string;
+}
+export interface MarketingContent {
+  id: string; campaign_id: string | null; owner_id: string; responsible_id: string; title: string; theme: string;
+  pillar: string; objective: string; format: string; channels: MarketingChannel[]; caption: string; creative_text: string;
+  cta: string; hashtags: string; scheduled_at: string | null; published_at: string | null; publication_url: string;
+  status: MarketingStatus; notes: string; feedback: string; learnings: string; created_at: string; updated_at: string;
+}
+export interface MarketingCreative {
+  id: string; content_id: string; owner_id: string; name: string; asset_url: string; version: number; approved: boolean; notes: string; created_at: string;
+}
+export interface MarketingMetric {
+  id: string; content_id: string; owner_id: string; reach: number; impressions: number; interactions: number; comments: number;
+  shares: number; saves: number; clicks: number; contacts: number; leads: number; measured_on: string; created_at: string; updated_at: string;
+}

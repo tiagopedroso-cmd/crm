@@ -9,6 +9,7 @@ import {
   CalendarDays,
   Target,
   ChartNoAxesCombined,
+  Megaphone,
   Settings,
   Plus,
   Menu,
@@ -29,6 +30,7 @@ const items = [
   ["/leads", "Meus leads", Users],
   ["/pipeline", "Pipeline", Columns3],
   ["/placar", "Placar comercial", Target],
+  ["/marketing", "Marketing", Megaphone],
   ["/relatorios", "Relatórios", ChartNoAxesCombined],
   ["/configuracoes", "Configurações", Settings],
 ] as const;
